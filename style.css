@@ -354,6 +354,14 @@ ul { list-style: none; }
   aspect-ratio: 16 / 10;
 }
 
+.project-media {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-alt);
+}
+
 .project-body { padding: 22px; }
 
 .project-body h3 { font-size: 1.15rem; margin-bottom: 8px; }
