@@ -393,6 +393,52 @@ ul { list-style: none; }
 }
 .project-links a:hover { color: var(--accent); border-color: var(--accent); }
 
+/* ============ Now ============ */
+.now-wrap {
+  max-width: 680px;
+}
+
+.now-lead {
+  color: var(--text-muted);
+  font-size: 1rem;
+  margin-bottom: 24px;
+}
+
+.now-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.now-list li {
+  display: flex;
+  gap: 20px;
+  padding: 16px 20px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.now-date {
+  flex-shrink: 0;
+  width: 90px;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.now-text {
+  color: var(--text);
+  font-size: 0.95rem;
+}
+
+@media (max-width: 520px) {
+  .now-list li { flex-direction: column; gap: 6px; }
+  .now-date { width: auto; }
+}
+
 /* ============ Contact ============ */
 .contact-wrap {
   max-width: 560px;
