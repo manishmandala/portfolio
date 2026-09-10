@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Receptionist — Manish Mandala</title>
+<meta name="description" content="AI Receptionist case study: n8n workflows using Claude, Gmail, Supabase, and Telegram to triage email and coordinate transactions for a real estate agent.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<header class="site-header">
+  <nav class="nav container">
+    <a href="index.html#home" class="logo">Manish Mandala</a>
+
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#skills">Skills</a></li>
+      <li><a href="index.html#projects">Projects</a></li>
+      <li><a href="index.html#also-built">Also Built</a></li>
+      <li><a href="index.html#now">Now</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <!-- ============ CASE HEADER ============ -->
+  <section class="case-header container">
+    <p class="case-eyebrow"><a href="index.html#projects">PROJECTS</a> / AI RECEPTIONIST</p>
+    <h1>AI Receptionist</h1>
+    <p>An AI-powered virtual receptionist for a real estate agent's inbox and client relationships, built as seven n8n workflows.</p>
+    <div class="case-meta-bar">
+      <div class="case-meta-item">
+        <span class="case-meta-label">STATUS</span>
+        <span class="case-status">COMPLETED</span>
+      </div>
+      <div class="case-meta-item">
+        <span class="case-meta-label">TIMEFRAME</span>
+        <span class="case-meta-value">Fall 2026</span>
+      </div>
+      <div class="case-meta-item">
+        <span class="case-meta-label">ROLE</span>
+        <span class="case-meta-value">Solo</span>
+      </div>
+      <div class="case-meta-item">
+        <span class="case-meta-label">CONTEXT</span>
+        <span class="case-meta-value">Client project</span>
+      </div>
+      <div class="case-meta-item">
+        <span class="case-meta-label">SHEET</span>
+        <span class="case-meta-value">01 / 05</span>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ============ CASE BODY ============ -->
+  <section class="case-body container">
+    <div class="case-main">
+      <div class="case-section">
+        <div class="case-label">MY ROLE</div>
+        <p>Designed and built the entire automation system solo for a real estate agent client &mdash; architected all seven n8n workflows, wrote every Claude prompt, and wired up the Gmail, Supabase, and Telegram integrations end to end.</p>
+      </div>
+      <div class="case-section">
+        <div class="case-label">PROBLEM / GOAL</div>
+        <p>Real estate agents run their whole pipeline through one inbox &mdash; new leads, active transactions, vendors, and past clients all mixed together, with slow replies costing real deals.</p>
+        <p>Goal: an AI system that triages, drafts, and reminds, without ever sending anything the agent hasn't personally reviewed.</p>
+      </div>
+      <div class="case-section">
+        <div class="case-label">APPROACH &amp; KEY DECISIONS</div>
+        <ul>
+          <li>Classify every inbound email into one of five categories with Claude, then auto-label it in Gmail.</li>
+          <li>Draft replies in the agent's actual voice &mdash; explicit, strict prompt rules (no em dashes, no &ldquo;I hope this finds you well&rdquo;, contractions required) instead of generic AI-sounding copy.</li>
+          <li>Never auto-send: every AI-drafted reply lands in Gmail Drafts for the agent to review first.</li>
+          <li>Separate Health Check and Error Trigger workflows so a silent failure gets caught in minutes on Telegram, not discovered days later.</li>
+          <li>Redacted all personal contact info (chat IDs, real email addresses) before publishing, since this represents a real client's business.</li>
+        </ul>
+      </div>
+      <div class="case-section">
+        <div class="case-label">OUTCOME</div>
+        <p>Seven production n8n workflows covering inbox triage, client nurture, transaction coordination, and a Telegram-based assistant &mdash; in active use handling a real agent's day-to-day email load.</p>
+      </div>
+      <div class="case-section">
+        <a href="https://github.com/manishmandala/ai-receptionist" target="_blank" rel="noopener" class="btn btn-primary">View Source on GitHub &rarr;</a>
+      </div>
+    </div>
+    <div class="case-sidebar">
+      <div class="case-sidebar-block">
+        <div class="case-label">TOOLS &amp; TECH</div>
+        <ul class="case-tools">
+          <li>n8n</li>
+          <li>Claude</li>
+          <li>Gmail API</li>
+          <li>Supabase</li>
+          <li>Telegram</li>
+        </ul>
+      </div>
+
+      <div class="case-sidebar-block case-build">
+        <img src="assets/ai-receptionist/inbox-classifier.png" alt="AI Receptionist inbox classifier workflow diagram">
+        <p class="case-build-caption">Fig. 1. The Inbox Classifier workflow &mdash; the busiest of the seven.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ CASE NAV ============ -->
+  <div class="case-nav container">
+    <a href="combination-lock.html">&larr; Combination Lock</a>
+    <a href="index.html#projects">All Projects</a>
+    <a href="laser-turret.html">Laser Turret &rarr;</a>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <p>&copy; <span id="year"></span> Manish Mandala. Built with HTML &amp; CSS.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

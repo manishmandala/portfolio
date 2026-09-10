@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Basketball Shot Analyzer — Manish Mandala</title>
+<meta name="description" content="Basketball Shot Analyzer case study: MediaPipe pose estimation scores elbow angle, knee bend, stance, and release position in real time.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<header class="site-header">
+  <nav class="nav container">
+    <a href="index.html#home" class="logo">Manish Mandala</a>
+
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#skills">Skills</a></li>
+      <li><a href="index.html#projects">Projects</a></li>
+      <li><a href="index.html#also-built">Also Built</a></li>
+      <li><a href="index.html#now">Now</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <!-- ============ CASE HEADER ============ -->
+  <section class="case-header container">
+    <p class="case-eyebrow"><a href="index.html#projects">PROJECTS</a> / BASKETBALL SHOT ANALYZER</p>
+    <h1>Basketball Shot Analyzer</h1>
+    <p>Real-time basketball shooting form analysis from a webcam feed, scoring five components of form live on screen.</p>
+    <div class="case-meta-bar">
+      <div class="case-meta-item">
+        <span class="case-meta-label">STATUS</span>
+        <span class="case-status">COMPLETED</span>
+      </div>
+      <div class="case-meta-item">
+        <span class="case-meta-label">TIMEFRAME</span>
+        <span class="case-meta-value">Summer 2026</span>
+      </div>
+      <div class="case-meta-item">
+        <span class="case-meta-label">ROLE</span>
+        <span class="case-meta-value">Solo</span>
+      </div>
+      <div class="case-meta-item">
+        <span class="case-meta-label">CONTEXT</span>
+        <span class="case-meta-value">Personal project</span>
+      </div>
+      <div class="case-meta-item">
+        <span class="case-meta-label">SHEET</span>
+        <span class="case-meta-value">03 / 05</span>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ============ CASE BODY ============ -->
+  <section class="case-body container">
+    <div class="case-main">
+      <div class="case-section">
+        <div class="case-label">MY ROLE</div>
+        <p>Built the full pose-estimation pipeline and scoring logic solo, from landmark extraction to the live on-screen feedback overlay.</p>
+      </div>
+      <div class="case-section">
+        <div class="case-label">PROBLEM / GOAL</div>
+        <p>Wanted real-time, quantified feedback on shooting form &mdash; elbow angle, knee bend, stance, release &mdash; instead of just eyeballing form on video after the fact.</p>
+      </div>
+      <div class="case-section">
+        <div class="case-label">APPROACH &amp; KEY DECISIONS</div>
+        <ul>
+          <li>MediaPipe Pose extracts body landmarks every frame; five geometric checks each get a pass/fail threshold grounded in basic shooting-form biomechanics.</li>
+          <li>Real end-to-end FPS measurement, not a guess &mdash; a warm-up period is excluded so the reported number reflects steady-state performance.</li>
+          <li>Found and fixed a real bug: the on-screen score box was hardcoded to a fixed width too narrow for its own text, so it clipped off the frame edge on some resolutions. Now sized dynamically from the actual rendered text.</li>
+        </ul>
+      </div>
+      <div class="case-section">
+        <div class="case-label">OUTCOME</div>
+        <p>A live webcam tool that scores shooting form 0&ndash;100 in real time, with demo footage showing actual scored reps.</p>
+      </div>
+      <div class="case-section">
+        <a href="https://github.com/manishmandala/basketball-shot-analyzer" target="_blank" rel="noopener" class="btn btn-primary">View Source on GitHub &rarr;</a>
+      </div>
+    </div>
+    <div class="case-sidebar">
+      <div class="case-sidebar-block">
+        <div class="case-label">TOOLS &amp; TECH</div>
+        <ul class="case-tools">
+          <li>Python</li>
+          <li>OpenCV</li>
+          <li>MediaPipe</li>
+          <li>Pose Estimation</li>
+        </ul>
+      </div>
+
+      <div class="case-sidebar-block case-build">
+        <video src="assets/basketball/demo-2.mp4" controls muted loop playsinline preload="metadata"></video>
+        <p class="case-build-caption">Fig. 1. Live scoring during an actual shooting session.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ CASE NAV ============ -->
+  <div class="case-nav container">
+    <a href="laser-turret.html">&larr; Laser Turret</a>
+    <a href="index.html#projects">All Projects</a>
+    <a href="multi-blade-knife.html">Multi-Blade Knife &rarr;</a>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <p>&copy; <span id="year"></span> Manish Mandala. Built with HTML &amp; CSS.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
