@@ -232,28 +232,14 @@ ul { list-style: none; }
 
 .hero-media {
   flex-shrink: 0;
-  position: relative;
-  padding: 14px;
-}
-
-.hero-media::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: conic-gradient(from 200deg, var(--cat-blue), var(--cat-violet), var(--cat-aqua), var(--cat-blue));
-  opacity: 0.85;
-  filter: blur(1px);
 }
 
 .avatar-photo {
-  position: relative;
-  width: 220px;
-  height: 220px;
+  width: 128px;
+  height: 128px;
   border-radius: 50%;
   object-fit: cover;
-  border: 4px solid var(--bg);
-  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border);
 }
 
 /* ============ Sections ============ */
@@ -843,7 +829,7 @@ ul { list-style: none; }
   .hero-text { margin-left: auto; margin-right: auto; }
   .hero-actions, .social-links { justify-content: center; }
 
-  .avatar-photo { width: 160px; height: 160px; }
+  .avatar-photo { width: 96px; height: 96px; }
 
   .section { padding: 64px 20px; }
 }
