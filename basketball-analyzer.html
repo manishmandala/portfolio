@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Basketball Shot Analyzer — Manish Mandala</title>
+<title>Basketball Shot Analyzer - Manish Mandala</title>
 <meta name="description" content="Basketball Shot Analyzer case study: MediaPipe pose estimation scores elbow angle, knee bend, stance, and release position in real time.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="style.css">
@@ -39,7 +39,7 @@
     <div class="case-meta-bar">
       <div class="case-meta-item">
         <span class="case-meta-label">STATUS</span>
-        <span class="case-status">COMPLETE &mdash; FOR NOW</span>
+        <span class="case-status">COMPLETE - FOR NOW</span>
       </div>
       <div class="case-meta-item">
         <span class="case-meta-label">TIMEFRAME</span>
@@ -70,13 +70,13 @@
       </div>
       <div class="case-section">
         <div class="case-label">PROBLEM / GOAL</div>
-        <p>Wanted real-time, quantified feedback on shooting form &mdash; elbow angle, knee bend, stance, release &mdash; instead of just eyeballing form on video after the fact.</p>
+        <p>Wanted real-time, quantified feedback on shooting form - elbow angle, knee bend, stance, release - instead of just eyeballing form on video after the fact.</p>
       </div>
       <div class="case-section">
         <div class="case-label">APPROACH &amp; KEY DECISIONS</div>
         <ul>
           <li>MediaPipe Pose extracts body landmarks every frame; five geometric checks each get a pass/fail threshold grounded in basic shooting-form biomechanics.</li>
-          <li>Real end-to-end FPS measurement, not a guess &mdash; a warm-up period is excluded so the reported number reflects steady-state performance.</li>
+          <li>Real end-to-end FPS measurement, not a guess - a warm-up period is excluded so the reported number reflects steady-state performance.</li>
           <li>Found and fixed a real bug: the on-screen score box was hardcoded to a fixed width too narrow for its own text, so it clipped off the frame edge on some resolutions. Now sized dynamically from the actual rendered text.</li>
         </ul>
       </div>

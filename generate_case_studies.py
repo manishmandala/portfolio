@@ -6,7 +6,7 @@ HEAD = """<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{title} — Manish Mandala</title>
+<title>{title} - Manish Mandala</title>
 <meta name="description" content="{description}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="style.css">
@@ -160,27 +160,27 @@ render_page(
     meta=("COMPLETED", "Fall 2026", "Solo", "Client project", "01 / 05"),
     sections=[
         ("MY ROLE", [
-            "Designed and built the entire automation system solo for a real estate agent client &mdash; architected all seven n8n workflows, wrote every Claude prompt, and wired up the Gmail, Supabase, and Telegram integrations end to end.",
+            "Designed and built the entire automation system solo for a real estate agent client - architected all seven n8n workflows, wrote every Claude prompt, and wired up the Gmail, Supabase, and Telegram integrations end to end.",
         ], None),
         ("PROBLEM / GOAL", [
-            "Real estate agents run their whole pipeline through one inbox &mdash; new leads, active transactions, vendors, and past clients all mixed together, with slow replies costing real deals.",
+            "Real estate agents run their whole pipeline through one inbox - new leads, active transactions, vendors, and past clients all mixed together, with slow replies costing real deals.",
             "Goal: an AI system that triages, drafts, and reminds, without ever sending anything the agent hasn't personally reviewed.",
         ], None),
         ("APPROACH &amp; KEY DECISIONS", None, [
             "Classify every inbound email into one of five categories with Claude, then auto-label it in Gmail.",
-            "Draft replies in the agent's actual voice &mdash; explicit, strict prompt rules (no em dashes, no &ldquo;I hope this finds you well&rdquo;, contractions required) instead of generic AI-sounding copy.",
+            "Draft replies in the agent's actual voice - explicit, strict prompt rules (no em dashes, no &ldquo;I hope this finds you well&rdquo;, contractions required) instead of generic AI-sounding copy.",
             "Never auto-send: every AI-drafted reply lands in Gmail Drafts for the agent to review first.",
             "Separate Health Check and Error Trigger workflows so a silent failure gets caught in minutes on Telegram, not discovered days later.",
             "Redacted all personal contact info (chat IDs, real email addresses) before publishing, since this represents a real client's business.",
         ]),
         ("OUTCOME", [
-            "Seven production n8n workflows covering inbox triage, client nurture, transaction coordination, and a Telegram-based assistant &mdash; in active use handling a real agent's day-to-day email load.",
+            "Seven production n8n workflows covering inbox triage, client nurture, transaction coordination, and a Telegram-based assistant - in active use handling a real agent's day-to-day email load.",
         ], None),
     ],
     sidebar_extra_first=None,
     tools=["n8n", "Claude", "Gmail API", "Supabase", "Telegram"],
     build_media='<img src="assets/ai-receptionist/inbox-classifier.png" alt="AI Receptionist inbox classifier workflow diagram">',
-    build_caption="Fig. 1. The Inbox Classifier workflow &mdash; the busiest of the seven.",
+    build_caption="Fig. 1. The Inbox Classifier workflow - the busiest of the seven.",
     github_url="https://github.com/manishmandala/ai-receptionist",
     prev_slug="combination-lock.html", prev_title="Combination Lock",
     next_slug="laser-turret.html", next_title="Laser Turret",
@@ -197,10 +197,10 @@ render_page(
     meta=("COMPLETED", "Summer 2026", "Solo", "Personal project", "02 / 05"),
     sections=[
         ("MY ROLE", [
-            "Designed, wired, and programmed the entire turret solo &mdash; both the Arduino firmware and the PC-side computer vision pipeline.",
+            "Designed, wired, and programmed the entire turret solo - both the Arduino firmware and the PC-side computer vision pipeline.",
         ], None),
         ("PROBLEM / GOAL", [
-            "Wanted a laser turret that tracks a hand in real time without expensive off-the-shelf tracking hardware &mdash; just a webcam, two servos, and an Arduino.",
+            "Wanted a laser turret that tracks a hand in real time without expensive off-the-shelf tracking hardware - just a webcam, two servos, and an Arduino.",
         ], None),
         ("APPROACH &amp; KEY DECISIONS", None, [
             "MediaPipe Hands on the PC tracks wrist position, mapped to pan/tilt angles through a real calibration step instead of a rough frame-edge guess.",
@@ -235,11 +235,11 @@ render_page(
             "Built the full pose-estimation pipeline and scoring logic solo, from landmark extraction to the live on-screen feedback overlay.",
         ], None),
         ("PROBLEM / GOAL", [
-            "Wanted real-time, quantified feedback on shooting form &mdash; elbow angle, knee bend, stance, release &mdash; instead of just eyeballing form on video after the fact.",
+            "Wanted real-time, quantified feedback on shooting form - elbow angle, knee bend, stance, release - instead of just eyeballing form on video after the fact.",
         ], None),
         ("APPROACH &amp; KEY DECISIONS", None, [
             "MediaPipe Pose extracts body landmarks every frame; five geometric checks each get a pass/fail threshold grounded in basic shooting-form biomechanics.",
-            "Real end-to-end FPS measurement, not a guess &mdash; a warm-up period is excluded so the reported number reflects steady-state performance.",
+            "Real end-to-end FPS measurement, not a guess - a warm-up period is excluded so the reported number reflects steady-state performance.",
             "Found and fixed a real bug: the on-screen score box was hardcoded to a fixed width too narrow for its own text, so it clipped off the frame edge on some resolutions. Now sized dynamically from the actual rendered text.",
         ]),
         ("OUTCOME", [
@@ -273,10 +273,10 @@ render_page(
             "Goal: cut prep time and physical effort without adding cost or complexity to a simple kitchen tool.",
         ], None),
         ("APPROACH &amp; KEY DECISIONS", None, [
-            "Ranked user needs with a pairwise comparison, then brainstormed broadly and scored concepts with a Pugh matrix &mdash; the multi-blade knife won on time savings and manufacturability.",
+            "Ranked user needs with a pairwise comparison, then brainstormed broadly and scored concepts with a Pugh matrix - the multi-blade knife won on time savings and manufacturability.",
             "Modeled the design in OnShape as separate, assembled components (blades, handle, locking pin) rather than one solid body, matching how it would actually be manufactured.",
             "Built a low-fidelity mock-up (skewers and a cardboard tube) before committing to CAD, to nail down blade spacing and feel early and cheaply.",
-            "Iterated the 3D-printed prototype after testing surfaced real problems &mdash; blade movement under force, an uncomfortable handle, food catching between blades &mdash; reinforcing the assembly and reshaping the handle in response.",
+            "Iterated the 3D-printed prototype after testing surfaced real problems - blade movement under force, an uncomfortable handle, food catching between blades - reinforcing the assembly and reshaping the handle in response.",
             "Verified the final prototype against six concrete requirements (spacing, slice consistency, time efficiency, comfort, cleaning time, structural stability) with a real test scorecard, not just a demo.",
         ]),
         ("OUTCOME", [
@@ -310,11 +310,11 @@ render_page(
         ], None),
         ("APPROACH &amp; KEY DECISIONS", None, [
             "Built the 16-part assembly from individually modeled components rather than one solid body, matching how it would actually be manufactured and assembled.",
-            "Designed a tri-lobed connector piece to transmit rotation from the dial into the rotor stack &mdash; a small custom part that had to mate precisely with both.",
+            "Designed a tri-lobed connector piece to transmit rotation from the dial into the rotor stack - a small custom part that had to mate precisely with both.",
             "Documented the one provided part (the deadbolt subassembly) alongside the custom-designed parts, so the BOM honestly reflects what was designed versus supplied.",
         ]),
         ("OUTCOME", [
-            "A complete, manufacturable technical drawing packet &mdash; full assembly, 16-part exploded BOM, and part-level detail drawings. The OnShape source file is no longer accessible, but the finished documentation survives.",
+            "A complete, manufacturable technical drawing packet - full assembly, 16-part exploded BOM, and part-level detail drawings. The OnShape source file is no longer accessible, but the finished documentation survives.",
         ], None),
     ],
     sidebar_extra_first=None,
