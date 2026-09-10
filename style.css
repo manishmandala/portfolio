@@ -436,6 +436,55 @@ ul { list-style: none; }
 }
 .project-links a:hover { color: var(--accent); border-color: var(--accent); }
 
+/* ============ Also Built ============ */
+.also-built-lead {
+  color: var(--text-muted);
+  font-size: 1rem;
+  margin-bottom: 24px;
+}
+
+.also-built-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.also-built-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  background: var(--card-bg);
+  padding: 20px 24px;
+}
+
+.also-built-text h3 {
+  font-size: 1rem;
+  margin-bottom: 4px;
+}
+
+.also-built-text p {
+  color: var(--text-muted);
+  font-size: 0.88rem;
+}
+
+.also-built-list a {
+  flex-shrink: 0;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+}
+.also-built-list a:hover { color: var(--accent); border-color: var(--accent); }
+
+@media (max-width: 640px) {
+  .also-built-list li { flex-direction: column; align-items: flex-start; gap: 12px; }
+}
+
 /* ============ Now ============ */
 .now-wrap {
   max-width: 680px;
