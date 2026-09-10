@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Basketball Shot Analyzer - Manish Mandala</title>
-<meta name="description" content="Basketball Shot Analyzer case study: MediaPipe pose estimation scores elbow angle, knee bend, stance, and release position in real time.">
+<title>Internship Intelligence Agent - Manish Mandala</title>
+<meta name="description" content="Internship Intelligence Agent case study: collects and scores internship postings from public company career APIs, presented in a Streamlit dashboard.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="style.css">
 </head>
@@ -33,9 +33,9 @@
 <main>
   <!-- ============ CASE HEADER ============ -->
   <section class="case-header container">
-    <p class="case-eyebrow"><a href="index.html#projects">PROJECTS</a> / BASKETBALL SHOT ANALYZER</p>
-    <h1>Basketball Shot Analyzer</h1>
-    <p>Real-time basketball shooting form analysis from a webcam feed, scoring five components of form live on screen.</p>
+    <p class="case-eyebrow"><a href="index.html#projects">PROJECTS</a> / INTERNSHIP INTELLIGENCE AGENT</p>
+    <h1>Internship Intelligence Agent</h1>
+    <p>Collects internship postings from public company career APIs, scores each one for fit, and presents everything in a local Streamlit dashboard.</p>
     <div class="case-meta-bar">
       <div class="case-meta-item">
         <span class="case-meta-label">STATUS</span>
@@ -55,7 +55,7 @@
       </div>
       <div class="case-meta-item">
         <span class="case-meta-label">SHEET</span>
-        <span class="case-meta-value">05 / 08</span>
+        <span class="case-meta-value">04 / 08</span>
       </div>
     </div>
 
@@ -66,26 +66,29 @@
     <div class="case-main">
       <div class="case-section">
         <div class="case-label">MY ROLE</div>
-        <p>Built the full pose-estimation pipeline and scoring logic solo, from landmark extraction to the live on-screen feedback overlay.</p>
+        <p>Built the whole pipeline solo: the API collectors, the parsing and scoring logic, the SQLite database, and the Streamlit dashboard.</p>
       </div>
       <div class="case-section">
         <div class="case-label">PROBLEM / GOAL</div>
-        <p>Wanted real-time, quantified feedback on shooting form - elbow angle, knee bend, stance, release - instead of just eyeballing form on video after the fact.</p>
+        <p>Mechanical engineering, PM, consulting, and robotics/AI internship postings are scattered across dozens of company career sites, each with its own layout. Manually checking them all, every day, doesn't scale.</p>
+        <p>Goal: pull postings from the public JSON APIs career sites already use to render their own listings, score each one for fit, and surface everything in one place.</p>
       </div>
       <div class="case-section">
         <div class="case-label">APPROACH &amp; KEY DECISIONS</div>
         <ul>
-          <li>MediaPipe Pose extracts body landmarks every frame; five geometric checks each get a pass/fail threshold grounded in basic shooting-form biomechanics.</li>
-          <li>Real end-to-end FPS measurement, not a guess - a warm-up period is excluded so the reported number reflects steady-state performance.</li>
-          <li>Found and fixed a real bug: the on-screen score box was hardcoded to a fixed width too narrow for its own text, so it clipped off the frame edge on some resolutions. Now sized dynamically from the actual rendered text.</li>
+          <li>Polls public, structured, unauthenticated JSON APIs (Greenhouse, Lever, Ashby, Workday, Amazon) instead of scraping rendered HTML or bypassing logins - no CAPTCHAs, no rate-limit abuse.</li>
+          <li>Rule-based fit scoring (weighted keyword matching plus eligibility/location logic), not an ML or LLM judgment - a transparent starting point for triage, not a black box.</li>
+          <li>Companies without a discoverable public API (SuccessFactors, iCIMS, Phenom, bespoke portals) are recorded as unsupported and skipped, not faked.</li>
+          <li>Found and fixed a real bug in the scoring pipeline: a dead ternary in the skill-matching code always fell back to scanning the entire posting instead of just the qualifications section, silently padding scores with irrelevant keyword matches.</li>
+          <li>Found and fixed a second bug: the shared retry/backoff logic only covered GET requests, so the Workday collector (the only one using POST) had zero protection against transient failures.</li>
         </ul>
       </div>
       <div class="case-section">
         <div class="case-label">OUTCOME</div>
-        <p>A live webcam tool that scores shooting form 0&ndash;100 in real time, with demo footage showing actual scored reps.</p>
+        <p>A working local dashboard with 122 real scored postings from companies like Anduril, Boeing, Amazon, and Applied Intuition, filterable by fit score, company, industry, and role category, with per-posting score explanations.</p>
       </div>
       <div class="case-section">
-        <a href="https://github.com/manishmandala/basketball-shot-analyzer" target="_blank" rel="noopener" class="btn btn-primary">View Source on GitHub &rarr;</a>
+        <a href="https://github.com/manishmandala/internship-intelligence-agent" target="_blank" rel="noopener" class="btn btn-primary">View Source on GitHub &rarr;</a>
       </div>
     </div>
     <div class="case-sidebar">
@@ -93,20 +96,15 @@
         <div class="case-label">TOOLS &amp; TECH</div>
         <ul class="case-tools">
           <li>Python</li>
-          <li>OpenCV</li>
-          <li>MediaPipe</li>
-          <li>Pose Estimation</li>
+          <li>Streamlit</li>
+          <li>SQLite</li>
+          <li>REST APIs</li>
         </ul>
       </div>
 
       <div class="case-sidebar-block case-build">
-        <video src="assets/basketball/demo-2.mp4" controls muted loop playsinline preload="metadata"></video>
-        <p class="case-build-caption">Fig. 1. Live scoring during an actual shooting session.</p>
-      </div>
-
-      <div class="case-sidebar-block case-build">
-        <video src="assets/basketball/demo-1.mp4" controls muted loop playsinline preload="metadata"></video>
-        <p class="case-build-caption">Fig. 2. A second scored session.</p>
+        <img src="assets/internship-agent-dashboard.png" alt="Internship Intelligence Agent Streamlit dashboard">
+        <p class="case-build-caption">Fig. 1. The dashboard with 122 real scored postings.</p>
       </div>
 
     </div>
@@ -114,9 +112,9 @@
 
   <!-- ============ CASE NAV ============ -->
   <div class="case-nav container">
-    <a href="internship-agent.html">&larr; Internship Intelligence Agent</a>
+    <a href="multi-blade-knife.html">&larr; Multi-Blade Knife</a>
     <a href="index.html#projects">All Projects</a>
-    <a href="combination-lock.html">Combination Lock &rarr;</a>
+    <a href="basketball-analyzer.html">Basketball Shot Analyzer &rarr;</a>
   </div>
 
 </main>

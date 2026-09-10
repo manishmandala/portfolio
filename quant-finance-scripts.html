@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Basketball Shot Analyzer - Manish Mandala</title>
-<meta name="description" content="Basketball Shot Analyzer case study: MediaPipe pose estimation scores elbow angle, knee bend, stance, and release position in real time.">
+<title>Quant Finance Scripts - Manish Mandala</title>
+<meta name="description" content="Quant Finance Scripts case study: Monte Carlo efficient frontier / max Sharpe ratio simulation, and return/volatility/correlation analysis, for a finance club.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="style.css">
 </head>
@@ -33,9 +33,9 @@
 <main>
   <!-- ============ CASE HEADER ============ -->
   <section class="case-header container">
-    <p class="case-eyebrow"><a href="index.html#projects">PROJECTS</a> / BASKETBALL SHOT ANALYZER</p>
-    <h1>Basketball Shot Analyzer</h1>
-    <p>Real-time basketball shooting form analysis from a webcam feed, scoring five components of form live on screen.</p>
+    <p class="case-eyebrow"><a href="index.html#projects">PROJECTS</a> / QUANT FINANCE SCRIPTS</p>
+    <h1>Quant Finance Scripts</h1>
+    <p>Two scripts exploring portfolio theory with real market data, written for a finance/investing club.</p>
     <div class="case-meta-bar">
       <div class="case-meta-item">
         <span class="case-meta-label">STATUS</span>
@@ -43,7 +43,7 @@
       </div>
       <div class="case-meta-item">
         <span class="case-meta-label">TIMEFRAME</span>
-        <span class="case-meta-value">Summer 2026</span>
+        <span class="case-meta-value">2026</span>
       </div>
       <div class="case-meta-item">
         <span class="case-meta-label">ROLE</span>
@@ -51,11 +51,11 @@
       </div>
       <div class="case-meta-item">
         <span class="case-meta-label">CONTEXT</span>
-        <span class="case-meta-value">Personal project</span>
+        <span class="case-meta-value">Finance club</span>
       </div>
       <div class="case-meta-item">
         <span class="case-meta-label">SHEET</span>
-        <span class="case-meta-value">05 / 08</span>
+        <span class="case-meta-value">07 / 08</span>
       </div>
     </div>
 
@@ -66,26 +66,26 @@
     <div class="case-main">
       <div class="case-section">
         <div class="case-label">MY ROLE</div>
-        <p>Built the full pose-estimation pipeline and scoring logic solo, from landmark extraction to the live on-screen feedback overlay.</p>
+        <p>Wrote both scripts solo for a finance/investing club, pulling real historical data instead of working from theory alone.</p>
       </div>
       <div class="case-section">
         <div class="case-label">PROBLEM / GOAL</div>
-        <p>Wanted real-time, quantified feedback on shooting form - elbow angle, knee bend, stance, release - instead of just eyeballing form on video after the fact.</p>
+        <p>Portfolio theory (efficient frontier, Sharpe ratio, diversification) is usually taught with toy numbers. Wanted to see what it actually looks like against real market data for real stocks.</p>
       </div>
       <div class="case-section">
         <div class="case-label">APPROACH &amp; KEY DECISIONS</div>
         <ul>
-          <li>MediaPipe Pose extracts body landmarks every frame; five geometric checks each get a pass/fail threshold grounded in basic shooting-form biomechanics.</li>
-          <li>Real end-to-end FPS measurement, not a guess - a warm-up period is excluded so the reported number reflects steady-state performance.</li>
-          <li>Found and fixed a real bug: the on-screen score box was hardcoded to a fixed width too narrow for its own text, so it clipped off the frame edge on some resolutions. Now sized dynamically from the actual rendered text.</li>
+          <li><strong>Project2.py:</strong> simulates 10,000 random portfolios across five stocks, computing annualized return, volatility, and Sharpe ratio for each, then plots the efficient frontier and highlights the max-Sharpe portfolio.</li>
+          <li><strong>RiskTester.py:</strong> pulls historical prices for a set of tickers, computes annualized expected return and volatility, and plots a correlation heatmap to see how diversified a set of holdings actually is.</li>
+          <li>Found and fixed a real bug in Project2.py: yfinance always returns columns sorted alphabetically regardless of input order, but the script combined that labeled data with raw positional numpy arrays for portfolio weights - silently mislabeling 3 of the 5 tickers' optimal weights in the final printout. Verified the bug empirically before fixing it.</li>
         </ul>
       </div>
       <div class="case-section">
         <div class="case-label">OUTCOME</div>
-        <p>A live webcam tool that scores shooting form 0&ndash;100 in real time, with demo footage showing actual scored reps.</p>
+        <p>Two working scripts that produce real efficient-frontier and correlation analysis from live market data - and one confirmed, fixed correctness bug in the headline output of the portfolio optimizer.</p>
       </div>
       <div class="case-section">
-        <a href="https://github.com/manishmandala/basketball-shot-analyzer" target="_blank" rel="noopener" class="btn btn-primary">View Source on GitHub &rarr;</a>
+        <a href="https://github.com/manishmandala/quant-finance-scripts" target="_blank" rel="noopener" class="btn btn-primary">View Source on GitHub &rarr;</a>
       </div>
     </div>
     <div class="case-sidebar">
@@ -93,30 +93,19 @@
         <div class="case-label">TOOLS &amp; TECH</div>
         <ul class="case-tools">
           <li>Python</li>
-          <li>OpenCV</li>
-          <li>MediaPipe</li>
-          <li>Pose Estimation</li>
+          <li>yfinance</li>
+          <li>NumPy / pandas</li>
+          <li>Matplotlib / Seaborn</li>
         </ul>
       </div>
-
-      <div class="case-sidebar-block case-build">
-        <video src="assets/basketball/demo-2.mp4" controls muted loop playsinline preload="metadata"></video>
-        <p class="case-build-caption">Fig. 1. Live scoring during an actual shooting session.</p>
-      </div>
-
-      <div class="case-sidebar-block case-build">
-        <video src="assets/basketball/demo-1.mp4" controls muted loop playsinline preload="metadata"></video>
-        <p class="case-build-caption">Fig. 2. A second scored session.</p>
-      </div>
-
     </div>
   </section>
 
   <!-- ============ CASE NAV ============ -->
   <div class="case-nav container">
-    <a href="internship-agent.html">&larr; Internship Intelligence Agent</a>
+    <a href="combination-lock.html">&larr; Combination Lock</a>
     <a href="index.html#projects">All Projects</a>
-    <a href="combination-lock.html">Combination Lock &rarr;</a>
+    <a href="drone.html">Drone &rarr;</a>
   </div>
 
 </main>
