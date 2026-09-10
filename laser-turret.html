@@ -79,11 +79,19 @@
           <li>Adaptive smoothing: fast response to big movements, stable and smooth on small ones, instead of one fixed smoothing constant that's wrong for both cases.</li>
           <li>Hard pan/tilt limits enforced on the Arduino itself, not just the PC side, so a software bug can't physically crash the rig into itself.</li>
           <li>Serial-loss failsafe: if the PC stops sending commands for 500ms (crash, unplugged cable), the laser force-shuts-off automatically.</li>
+          <li>CAD'd and 3D-printed a custom L-shaped bracket to physically mount the tilt servo on top of the pan servo's horn - the mechanical link that lets pan rotation carry the tilt assembly and laser around with it.</li>
         </ul>
       </div>
       <div class="case-section">
         <div class="case-label">RESULT</div>
         <p>A working, calibrated hand-tracking turret with hardware-verified safety failsafes. Full build documented with wiring photos, a Bill of Materials, and a testing/calibration video.</p>
+      </div>
+      <div class="case-section">
+        <div class="case-label">NEXT STEPS</div>
+        <ul>
+          <li>Smooth out the tracking further - still some jitter/lag under fast hand motion that better filtering should help.</li>
+          <li>Explore tracking a head instead of a hand, using MediaPipe's face mesh or pose landmarks in place of hand tracking - same pan/tilt/serial pipeline underneath, different landmark source.</li>
+        </ul>
       </div>
       <div class="case-section">
         <a href="https://github.com/manishmandala/hand-tracking-laser-turret" target="_blank" rel="noopener" class="btn btn-primary">View Source on GitHub &rarr;</a>
