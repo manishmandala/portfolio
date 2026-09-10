@@ -186,7 +186,7 @@ ul { list-style: none; }
   stroke: var(--border);
 }
 
-.hero-bg-waves {
+.hero-bg-circuit {
   position: absolute;
   top: 0;
   left: 0;
@@ -194,19 +194,20 @@ ul { list-style: none; }
   height: 100%;
   fill: none;
   pointer-events: none;
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 25%, black 75%, transparent 100%);
-  mask-image: linear-gradient(to bottom, transparent 0%, black 25%, black 75%, transparent 100%);
 }
 
-.hero-bg-waves .wave {
+.hero-bg-circuit .trace {
   stroke: var(--border);
   stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.7;
 }
 
-.hero-bg-waves .wave-1 { opacity: 0.9; }
-.hero-bg-waves .wave-2 { opacity: 0.7; }
-.hero-bg-waves .wave-3 { opacity: 0.5; }
-.hero-bg-waves .wave-4 { opacity: 0.35; }
+.hero-bg-circuit .pad {
+  fill: var(--border);
+  opacity: 0.7;
+}
 
 .hero-content { max-width: 620px; }
 
