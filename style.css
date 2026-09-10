@@ -1,28 +1,29 @@
 /* ============ Design tokens ============ */
 :root {
-  --bg: #10131c;
-  --bg-alt: #171a24;
-  --text: #f1f2f4;
-  --text-muted: #9498a3;
-  --border: #2b2e3a;
-  --accent: #cfd2da;
-  --accent-hover: #ffffff;
-  --card-bg: #1a1d29;
-  --shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 10px 28px rgba(0, 0, 0, 0.5);
+  color-scheme: light;
+  --bg: #ffffff;
+  --bg-alt: #f3f4f7;
+  --text: #191c26;
+  --text-muted: #5b6172;
+  --border: #e1e3e9;
+  --accent: #1e3a5f;
+  --accent-hover: #14263f;
+  --card-bg: #ffffff;
+  --shadow: 0 1px 3px rgba(16, 24, 40, 0.06), 0 1px 2px rgba(16, 24, 40, 0.04);
+  --shadow-md: 0 10px 24px rgba(16, 24, 40, 0.10);
   --radius: 12px;
   --max-width: 1080px;
   --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
 
-  --cat-blue: #3987e5;
-  --cat-orange: #d95926;
-  --cat-aqua: #199e70;
-  --cat-yellow: #c98500;
-  --cat-magenta: #d55181;
-  --cat-green: #21b321;
-  --cat-violet: #9085e9;
-  --cat-red: #e66767;
+  --cat-blue: #2a78d6;
+  --cat-orange: #c65a2e;
+  --cat-aqua: #1baf7a;
+  --cat-yellow: #b5790a;
+  --cat-magenta: #c25f86;
+  --cat-green: #1a8f1a;
+  --cat-violet: #4a3aa7;
+  --cat-red: #c93f3f;
 }
 
 :root { color-scheme: dark; }
@@ -132,7 +133,7 @@ ul { list-style: none; }
 
 .btn-primary {
   background: var(--accent);
-  color: #14161d;
+  color: #ffffff;
 }
 .btn-primary:hover { background: var(--accent-hover); }
 
