@@ -195,7 +195,9 @@ ul { list-style: none; }
   border: 1px solid var(--border);
   border-radius: var(--radius);
   overflow: hidden;
-  cursor: default;
+  display: flex;
+  flex-direction: column;
+  background: var(--card-bg);
   transition: border-color 0.2s ease;
 }
 
@@ -203,55 +205,50 @@ ul { list-style: none; }
   border-color: var(--accent);
 }
 
-.hero-game-icon {
-  position: absolute;
-  inset: 0;
-  margin: auto;
-  width: 72px;
-  height: 72px;
-  fill: none;
-  stroke: var(--text-muted);
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  transition: opacity 0.2s ease;
-}
-
-.hero-game-icon circle { fill: var(--text-muted); stroke: none; }
-
-.hero-game-slot:hover .hero-game-icon { opacity: 0.15; }
-
-.hero-game-overlay {
-  position: absolute;
-  inset: 0;
+.hero-game-hud {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
-  background: color-mix(in srgb, var(--card-bg) 85%, transparent);
-  opacity: 0;
-  transition: opacity 0.2s ease;
-}
-
-.hero-game-slot:hover .hero-game-overlay {
-  opacity: 1;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
 }
 
 .hero-game-tag {
   font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   color: var(--accent);
-  border: 1px solid var(--accent);
-  border-radius: 4px;
-  padding: 3px 10px;
 }
 
-.hero-game-text {
+.hero-game-score {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
   color: var(--text-muted);
-  font-size: 0.95rem;
+}
+
+.hero-game-canvas {
+  flex: 1;
+  width: 100%;
+  display: block;
+  cursor: crosshair;
+}
+
+.hero-game-msg {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 10px;
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.hero-game-msg-over {
+  color: var(--accent);
+  font-weight: 600;
 }
 
 .hero-bg-circuit {
