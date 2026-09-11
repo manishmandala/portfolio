@@ -6,6 +6,10 @@
 <title>Manish Mandala - Portfolio</title>
 <meta name="description" content="Portfolio of Manish Mandala - Mechanical Engineering student building end-to-end software and hardware projects.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -21,6 +25,7 @@
 
     <ul class="nav-links" id="navLinks">
       <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
       <li><a href="#skills">Skills</a></li>
       <li><a href="#projects">Projects</a></li>
       <li><a href="#also-built">Also Built</a></li>
@@ -40,6 +45,13 @@
         <img class="avatar-photo" src="assets/headshot.png" alt="Manish Mandala">
         <h1>Manish Mandala</h1>
       </div>
+      <a href="new-project.html" class="wip-badge">
+        <span class="wip-dot"></span>
+        <span class="wip-text">
+          <span class="wip-label">WORKING ON RN</span>
+          <span class="wip-detail">New project - in progress, details upcoming soon</span>
+        </span>
+      </a>
       <p class="hero-text">
         Mechanical Engineering student at Ohio State University,
         interested in design/manufacturing engineering, product &amp;
@@ -125,56 +137,100 @@
         </p>
         <ul class="about-facts">
           <li><strong>Location:</strong> United States</li>
-          <li><strong>Education:</strong> B.S. Mechanical Engineering, Ohio State University</li>
+          <li><strong>Education:</strong> B.S. Mechanical Engineering, Ohio State University &middot; GPA 3.95/4.0</li>
           <li><strong>Currently:</strong> Open to internships &amp; co-ops</li>
         </ul>
       </div>
     </div>
   </section>
 
+  <!-- ============ EXPERIENCE ============ -->
+  <section id="experience" class="section container">
+    <h2 class="section-title"><span class="section-num">02.</span> Experience</h2>
+    <div class="exp-list">
+
+      <div class="exp-item cat-aqua" data-reveal data-reveal-group="exp">
+        <div class="exp-when">
+          <span class="exp-dates">Jun 2026 - Aug 2026</span>
+          <span class="exp-location">Evanston, IL</span>
+        </div>
+        <div class="exp-main">
+          <h3>Undergraduate Research Assistant</h3>
+          <p class="exp-org">Northwestern University &middot; McCormick School of Engineering, AMPL Lab</p>
+          <p>Redesigned a GPU-accelerated additive manufacturing thermal solver's multimaterial system, swapping a 70-band discrete scheme for a continuous per-element field and cutting per-timestep cost roughly 20x. Built a mesh-import pipeline validated to 100% accuracy on convex geometry and ran weekly progress updates for a team of 10+ researchers.</p>
+        </div>
+      </div>
+
+      <div class="exp-item cat-violet" data-reveal data-reveal-group="exp">
+        <div class="exp-when">
+          <span class="exp-dates">Nov 2025 - Feb 2026</span>
+          <span class="exp-location">Columbus, OH</span>
+        </div>
+        <div class="exp-main">
+          <h3>AI/ML Developer</h3>
+          <p class="exp-org">The Ohio State University &middot; Wexner Medical Center</p>
+          <p>Built deep learning models in Python to classify brain tumor MRI scans, cutting training time 10x with GPU acceleration. Designed the full ML pipeline end to end - preprocessing, augmentation, training, and evaluation - and ran experiments comparing architectures and hyperparameters.</p>
+        </div>
+      </div>
+
+      <div class="exp-item cat-yellow" data-reveal data-reveal-group="exp">
+        <div class="exp-when">
+          <span class="exp-dates">Jun 2025 - Aug 2025</span>
+          <span class="exp-location">Dallas, TX</span>
+        </div>
+        <div class="exp-main">
+          <h3>Analytics &amp; Strategy Intern</h3>
+          <p class="exp-org">Epic Estates</p>
+          <p>Led a 4-person team analyzing a $3M, 403-acre land acquisition and presented a 40-slide deck to senior leadership at a board meeting. Built decision frameworks from 50+ pages of market research across 5+ deals, raising projected land value 30%.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
   <!-- ============ SKILLS ============ -->
   <section id="skills" class="section container">
-    <h2 class="section-title"><span class="section-num">02.</span> Skills</h2>
+    <h2 class="section-title"><span class="section-num">03.</span> Skills</h2>
     <div class="skills-sheet">
 
       <div class="skills-row cat-blue">
         <span class="skills-label">Languages</span>
         <ul class="skill-tags">
-          <li>Python</li>
-          <li>JavaScript</li>
-          <li>C++ (Arduino)</li>
-          <li>SQL</li>
+          <li><i class="devicon-python-plain"></i>Python</li>
+          <li><i class="devicon-javascript-plain"></i>JavaScript</li>
+          <li><i class="devicon-cplusplus-plain"></i>C++ (Arduino)</li>
+          <li><i class="fa-solid fa-database"></i>SQL</li>
         </ul>
       </div>
 
       <div class="skills-row cat-orange">
         <span class="skills-label">Frameworks &amp; Libraries</span>
         <ul class="skill-tags">
-          <li>React</li>
-          <li>Node.js / Express</li>
-          <li>Streamlit</li>
-          <li>OpenCV</li>
-          <li>MediaPipe</li>
+          <li><i class="devicon-react-original"></i>React</li>
+          <li><i class="devicon-nodejs-plain"></i>Node.js / Express</li>
+          <li><i class="fa-solid fa-chart-line"></i>Streamlit</li>
+          <li><i class="devicon-opencv-plain"></i>OpenCV</li>
+          <li><i class="fa-solid fa-hand"></i>MediaPipe</li>
         </ul>
       </div>
 
       <div class="skills-row cat-aqua">
         <span class="skills-label">Tools &amp; Platforms</span>
         <ul class="skill-tags">
-          <li>Git &amp; GitHub</li>
-          <li>Arduino</li>
-          <li>SQLite</li>
-          <li>WebSockets</li>
+          <li><i class="devicon-github-original"></i>Git &amp; GitHub</li>
+          <li><i class="devicon-arduino-plain"></i>Arduino</li>
+          <li><i class="devicon-sqlite-plain"></i>SQLite</li>
+          <li><i class="fa-solid fa-satellite-dish"></i>WebSockets</li>
         </ul>
       </div>
 
       <div class="skills-row cat-violet">
         <span class="skills-label">Other</span>
         <ul class="skill-tags">
-          <li>Computer Vision</li>
-          <li>Pose Estimation</li>
-          <li>REST APIs</li>
-          <li>Hardware Integration</li>
+          <li><i class="fa-solid fa-eye"></i>Computer Vision</li>
+          <li><i class="fa-solid fa-person-walking"></i>Pose Estimation</li>
+          <li><i class="fa-solid fa-plug"></i>REST APIs</li>
+          <li><i class="fa-solid fa-microchip"></i>Hardware Integration</li>
         </ul>
       </div>
 
@@ -183,10 +239,10 @@
 
   <!-- ============ PROJECTS ============ -->
   <section id="projects" class="section container">
-    <h2 class="section-title"><span class="section-num">03.</span> Projects</h2>
+    <h2 class="section-title"><span class="section-num">04.</span> Projects</h2>
     <div class="projects-grid">
 
-      <article class="project-card cat-orange">
+      <article class="project-card cat-orange tilt-card" data-reveal data-reveal-group="projects">
         <video class="project-media" src="assets/laser/testing-and-calibration.mp4" controls muted loop playsinline preload="metadata"></video>
         <div class="project-body">
           <h3>Hand-Tracking Laser Turret</h3>
@@ -213,7 +269,7 @@
         </div>
       </article>
 
-      <article class="project-card cat-violet">
+      <article class="project-card cat-violet tilt-card" data-reveal data-reveal-group="projects">
         <img class="project-media" src="assets/ai-receptionist/inbox-classifier.png" alt="AI Receptionist inbox classifier workflow diagram" loading="lazy">
         <div class="project-body">
           <h3>AI Receptionist</h3>
@@ -238,7 +294,7 @@
         </div>
       </article>
 
-      <article class="project-card cat-red">
+      <article class="project-card cat-red tilt-card" data-reveal data-reveal-group="projects">
         <img class="project-media" src="assets/multi-blade-knife-result.jpg" alt="Multi-blade knife 3D-printed prototype" loading="lazy">
         <div class="project-body">
           <h3>Multi-Blade Knife</h3>
@@ -269,30 +325,30 @@
 
   <!-- ============ ALSO BUILT ============ -->
   <section id="also-built" class="section container">
-    <h2 class="section-title"><span class="section-num">04.</span> Also Built</h2>
+    <h2 class="section-title"><span class="section-num">05.</span> Also Built</h2>
     <ul class="also-built-list">
-      <li class="cat-yellow">
+      <li class="cat-yellow" data-reveal data-reveal-group="also-built">
         <div class="also-built-text">
           <h3>Combination Lock</h3>
           <p>A working mechanical combination lock designed in OnShape for Ohio State's First Year Engineering program - rotor mechanism, exploded assembly, full BOM.</p>
         </div>
         <a href="combination-lock.html">Overview &rarr;</a>
       </li>
-      <li class="cat-blue">
+      <li class="cat-blue" data-reveal data-reveal-group="also-built">
         <div class="also-built-text">
           <h3>Basketball Shot Analyzer</h3>
           <p>Real-time basketball shooting form analysis from a webcam feed using pose estimation.</p>
         </div>
         <a href="basketball-analyzer.html">Overview &rarr;</a>
       </li>
-      <li class="cat-magenta">
+      <li class="cat-magenta" data-reveal data-reveal-group="also-built">
         <div class="also-built-text">
           <h3>Internship Intelligence Agent</h3>
           <p>Collects and scores internship postings from public company career APIs, presented in a local Streamlit dashboard.</p>
         </div>
         <a href="internship-agent.html">Overview &rarr;</a>
       </li>
-      <li class="cat-green">
+      <li class="cat-green" data-reveal data-reveal-group="also-built">
         <div class="also-built-text">
           <h3>Quant Finance Scripts</h3>
           <p>Portfolio theory scripts for a finance club - Monte Carlo efficient frontier / max Sharpe ratio simulation, and return/volatility/correlation analysis.</p>
@@ -304,15 +360,15 @@
 
   <!-- ============ NOW ============ -->
   <section id="now" class="section container">
-    <h2 class="section-title"><span class="section-num">05.</span> Now</h2>
+    <h2 class="section-title"><span class="section-num">06.</span> Now</h2>
     <div class="now-wrap">
       <p class="now-lead">What I'm currently working on, updated as I go.</p>
       <ul class="now-list">
-        <li>
+        <li data-reveal data-reveal-group="now">
           <span class="now-date">Sep 2026</span>
           <span class="now-text">A new project is in the works - <a href="new-project.html">follow along</a>, full write-up lands once it's done.</span>
         </li>
-        <li>
+        <li data-reveal data-reveal-group="now">
           <span class="now-date">Sep 2026</span>
           <span class="now-text">Polished up all three projects (bug fixes, docs) and added this site's Now log.</span>
         </li>
@@ -322,7 +378,7 @@
 
   <!-- ============ CONTACT ============ -->
   <section id="contact" class="section container">
-    <h2 class="section-title"><span class="section-num">06.</span> Contact</h2>
+    <h2 class="section-title"><span class="section-num">07.</span> Contact</h2>
     <div class="contact-wrap">
       <p class="contact-lead">
         I'm open to discussing or learning more about opportunities -
