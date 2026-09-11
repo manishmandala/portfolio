@@ -48,6 +48,7 @@
       y: -r,
       r,
       speed: 28 + Math.random() * 18 + Math.min(40, score * 1.2),
+      spawnT: 0,
     });
   }
 
@@ -82,26 +83,29 @@
     const cx = e.clientX - rect.left;
     const cy = e.clientY - rect.top;
 
-    streaks.push({ x1: width / 2, y1: height, x2: cx, y2: cy, life: 1 });
-
     const hitRadius = 16;
-    let hit = false;
+    let hitTarget = null;
     for (let i = targets.length - 1; i >= 0; i--) {
       const t = targets[i];
       const dx = t.x - cx;
       const dy = t.y - cy;
       if (Math.sqrt(dx * dx + dy * dy) <= t.r + hitRadius) {
-        explosions.push({ x: t.x, y: t.y, r: 2, maxR: 24, life: 1 });
-        targets.splice(i, 1);
-        score++;
-        scoreEl.textContent = String(score);
-        hit = true;
+        hitTarget = t;
+        t.targeted = true;
         break;
       }
     }
-    if (!hit) {
-      explosions.push({ x: cx, y: cy, r: 1, maxR: 8, life: 1, faint: true });
-    }
+
+    const x1 = width / 2;
+    const y1 = height;
+    const dist = Math.hypot(cx - x1, cy - y1);
+    const dur = Math.min(0.22, Math.max(0.08, dist / 900));
+    streaks.push({
+      x1, y1, x2: cx, y2: cy,
+      t: 0, dur,
+      hitTarget,
+      resolved: false,
+    });
   });
 
   function endGame() {
@@ -123,26 +127,48 @@
 
     for (let i = targets.length - 1; i >= 0; i--) {
       const t = targets[i];
-      t.y += t.speed * dt;
-      if (t.y - t.r > height) {
-        targets.splice(i, 1);
-        lives--;
-        if (lives <= 0) {
-          endGame();
+      t.spawnT = Math.min(1, t.spawnT + dt / 0.25);
+      if (!t.targeted) {
+        t.y += t.speed * dt;
+        if (t.y - t.r > height) {
+          targets.splice(i, 1);
+          lives--;
+          if (lives <= 0) {
+            endGame();
+          }
         }
+      } else {
+        // still drift slightly so the intercept point feels alive
+        t.y += t.speed * dt * 0.4;
       }
     }
 
     for (let i = explosions.length - 1; i >= 0; i--) {
       const ex = explosions[i];
-      ex.r += (ex.maxR - ex.r) * 0.35;
-      ex.life -= dt * 2.5;
+      ex.r += (ex.maxR - ex.r) * 0.3;
+      ex.life -= dt * 3;
       if (ex.life <= 0) explosions.splice(i, 1);
     }
 
     for (let i = streaks.length - 1; i >= 0; i--) {
-      streaks[i].life -= dt * 4;
-      if (streaks[i].life <= 0) streaks.splice(i, 1);
+      const s = streaks[i];
+      s.t += dt;
+      const progress = s.t / s.dur;
+      if (progress >= 1 && !s.resolved) {
+        s.resolved = true;
+        if (s.hitTarget) {
+          const idx = targets.indexOf(s.hitTarget);
+          if (idx !== -1) {
+            explosions.push({ x: s.hitTarget.x, y: s.hitTarget.y, r: 2, maxR: 24, life: 1 });
+            targets.splice(idx, 1);
+            score++;
+            scoreEl.textContent = String(score);
+          }
+        } else {
+          explosions.push({ x: s.x2, y: s.y2, r: 1, maxR: 8, life: 1, faint: true });
+        }
+      }
+      if (progress >= 1.25) streaks.splice(i, 1);
     }
   }
 
@@ -165,26 +191,47 @@
     ctx.stroke();
     ctx.globalAlpha = 1;
 
-    // streaks (interceptor launches)
+    // streaks (interceptor launches) - traveling projectile with a fading trail
     streaks.forEach((s) => {
+      const progress = Math.min(1, s.t / s.dur);
+      const ease = 1 - Math.pow(1 - progress, 2);
+      const targetX = s.hitTarget ? s.hitTarget.x : s.x2;
+      const targetY = s.hitTarget ? s.hitTarget.y : s.y2;
+      const curX = s.x1 + (targetX - s.x1) * ease;
+      const curY = s.y1 + (targetY - s.y1) * ease;
+      const fadeOut = progress >= 1 ? Math.max(0, 1 - (s.t - s.dur) / (s.dur * 0.25)) : 1;
+
+      const trailStart = Math.max(0, ease - 0.35);
+      const trailX = s.x1 + (targetX - s.x1) * trailStart;
+      const trailY = s.y1 + (targetY - s.y1) * trailStart;
+
       ctx.strokeStyle = colorAccent;
-      ctx.globalAlpha = Math.max(0, s.life);
+      ctx.globalAlpha = 0.55 * fadeOut;
       ctx.lineWidth = 1.5;
       ctx.beginPath();
-      ctx.moveTo(s.x1, s.y1);
-      ctx.lineTo(s.x2, s.y2);
+      ctx.moveTo(trailX, trailY);
+      ctx.lineTo(curX, curY);
       ctx.stroke();
+
+      if (progress < 1) {
+        ctx.fillStyle = colorAccent;
+        ctx.globalAlpha = 1;
+        ctx.beginPath();
+        ctx.arc(curX, curY, 2.2, 0, Math.PI * 2);
+        ctx.fill();
+      }
       ctx.globalAlpha = 1;
     });
 
     // targets (falling missiles)
     targets.forEach((t) => {
+      ctx.globalAlpha = t.spawnT;
       ctx.fillStyle = colorRed;
       ctx.beginPath();
-      ctx.arc(t.x, t.y, t.r, 0, Math.PI * 2);
+      ctx.arc(t.x, t.y, t.r * (0.7 + 0.3 * t.spawnT), 0, Math.PI * 2);
       ctx.fill();
       ctx.strokeStyle = colorRed;
-      ctx.globalAlpha = 0.35;
+      ctx.globalAlpha = 0.35 * t.spawnT;
       ctx.lineWidth = 1;
       ctx.beginPath();
       ctx.moveTo(t.x, t.y - t.r);
