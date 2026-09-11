@@ -3,6 +3,26 @@ import { FaArrowUpRightFromSquare } from "react-icons/fa6";
 import { TiltCard } from "@/components/tilt-card";
 import { categoryStyle } from "@/lib/categories";
 
+// Large, faint decorative marks sitting behind the photo on a couple of
+// cards (dimmed by the same gradient overlay as everything else) - a nod to
+// the "big faded logo behind the project" treatment, using generic
+// non-trademarked shapes rather than reproducing any org's actual wordmark.
+const WATERMARKS = {
+  crosshair: (
+    <svg viewBox="0 0 200 200" className="absolute -right-6 -top-6 h-40 w-40 opacity-[0.14]" aria-hidden="true">
+      <circle cx="100" cy="100" r="70" fill="none" stroke="currentColor" strokeWidth="2" />
+      <circle cx="100" cy="100" r="40" fill="none" stroke="currentColor" strokeWidth="2" />
+      <path d="M100 10v40M100 150v40M10 100h40M150 100h40" stroke="currentColor" strokeWidth="2" />
+    </svg>
+  ),
+  osu: (
+    <svg viewBox="0 0 200 200" className="absolute -right-8 -top-8 h-44 w-44 opacity-[0.14]" aria-hidden="true">
+      <rect x="20" y="20" width="160" height="160" rx="18" fill="none" stroke="currentColor" strokeWidth="10" />
+      <rect x="55" y="55" width="90" height="90" rx="8" fill="none" stroke="currentColor" strokeWidth="8" />
+    </svg>
+  ),
+};
+
 // Numbered (01-07) bento project card: full-bleed background image/video,
 // dark gradient overlay for legibility, number + external-link arrow icon
 // top corners, title, short description, tag pills, category-color accent.
@@ -50,6 +70,9 @@ export function ProjectCard({ project, featured = false }) {
               opacity="0.55"
             />
           </svg>
+        )}
+        {project.watermark && (
+          <div className="absolute inset-0 text-[var(--row-color)]">{WATERMARKS[project.watermark]}</div>
         )}
       </div>
 

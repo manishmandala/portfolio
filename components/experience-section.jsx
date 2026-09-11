@@ -1,35 +1,105 @@
+"use client";
+
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Reveal } from "@/components/reveal";
-import { categoryStyle } from "@/lib/categories";
 
 const EXPERIENCE = [
   {
-    category: "aqua",
+    mark: "NU",
+    markColor: "#4E2A84",
     dates: "Jun 2026 - Aug 2026",
-    location: "Evanston, IL",
     title: "Undergraduate Research Assistant",
-    org: "Northwestern University · McCormick School of Engineering, AMPL Lab",
+    org: "Northwestern University · AMPL Lab",
     description:
-      "Redesigned a GPU-accelerated additive manufacturing thermal solver's multimaterial system, swapping a 70-band discrete scheme for a continuous per-element field and cutting per-timestep cost roughly 20x. Built a mesh-import pipeline validated to 100% accuracy on convex geometry and ran weekly progress updates for a team of 10+ researchers.",
+      "Researching faster GPU-based simulation methods for 3D printing, working alongside a team of PhD researchers at Northwestern's AMPL Lab.",
+    badges: ["Research", "On-site", "Evanston, IL"],
   },
   {
-    category: "violet",
+    mark: "OSU",
+    markColor: "#BB0000",
     dates: "Nov 2025 - Feb 2026",
-    location: "Columbus, OH",
     title: "AI/ML Developer",
-    org: "The Ohio State University · Wexner Medical Center",
+    org: "Ohio State · Wexner Medical Center",
     description:
-      "Built deep learning models in Python to classify brain tumor MRI scans, cutting training time 10x with GPU acceleration. Designed the full ML pipeline end to end - preprocessing, augmentation, training, and evaluation - and ran experiments comparing architectures and hyperparameters.",
+      "Built machine learning models to help classify brain tumor MRI scans for a hospital research team.",
+    badges: ["Research", "On-site", "Columbus, OH"],
   },
   {
-    category: "yellow",
+    mark: "EE",
+    markColor: "#8a90a3",
     dates: "Jun 2025 - Aug 2025",
-    location: "Dallas, TX",
     title: "Analytics & Strategy Intern",
     org: "Epic Estates",
     description:
-      "Led a 4-person team analyzing a $3M, 403-acre land acquisition and presented a 40-slide deck to senior leadership at a board meeting. Built decision frameworks from 50+ pages of market research across 5+ deals, raising projected land value 30%.",
+      "Analyzed a multi-million dollar land acquisition and helped shape the recommendation presented to senior leadership.",
+    badges: ["Internship", "On-site", "Dallas, TX"],
   },
 ];
+
+function ExperienceCard({ exp }) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className="rounded-xl border border-border bg-card px-6 py-5 transition-colors hover:border-[color-mix(in_srgb,var(--mark-color)_45%,var(--border))]" style={{ "--mark-color": exp.markColor }}>
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        className="flex w-full items-center gap-4 text-left"
+      >
+        <span
+          className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg font-display text-sm font-bold text-white"
+          style={{ backgroundColor: exp.markColor }}
+        >
+          {exp.mark}
+        </span>
+        <span className="min-w-0 flex-1">
+          <span className="block truncate font-display text-[1.02rem] font-semibold text-foreground">{exp.title}</span>
+          <span className="block truncate text-[0.88rem] text-muted-foreground">{exp.org}</span>
+        </span>
+        <span className="flex shrink-0 items-center gap-3">
+          <span className="hidden font-mono text-[0.8rem] font-semibold sm:inline" style={{ color: exp.markColor }}>
+            {exp.dates}
+          </span>
+          <motion.span animate={{ rotate: open ? 180 : 0 }} transition={{ duration: 0.2 }} className="text-muted-foreground">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <path d="M6 9l6 6 6-6" />
+            </svg>
+          </motion.span>
+        </span>
+      </button>
+      <span className="mt-1 block font-mono text-[0.78rem] font-semibold sm:hidden" style={{ color: exp.markColor }}>
+        {exp.dates}
+      </span>
+
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.25, ease: "easeInOut" }}
+            className="overflow-hidden"
+          >
+            <div className="mt-4 border-t border-border pt-4">
+              <p className="text-[0.92rem] text-muted-foreground">{exp.description}</p>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {exp.badges.map((badge) => (
+                  <span
+                    key={badge}
+                    className="rounded-full bg-secondary px-3 py-1 font-mono text-[0.72rem] text-muted-foreground"
+                  >
+                    {badge}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
 
 export function ExperienceSection() {
   return (
@@ -37,23 +107,10 @@ export function ExperienceSection() {
       <h2 className="mb-12 flex items-baseline gap-2.5 font-display text-[clamp(1.6rem,4vw,2rem)] font-extrabold tracking-[-0.01em]">
         <span className="font-mono text-[1.1rem] font-semibold text-brand">02.</span> Experience
       </h2>
-      <div className="flex flex-col gap-px overflow-hidden rounded-lg border border-border bg-border shadow-[0_1px_3px_rgba(0,0,0,0.4)]">
+      <div className="flex flex-col gap-4">
         {EXPERIENCE.map((exp, i) => (
           <Reveal key={exp.title} delay={Math.min(i, 6) * 0.07}>
-            <div
-              className="grid grid-cols-1 gap-2.5 border-l-4 bg-card p-6 transition-colors sm:grid-cols-[180px_1fr] sm:gap-6"
-              style={{ borderLeftColor: "var(--row-color)", ...categoryStyle(exp.category) }}
-            >
-              <div className="flex flex-col gap-1">
-                <span className="font-mono text-[0.82rem] font-semibold text-[var(--row-color)]">{exp.dates}</span>
-                <span className="text-[0.82rem] text-muted-foreground">{exp.location}</span>
-              </div>
-              <div>
-                <h3 className="mb-1 font-display text-[1.05rem]">{exp.title}</h3>
-                <p className="mb-2.5 text-[0.88rem] font-semibold text-muted-foreground">{exp.org}</p>
-                <p className="text-[0.92rem] text-muted-foreground">{exp.description}</p>
-              </div>
-            </div>
+            <ExperienceCard exp={exp} />
           </Reveal>
         ))}
       </div>
