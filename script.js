@@ -1,3 +1,19 @@
+// Intro splash (initials draw-on animation, once per session, tap to skip)
+const introSplash = document.getElementById('introSplash');
+if (introSplash) {
+  let dismissed = false;
+  const dismissIntro = () => {
+    if (dismissed) return;
+    dismissed = true;
+    introSplash.classList.add('intro-hide');
+    document.documentElement.classList.remove('intro-active');
+    try { sessionStorage.setItem('mmIntroSeen', '1'); } catch (e) {}
+    setTimeout(() => introSplash.remove(), 650);
+  };
+  introSplash.addEventListener('click', dismissIntro);
+  setTimeout(dismissIntro, 2600);
+}
+
 // Mobile nav toggle
 const navToggle = document.getElementById('navToggle');
 const navLinks = document.getElementById('navLinks');

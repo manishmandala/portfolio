@@ -14,6 +14,26 @@
 </head>
 <body>
 
+<!-- ============ INTRO SPLASH ============ -->
+<div class="intro-splash" id="introSplash" aria-hidden="true">
+  <svg class="intro-svg" viewBox="0 0 300 130">
+    <text x="50%" y="68%" text-anchor="middle" class="intro-text">MM</text>
+  </svg>
+  <span class="intro-skip">Tap to skip</span>
+</div>
+<script>
+  (function () {
+    var seen = false;
+    try { seen = sessionStorage.getItem('mmIntroSeen') === '1'; } catch (e) {}
+    var el = document.getElementById('introSplash');
+    if (seen) {
+      if (el) el.remove();
+    } else {
+      document.documentElement.classList.add('intro-active');
+    }
+  })();
+</script>
+
 <!-- ============ NAV ============ -->
 <header class="site-header">
   <nav class="nav container">
@@ -28,7 +48,6 @@
       <li><a href="#experience">Experience</a></li>
       <li><a href="#skills">Skills</a></li>
       <li><a href="#projects">Projects</a></li>
-      <li><a href="#also-built">Also Built</a></li>
       <li><a href="#now">Now</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
@@ -137,7 +156,7 @@
         </p>
         <ul class="about-facts">
           <li><strong>Location:</strong> United States</li>
-          <li><strong>Education:</strong> B.S. Mechanical Engineering, Ohio State University &middot; GPA 3.95/4.0</li>
+          <li><strong>Education:</strong> B.S. Mechanical Engineering, Ohio State University</li>
           <li><strong>Currently:</strong> Open to internships &amp; co-ops</li>
         </ul>
       </div>
@@ -240,127 +259,147 @@
   <!-- ============ PROJECTS ============ -->
   <section id="projects" class="section container">
     <h2 class="section-title"><span class="section-num">04.</span> Projects</h2>
-    <div class="projects-grid">
+    <div class="proj-grid">
 
-      <article class="project-card cat-orange tilt-card" data-reveal data-reveal-group="projects">
-        <video class="project-media" src="assets/laser/testing-and-calibration.mp4" controls muted loop playsinline preload="metadata"></video>
-        <div class="project-body">
+      <a href="laser-turret.html" class="proj-card proj-card-feature cat-orange tilt-card" data-reveal data-reveal-group="projects">
+        <div class="proj-card-media">
+          <img src="assets/laser/wiring-3.jpg" alt="Full turret rig wiring overview" loading="lazy">
+        </div>
+        <div class="proj-card-top">
+          <span class="proj-num">01</span>
+          <span class="proj-arrow"><i class="fa-solid fa-arrow-up-right"></i></span>
+        </div>
+        <div class="proj-card-body">
           <h3>Hand-Tracking Laser Turret</h3>
-          <p>
-            A pan/tilt laser turret that follows your hand. Webcam + MediaPipe
-            hand tracking on the PC streams commands to an Arduino driving two
-            servos, with hard safety limits and a serial-loss failsafe.
-          </p>
-          <ul class="tag-list">
+          <p>A pan/tilt laser turret that follows your hand in real time - MediaPipe hand tracking, Arduino servo control, hard safety limits, and a serial-loss failsafe.</p>
+          <ul class="proj-tags">
             <li>Arduino / C++</li>
             <li>Python</li>
             <li>OpenCV</li>
             <li>MediaPipe</li>
           </ul>
-          <div class="project-gallery">
-            <a href="assets/laser/wiring-1.jpg" target="_blank" rel="noopener"><img src="assets/laser/wiring-1.jpg" alt="Turret wiring 1" loading="lazy"></a>
-            <a href="assets/laser/wiring-2.jpg" target="_blank" rel="noopener"><img src="assets/laser/wiring-2.jpg" alt="Turret wiring 2" loading="lazy"></a>
-            <a href="assets/laser/wiring-3.jpg" target="_blank" rel="noopener"><img src="assets/laser/wiring-3.jpg" alt="Turret wiring 3" loading="lazy"></a>
-            <a href="assets/laser/soldering.jpg" target="_blank" rel="noopener"><img src="assets/laser/soldering.jpg" alt="Soldering the turret" loading="lazy"></a>
-          </div>
-          <div class="project-links">
-            <a href="laser-turret.html" class="btn btn-small">View Overview &rarr;</a>
-          </div>
         </div>
-      </article>
+      </a>
 
-      <article class="project-card cat-violet tilt-card" data-reveal data-reveal-group="projects">
-        <img class="project-media" src="assets/ai-receptionist/inbox-classifier.png" alt="AI Receptionist inbox classifier workflow diagram" loading="lazy">
-        <div class="project-body">
+      <a href="ai-receptionist.html" class="proj-card cat-violet tilt-card" data-reveal data-reveal-group="projects">
+        <div class="proj-card-media">
+          <img src="assets/ai-receptionist/inbox-classifier.png" alt="AI Receptionist inbox classifier workflow diagram" loading="lazy">
+        </div>
+        <div class="proj-card-top">
+          <span class="proj-num">02</span>
+          <span class="proj-arrow"><i class="fa-solid fa-arrow-up-right"></i></span>
+        </div>
+        <div class="proj-card-body">
           <h3>AI Receptionist</h3>
-          <p>
-            An AI-powered virtual receptionist for a real estate agent's
-            inbox and client relationships - built as a set of n8n workflows
-            using Claude, Gmail, Supabase, and Telegram. Classifies incoming
-            email, drafts replies in the agent's voice, nurtures past
-            clients on a schedule, and coordinates active transactions.
-            Every draft is reviewed by the agent before anything sends.
-          </p>
-          <ul class="tag-list">
+          <p>An AI virtual receptionist for a real estate agent's inbox and client relationships, built as n8n workflows on Claude, Gmail, and Supabase.</p>
+          <ul class="proj-tags">
             <li>n8n</li>
             <li>Claude</li>
             <li>Gmail API</li>
             <li>Supabase</li>
-            <li>Telegram</li>
           </ul>
-          <div class="project-links">
-            <a href="ai-receptionist.html" class="btn btn-small">View Overview &rarr;</a>
-          </div>
         </div>
-      </article>
+      </a>
 
-      <article class="project-card cat-red tilt-card" data-reveal data-reveal-group="projects">
-        <img class="project-media" src="assets/multi-blade-knife-result.jpg" alt="Multi-blade knife 3D-printed prototype" loading="lazy">
-        <div class="project-body">
+      <a href="multi-blade-knife.html" class="proj-card cat-red tilt-card" data-reveal data-reveal-group="projects">
+        <div class="proj-card-media">
+          <img src="assets/multi-blade-knife-result.jpg" alt="Multi-blade knife 3D-printed prototype" loading="lazy">
+        </div>
+        <div class="proj-card-top">
+          <span class="proj-num">03</span>
+          <span class="proj-arrow"><i class="fa-solid fa-arrow-up-right"></i></span>
+        </div>
+        <div class="proj-card-body">
           <h3>Multi-Blade Knife</h3>
-          <p>
-            A kitchen tool that turns one cutting motion into four slices,
-            taken from user research through a verified 3D-printed
-            prototype - user interviews, a Pugh matrix, prototype
-            iteration, and real verification testing.
-          </p>
-          <ul class="tag-list">
+          <p>A kitchen tool that turns one cutting motion into four slices - user research through a verified 3D-printed prototype.</p>
+          <ul class="proj-tags">
             <li>OnShape</li>
             <li>3D Printing</li>
             <li>Pugh Matrix</li>
-            <li>User Research</li>
           </ul>
-          <div class="project-gallery">
-            <a href="assets/multi-blade-knife-cad-model.png" target="_blank" rel="noopener"><img src="assets/multi-blade-knife-cad-model.png" alt="Concept sketches" loading="lazy"></a>
-            <a href="assets/multi-blade-knife-prototype.jpg" target="_blank" rel="noopener"><img src="assets/multi-blade-knife-prototype.jpg" alt="Low-fidelity mock-up" loading="lazy"></a>
-          </div>
-          <div class="project-links">
-            <a href="multi-blade-knife.html" class="btn btn-small">View Overview &rarr;</a>
-          </div>
         </div>
-      </article>
+      </a>
+
+      <a href="combination-lock.html" class="proj-card cat-yellow tilt-card" data-reveal data-reveal-group="projects">
+        <div class="proj-card-media">
+          <img src="assets/lock-assembly-render.png" alt="Combination lock assembly render" loading="lazy">
+        </div>
+        <div class="proj-card-top">
+          <span class="proj-num">04</span>
+          <span class="proj-arrow"><i class="fa-solid fa-arrow-up-right"></i></span>
+        </div>
+        <div class="proj-card-body">
+          <h3>Combination Lock</h3>
+          <p>A working mechanical combination lock modeled in OnShape - rotor mechanism, exploded assembly, full BOM.</p>
+          <ul class="proj-tags">
+            <li>OnShape</li>
+            <li>Assembly Mates</li>
+          </ul>
+        </div>
+      </a>
+
+      <a href="basketball-analyzer.html" class="proj-card cat-blue tilt-card" data-reveal data-reveal-group="projects">
+        <div class="proj-card-media">
+          <video src="assets/basketball/demo-2.mp4" autoplay muted loop playsinline preload="metadata"></video>
+        </div>
+        <div class="proj-card-top">
+          <span class="proj-num">05</span>
+          <span class="proj-arrow"><i class="fa-solid fa-arrow-up-right"></i></span>
+        </div>
+        <div class="proj-card-body">
+          <h3>Basketball Shot Analyzer</h3>
+          <p>Real-time shooting form analysis from a webcam feed, scoring elbow, knee, stance, and release live with pose estimation.</p>
+          <ul class="proj-tags">
+            <li>Python</li>
+            <li>MediaPipe</li>
+          </ul>
+        </div>
+      </a>
+
+      <a href="internship-agent.html" class="proj-card cat-magenta tilt-card" data-reveal data-reveal-group="projects">
+        <div class="proj-card-media">
+          <img src="assets/internship-agent-dashboard.png" alt="Internship Intelligence Agent dashboard" loading="lazy">
+        </div>
+        <div class="proj-card-top">
+          <span class="proj-num">06</span>
+          <span class="proj-arrow"><i class="fa-solid fa-arrow-up-right"></i></span>
+        </div>
+        <div class="proj-card-body">
+          <h3>Internship Intelligence Agent</h3>
+          <p>Collects and scores internship postings from public company career APIs in a local Streamlit dashboard.</p>
+          <ul class="proj-tags">
+            <li>Python</li>
+            <li>Streamlit</li>
+          </ul>
+        </div>
+      </a>
+
+      <a href="quant-finance-scripts.html" class="proj-card proj-card-solid cat-green tilt-card" data-reveal data-reveal-group="projects">
+        <div class="proj-card-media">
+          <svg viewBox="0 0 200 100" preserveAspectRatio="none" aria-hidden="true">
+            <polyline points="0,80 25,68 50,74 75,45 100,52 125,28 150,34 175,12 200,20" fill="none" stroke="var(--cat-green)" stroke-width="2" opacity="0.55" />
+          </svg>
+        </div>
+        <div class="proj-card-top">
+          <span class="proj-num">07</span>
+          <span class="proj-arrow"><i class="fa-solid fa-arrow-up-right"></i></span>
+        </div>
+        <div class="proj-card-body">
+          <h3>Quant Finance Scripts</h3>
+          <p>Portfolio theory scripts for a finance club - Monte Carlo efficient frontier and return/volatility/correlation analysis.</p>
+          <ul class="proj-tags">
+            <li>Python</li>
+            <li>yfinance</li>
+          </ul>
+        </div>
+      </a>
 
     </div>
   </section>
 
-  <!-- ============ ALSO BUILT ============ -->
-  <section id="also-built" class="section container">
-    <h2 class="section-title"><span class="section-num">05.</span> Also Built</h2>
-    <ul class="also-built-list">
-      <li class="cat-yellow" data-reveal data-reveal-group="also-built">
-        <div class="also-built-text">
-          <h3>Combination Lock</h3>
-          <p>A working mechanical combination lock designed in OnShape for Ohio State's First Year Engineering program - rotor mechanism, exploded assembly, full BOM.</p>
-        </div>
-        <a href="combination-lock.html">Overview &rarr;</a>
-      </li>
-      <li class="cat-blue" data-reveal data-reveal-group="also-built">
-        <div class="also-built-text">
-          <h3>Basketball Shot Analyzer</h3>
-          <p>Real-time basketball shooting form analysis from a webcam feed using pose estimation.</p>
-        </div>
-        <a href="basketball-analyzer.html">Overview &rarr;</a>
-      </li>
-      <li class="cat-magenta" data-reveal data-reveal-group="also-built">
-        <div class="also-built-text">
-          <h3>Internship Intelligence Agent</h3>
-          <p>Collects and scores internship postings from public company career APIs, presented in a local Streamlit dashboard.</p>
-        </div>
-        <a href="internship-agent.html">Overview &rarr;</a>
-      </li>
-      <li class="cat-green" data-reveal data-reveal-group="also-built">
-        <div class="also-built-text">
-          <h3>Quant Finance Scripts</h3>
-          <p>Portfolio theory scripts for a finance club - Monte Carlo efficient frontier / max Sharpe ratio simulation, and return/volatility/correlation analysis.</p>
-        </div>
-        <a href="quant-finance-scripts.html">Overview &rarr;</a>
-      </li>
-    </ul>
-  </section>
-
   <!-- ============ NOW ============ -->
   <section id="now" class="section container">
-    <h2 class="section-title"><span class="section-num">06.</span> Now</h2>
+    <h2 class="section-title"><span class="section-num">05.</span> Now</h2>
     <div class="now-wrap">
       <p class="now-lead">What I'm currently working on, updated as I go.</p>
       <ul class="now-list">
@@ -378,7 +417,7 @@
 
   <!-- ============ CONTACT ============ -->
   <section id="contact" class="section container">
-    <h2 class="section-title"><span class="section-num">07.</span> Contact</h2>
+    <h2 class="section-title"><span class="section-num">06.</span> Contact</h2>
     <div class="contact-wrap">
       <p class="contact-lead">
         I'm open to discussing or learning more about opportunities -
