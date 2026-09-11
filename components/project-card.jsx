@@ -1,0 +1,92 @@
+import Link from "next/link";
+import { FaArrowUpRightFromSquare } from "react-icons/fa6";
+import { TiltCard } from "@/components/tilt-card";
+import { categoryStyle } from "@/lib/categories";
+
+// Numbered (01-07) bento project card: full-bleed background image/video,
+// dark gradient overlay for legibility, number + external-link arrow icon
+// top corners, title, short description, tag pills, category-color accent.
+// Used for every homepage project entry, including the full-width feature
+// card (project 1, Laser Turret).
+export function ProjectCard({ project, featured = false }) {
+  return (
+    <TiltCard
+      className={`group relative flex flex-col justify-between overflow-hidden rounded-lg border border-border bg-secondary p-5 shadow-[0_1px_3px_rgba(0,0,0,0.4)] transition-[border-color,box-shadow] duration-200 hover:border-[var(--row-color)] hover:shadow-[0_10px_28px_rgba(0,0,0,0.5)] ${
+        featured ? "min-h-[340px] md:col-span-2" : "min-h-[250px]"
+      }`}
+      style={categoryStyle(project.category)}
+    >
+      <Link href={`/${project.slug}`} className="absolute inset-0 z-10" aria-label={project.title} />
+
+      {/* background media */}
+      <div className="absolute inset-0 -z-20">
+        {project.media.type === "image" && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={project.media.src}
+            alt={project.media.alt ?? ""}
+            loading="lazy"
+            className="h-full w-full object-cover saturate-[0.85] transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.06] group-hover:saturate-100"
+          />
+        )}
+        {project.media.type === "video" && (
+          <video
+            src={project.media.src}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            className="h-full w-full object-cover saturate-[0.85] transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.06] group-hover:saturate-100"
+          />
+        )}
+        {project.media.type === "sparkline" && (
+          <svg viewBox="0 0 200 100" preserveAspectRatio="none" className="h-full w-full" aria-hidden="true">
+            <polyline
+              points="0,80 25,68 50,74 75,45 100,52 125,28 150,34 175,12 200,20"
+              fill="none"
+              stroke="var(--cat-green)"
+              strokeWidth="2"
+              opacity="0.55"
+            />
+          </svg>
+        )}
+      </div>
+
+      {/* gradient overlay */}
+      <div
+        className={`absolute inset-0 -z-10 ${
+          project.solidCard
+            ? `bg-gradient-to-br from-[color-mix(in_srgb,var(--cat-green)_16%,var(--secondary))] to-card`
+            : "bg-gradient-to-t from-[rgba(8,10,15,0.92)] via-[rgba(8,10,15,0.55)] to-[rgba(8,10,15,0.2)]"
+        }`}
+      />
+
+      <div className="relative z-[1] flex items-start justify-between">
+        <span className="font-mono text-[0.8rem] font-bold tracking-[0.05em] text-[var(--row-color)] drop-shadow-[0_1px_4px_rgba(0,0,0,0.6)]">
+          {project.number}
+        </span>
+        <span className="flex h-[30px] w-[30px] items-center justify-center rounded-full border border-white/30 bg-black/40 text-foreground backdrop-blur-md transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:border-[var(--row-color)] group-hover:text-[var(--row-color)]">
+          <FaArrowUpRightFromSquare className="h-3 w-3" />
+        </span>
+      </div>
+
+      <div className="relative z-[1]">
+        <h3 className={`mb-1.5 font-display font-bold text-foreground ${featured ? "text-[1.35rem]" : "text-[1.15rem]"}`}>
+          {project.title}
+        </h3>
+        <p className="mb-3.5 max-w-[46ch] text-[0.88rem] text-foreground/80">{project.cardDescription}</p>
+        <ul className="flex flex-wrap gap-1.5">
+          {project.cardTags.map((tag) => (
+            <li
+              key={tag}
+              className="rounded-full border border-white/20 bg-black/55 px-2.5 py-1 font-mono text-[0.72rem] text-foreground backdrop-blur-md"
+            >
+              {tag}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </TiltCard>
+  );
+}
