@@ -1,27 +1,7 @@
-import Link from "next/link";
 import { FaArrowUpRightFromSquare } from "react-icons/fa6";
 import { TiltCard } from "@/components/tilt-card";
 import { categoryStyle } from "@/lib/categories";
-import { frontierData } from "@/lib/quant-data";
-
-// Small static preview of the real efficient-frontier scatter (the full
-// interactive version lives on the case-study page) - a genuine preview of
-// what's inside instead of a generic decorative squiggle.
-const FRONTIER_PREVIEW = (() => {
-  const vols = frontierData.points.map((p) => p.volatility);
-  const rets = frontierData.points.map((p) => p.return);
-  const minV = Math.min(...vols), maxV = Math.max(...vols);
-  const minR = Math.min(...rets), maxR = Math.max(...rets);
-  const pad = 12;
-  const scaleX = (v) => pad + ((v - minV) / (maxV - minV)) * (200 - pad * 2);
-  const scaleY = (r) => 100 - pad - ((r - minR) / (maxR - minR)) * (100 - pad * 2);
-  return {
-    dots: frontierData.points
-      .filter((_, i) => i % 3 === 0)
-      .map((p) => ({ x: scaleX(p.volatility), y: scaleY(p.return) })),
-    max: { x: scaleX(frontierData.maxSharpe.volatility), y: scaleY(frontierData.maxSharpe.return) },
-  };
-})();
+import { frontierPreviewDots } from "@/lib/quant-data";
 
 // Large, faint decorative marks sitting behind the photo on a couple of
 // cards (dimmed by the same gradient overlay as everything else) - a nod to
@@ -48,7 +28,7 @@ const WATERMARKS = {
 // top corners, title, short description, tag pills, category-color accent.
 // Used for every homepage project entry, including the full-width feature
 // card (project 1, Laser Turret).
-export function ProjectCard({ project, featured = false }) {
+export function ProjectCard({ project, featured = false, onOpen }) {
   return (
     <TiltCard
       className={`group relative flex flex-col justify-between overflow-hidden rounded-lg border border-border bg-secondary p-5 shadow-[0_1px_3px_rgba(0,0,0,0.4)] transition-[border-color,box-shadow] duration-200 hover:border-[var(--row-color)] hover:shadow-[0_10px_28px_rgba(0,0,0,0.5)] ${
@@ -56,7 +36,12 @@ export function ProjectCard({ project, featured = false }) {
       }`}
       style={categoryStyle(project.category)}
     >
-      <Link href={`/${project.slug}`} className="absolute inset-0 z-10" aria-label={project.title} />
+      <button
+        type="button"
+        onClick={onOpen}
+        className="absolute inset-0 z-10 cursor-pointer text-left"
+        aria-label={`Preview ${project.title}`}
+      />
 
       {/* background media */}
       <div className="absolute inset-0 -z-20">
@@ -88,10 +73,10 @@ export function ProjectCard({ project, featured = false }) {
         )}
         {project.media.type === "sparkline" && (
           <svg viewBox="0 0 200 100" className="h-full w-full" aria-hidden="true">
-            {FRONTIER_PREVIEW.dots.map((d, i) => (
+            {frontierPreviewDots.dots.map((d, i) => (
               <circle key={i} cx={d.x} cy={d.y} r="1.6" fill="var(--cat-green)" opacity="0.45" />
             ))}
-            <circle cx={FRONTIER_PREVIEW.max.x} cy={FRONTIER_PREVIEW.max.y} r="3.5" fill="var(--cat-green)" />
+            <circle cx={frontierPreviewDots.max.x} cy={frontierPreviewDots.max.y} r="3.5" fill="var(--cat-green)" />
           </svg>
         )}
         {project.watermark && (
