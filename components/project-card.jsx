@@ -61,13 +61,19 @@ export function ProjectCard({ project, featured = false }) {
       {/* background media */}
       <div className="absolute inset-0 -z-20">
         {project.media.type === "image" && (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={project.media.src}
-            alt={project.media.alt ?? ""}
-            loading="lazy"
-            className="h-full w-full object-cover saturate-[0.85] transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03] group-hover:saturate-100"
-          />
+          <div className={`h-full w-full ${project.mediaFit === "contain" ? "bg-secondary" : ""}`}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={project.media.src}
+              alt={project.media.alt ?? ""}
+              loading="lazy"
+              className={`h-full w-full saturate-[0.85] transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:saturate-100 ${
+                project.mediaFit === "contain"
+                  ? "object-contain p-4 group-hover:scale-[1.015]"
+                  : "object-cover group-hover:scale-[1.03]"
+              }`}
+            />
+          </div>
         )}
         {project.media.type === "video" && (
           <video
