@@ -42,6 +42,14 @@ function ReturnVolatilityChart() {
       </p>
       <ResponsiveContainer width="100%" height={260}>
         <BarChart data={riskBarData} margin={{ top: 4, right: 8, left: -16, bottom: 0 }}>
+          <defs>
+            <linearGradient id="googleGradient" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stopColor="#4285F4" />
+              <stop offset="35%" stopColor="#EA4335" />
+              <stop offset="65%" stopColor="#FBBC05" />
+              <stop offset="100%" stopColor="#34A853" />
+            </linearGradient>
+          </defs>
           <CartesianGrid stroke={GRID_COLOR} vertical={false} />
           <XAxis dataKey="ticker" stroke={AXIS_COLOR} fontSize={12} tickLine={false} axisLine={{ stroke: GRID_COLOR }} />
           <YAxis stroke={AXIS_COLOR} fontSize={12} tickLine={false} axisLine={false} tickFormatter={(v) => `${Math.round(v * 100)}%`} />
@@ -55,12 +63,12 @@ function ReturnVolatilityChart() {
           />
           <Bar dataKey="return" name="return" radius={[4, 4, 0, 0]} maxBarSize={28}>
             {riskBarData.map((d) => (
-              <Cell key={`r-${d.ticker}`} fill={d.color} />
+              <Cell key={`r-${d.ticker}`} fill={d.ticker === "GOOGL" ? "url(#googleGradient)" : d.color} />
             ))}
           </Bar>
           <Bar dataKey="volatility" name="volatility" radius={[4, 4, 0, 0]} maxBarSize={28} fillOpacity={0.45}>
             {riskBarData.map((d) => (
-              <Cell key={`v-${d.ticker}`} fill={d.color} />
+              <Cell key={`v-${d.ticker}`} fill={d.ticker === "GOOGL" ? "url(#googleGradient)" : d.color} />
             ))}
           </Bar>
         </BarChart>
@@ -91,22 +99,24 @@ function EfficientFrontierChart() {
             type="number"
             dataKey="volatility"
             name="Volatility"
+            domain={["dataMin - 0.005", "dataMax + 0.005"]}
             stroke={AXIS_COLOR}
             fontSize={12}
             tickLine={false}
             axisLine={{ stroke: GRID_COLOR }}
-            tickFormatter={(v) => `${Math.round(v * 100)}%`}
+            tickFormatter={(v) => `${(v * 100).toFixed(1)}%`}
             label={{ value: "Volatility (risk)", position: "insideBottom", offset: -2, fill: AXIS_COLOR, fontSize: 11 }}
           />
           <YAxis
             type="number"
             dataKey="return"
             name="Expected Return"
+            domain={["dataMin - 0.005", "dataMax + 0.005"]}
             stroke={AXIS_COLOR}
             fontSize={12}
             tickLine={false}
             axisLine={false}
-            tickFormatter={(v) => `${Math.round(v * 100)}%`}
+            tickFormatter={(v) => `${(v * 100).toFixed(1)}%`}
           />
           <Tooltip
             cursor={{ strokeDasharray: "3 3", stroke: GRID_COLOR }}

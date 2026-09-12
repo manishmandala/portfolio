@@ -2,6 +2,26 @@ import Link from "next/link";
 import { FaArrowUpRightFromSquare } from "react-icons/fa6";
 import { TiltCard } from "@/components/tilt-card";
 import { categoryStyle } from "@/lib/categories";
+import { frontierData } from "@/lib/quant-data";
+
+// Small static preview of the real efficient-frontier scatter (the full
+// interactive version lives on the case-study page) - a genuine preview of
+// what's inside instead of a generic decorative squiggle.
+const FRONTIER_PREVIEW = (() => {
+  const vols = frontierData.points.map((p) => p.volatility);
+  const rets = frontierData.points.map((p) => p.return);
+  const minV = Math.min(...vols), maxV = Math.max(...vols);
+  const minR = Math.min(...rets), maxR = Math.max(...rets);
+  const pad = 12;
+  const scaleX = (v) => pad + ((v - minV) / (maxV - minV)) * (200 - pad * 2);
+  const scaleY = (r) => 100 - pad - ((r - minR) / (maxR - minR)) * (100 - pad * 2);
+  return {
+    dots: frontierData.points
+      .filter((_, i) => i % 3 === 0)
+      .map((p) => ({ x: scaleX(p.volatility), y: scaleY(p.return) })),
+    max: { x: scaleX(frontierData.maxSharpe.volatility), y: scaleY(frontierData.maxSharpe.return) },
+  };
+})();
 
 // Large, faint decorative marks sitting behind the photo on a couple of
 // cards (dimmed by the same gradient overlay as everything else) - a nod to
@@ -46,7 +66,7 @@ export function ProjectCard({ project, featured = false }) {
             src={project.media.src}
             alt={project.media.alt ?? ""}
             loading="lazy"
-            className="h-full w-full object-cover saturate-[0.85] transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.06] group-hover:saturate-100"
+            className="h-full w-full object-cover saturate-[0.85] transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03] group-hover:saturate-100"
           />
         )}
         {project.media.type === "video" && (
@@ -57,18 +77,15 @@ export function ProjectCard({ project, featured = false }) {
             loop
             playsInline
             preload="metadata"
-            className="h-full w-full object-cover saturate-[0.85] transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.06] group-hover:saturate-100"
+            className="h-full w-full object-cover saturate-[0.85] transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03] group-hover:saturate-100"
           />
         )}
         {project.media.type === "sparkline" && (
-          <svg viewBox="0 0 200 100" preserveAspectRatio="none" className="h-full w-full" aria-hidden="true">
-            <polyline
-              points="0,80 25,68 50,74 75,45 100,52 125,28 150,34 175,12 200,20"
-              fill="none"
-              stroke="var(--cat-green)"
-              strokeWidth="2"
-              opacity="0.55"
-            />
+          <svg viewBox="0 0 200 100" className="h-full w-full" aria-hidden="true">
+            {FRONTIER_PREVIEW.dots.map((d, i) => (
+              <circle key={i} cx={d.x} cy={d.y} r="1.6" fill="var(--cat-green)" opacity="0.45" />
+            ))}
+            <circle cx={FRONTIER_PREVIEW.max.x} cy={FRONTIER_PREVIEW.max.y} r="3.5" fill="var(--cat-green)" />
           </svg>
         )}
         {project.watermark && (
