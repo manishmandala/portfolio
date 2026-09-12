@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { QuantCharts } from "@/components/quant-charts";
 
 // Reusable case-study template, driven by a project data object from
 // lib/projects-data.js. Renders the standard WHAT I DID / THE PROBLEM /
@@ -6,6 +7,7 @@ import Link from "next/link";
 // variant used only by the New Project teaser page.
 export function CaseStudy({ project }) {
   const isTeaser = Boolean(project.statusUpdate);
+  const hasCharts = project.slug === "quant-finance-scripts";
 
   return (
     <>
@@ -62,6 +64,12 @@ export function CaseStudy({ project }) {
           </div>
         </div>
       </section>
+
+      {hasCharts && (
+        <section className="container mx-auto max-w-[1080px] px-6 pt-2">
+          <QuantCharts />
+        </section>
+      )}
 
       <section className="container mx-auto max-w-[1080px] grid grid-cols-1 items-start gap-12 px-6 pt-10 pb-16 md:grid-cols-[1.7fr_1fr]">
         <div>

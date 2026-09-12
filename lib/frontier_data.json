@@ -1,0 +1,2030 @@
+{
+  "tickers": [
+    "AAPL",
+    "MSFT",
+    "GOOG",
+    "AMZN",
+    "JPM"
+  ],
+  "meanReturns": {
+    "AAPL": 0.29789,
+    "MSFT": 0.24893,
+    "GOOG": 0.25863,
+    "AMZN": 0.23266,
+    "JPM": 0.18793
+  },
+  "points": [
+    {
+      "return": 0.27569,
+      "volatility": 0.2802,
+      "sharpe": 0.8412
+    },
+    {
+      "return": 0.23796,
+      "volatility": 0.25592,
+      "sharpe": 0.7735
+    },
+    {
+      "return": 0.25651,
+      "volatility": 0.27224,
+      "sharpe": 0.7953
+    },
+    {
+      "return": 0.22578,
+      "volatility": 0.25975,
+      "sharpe": 0.7152
+    },
+    {
+      "return": 0.27067,
+      "volatility": 0.28542,
+      "sharpe": 0.8082
+    },
+    {
+      "return": 0.22642,
+      "volatility": 0.2585,
+      "sharpe": 0.7211
+    },
+    {
+      "return": 0.23407,
+      "volatility": 0.2623,
+      "sharpe": 0.7399
+    },
+    {
+      "return": 0.24222,
+      "volatility": 0.25708,
+      "sharpe": 0.7866
+    },
+    {
+      "return": 0.2269,
+      "volatility": 0.2637,
+      "sharpe": 0.7088
+    },
+    {
+      "return": 0.22764,
+      "volatility": 0.25863,
+      "sharpe": 0.7255
+    },
+    {
+      "return": 0.23823,
+      "volatility": 0.2714,
+      "sharpe": 0.7304
+    },
+    {
+      "return": 0.26395,
+      "volatility": 0.27469,
+      "sharpe": 0.8153
+    },
+    {
+      "return": 0.23326,
+      "volatility": 0.25996,
+      "sharpe": 0.7434
+    },
+    {
+      "return": 0.24711,
+      "volatility": 0.26423,
+      "sharpe": 0.7838
+    },
+    {
+      "return": 0.25554,
+      "volatility": 0.26809,
+      "sharpe": 0.804
+    },
+    {
+      "return": 0.25638,
+      "volatility": 0.28064,
+      "sharpe": 0.771
+    },
+    {
+      "return": 0.26947,
+      "volatility": 0.28088,
+      "sharpe": 0.8169
+    },
+    {
+      "return": 0.25396,
+      "volatility": 0.2618,
+      "sharpe": 0.8173
+    },
+    {
+      "return": 0.22803,
+      "volatility": 0.25853,
+      "sharpe": 0.7273
+    },
+    {
+      "return": 0.23993,
+      "volatility": 0.26563,
+      "sharpe": 0.7527
+    },
+    {
+      "return": 0.23743,
+      "volatility": 0.25919,
+      "sharpe": 0.7617
+    },
+    {
+      "return": 0.25306,
+      "volatility": 0.28603,
+      "sharpe": 0.7449
+    },
+    {
+      "return": 0.25183,
+      "volatility": 0.26693,
+      "sharpe": 0.7936
+    },
+    {
+      "return": 0.24391,
+      "volatility": 0.25941,
+      "sharpe": 0.7861
+    },
+    {
+      "return": 0.24153,
+      "volatility": 0.26379,
+      "sharpe": 0.764
+    },
+    {
+      "return": 0.25164,
+      "volatility": 0.26847,
+      "sharpe": 0.7883
+    },
+    {
+      "return": 0.25428,
+      "volatility": 0.27425,
+      "sharpe": 0.7813
+    },
+    {
+      "return": 0.24081,
+      "volatility": 0.26552,
+      "sharpe": 0.7563
+    },
+    {
+      "return": 0.25157,
+      "volatility": 0.27404,
+      "sharpe": 0.7721
+    },
+    {
+      "return": 0.21991,
+      "volatility": 0.26252,
+      "sharpe": 0.6853
+    },
+    {
+      "return": 0.25359,
+      "volatility": 0.26462,
+      "sharpe": 0.8072
+    },
+    {
+      "return": 0.24804,
+      "volatility": 0.26194,
+      "sharpe": 0.7942
+    },
+    {
+      "return": 0.23646,
+      "volatility": 0.26369,
+      "sharpe": 0.7451
+    },
+    {
+      "return": 0.25476,
+      "volatility": 0.27876,
+      "sharpe": 0.7704
+    },
+    {
+      "return": 0.24578,
+      "volatility": 0.265,
+      "sharpe": 0.7765
+    },
+    {
+      "return": 0.24897,
+      "volatility": 0.26132,
+      "sharpe": 0.7997
+    },
+    {
+      "return": 0.24492,
+      "volatility": 0.26614,
+      "sharpe": 0.77
+    },
+    {
+      "return": 0.23767,
+      "volatility": 0.25915,
+      "sharpe": 0.7628
+    },
+    {
+      "return": 0.24017,
+      "volatility": 0.26247,
+      "sharpe": 0.7627
+    },
+    {
+      "return": 0.25328,
+      "volatility": 0.2738,
+      "sharpe": 0.779
+    },
+    {
+      "return": 0.24311,
+      "volatility": 0.25795,
+      "sharpe": 0.7874
+    },
+    {
+      "return": 0.23106,
+      "volatility": 0.2597,
+      "sharpe": 0.7357
+    },
+    {
+      "return": 0.24829,
+      "volatility": 0.25822,
+      "sharpe": 0.8066
+    },
+    {
+      "return": 0.24514,
+      "volatility": 0.25662,
+      "sharpe": 0.7994
+    },
+    {
+      "return": 0.22674,
+      "volatility": 0.2582,
+      "sharpe": 0.7232
+    },
+    {
+      "return": 0.25451,
+      "volatility": 0.28034,
+      "sharpe": 0.7652
+    },
+    {
+      "return": 0.24656,
+      "volatility": 0.26244,
+      "sharpe": 0.7871
+    },
+    {
+      "return": 0.23885,
+      "volatility": 0.26475,
+      "sharpe": 0.7511
+    },
+    {
+      "return": 0.25215,
+      "volatility": 0.25981,
+      "sharpe": 0.8165
+    },
+    {
+      "return": 0.23766,
+      "volatility": 0.25635,
+      "sharpe": 0.771
+    },
+    {
+      "return": 0.24338,
+      "volatility": 0.26126,
+      "sharpe": 0.7785
+    },
+    {
+      "return": 0.23859,
+      "volatility": 0.26169,
+      "sharpe": 0.7589
+    },
+    {
+      "return": 0.24641,
+      "volatility": 0.27433,
+      "sharpe": 0.7524
+    },
+    {
+      "return": 0.24835,
+      "volatility": 0.26191,
+      "sharpe": 0.7955
+    },
+    {
+      "return": 0.221,
+      "volatility": 0.26017,
+      "sharpe": 0.6957
+    },
+    {
+      "return": 0.25831,
+      "volatility": 0.28576,
+      "sharpe": 0.764
+    },
+    {
+      "return": 0.2272,
+      "volatility": 0.25817,
+      "sharpe": 0.7251
+    },
+    {
+      "return": 0.25935,
+      "volatility": 0.26778,
+      "sharpe": 0.8191
+    },
+    {
+      "return": 0.26456,
+      "volatility": 0.27568,
+      "sharpe": 0.8146
+    },
+    {
+      "return": 0.23375,
+      "volatility": 0.25891,
+      "sharpe": 0.7483
+    },
+    {
+      "return": 0.24103,
+      "volatility": 0.26332,
+      "sharpe": 0.7635
+    },
+    {
+      "return": 0.25487,
+      "volatility": 0.2757,
+      "sharpe": 0.7794
+    },
+    {
+      "return": 0.25393,
+      "volatility": 0.26513,
+      "sharpe": 0.8069
+    },
+    {
+      "return": 0.24603,
+      "volatility": 0.26087,
+      "sharpe": 0.7898
+    },
+    {
+      "return": 0.25429,
+      "volatility": 0.27905,
+      "sharpe": 0.7679
+    },
+    {
+      "return": 0.24982,
+      "volatility": 0.25895,
+      "sharpe": 0.8103
+    },
+    {
+      "return": 0.25738,
+      "volatility": 0.27704,
+      "sharpe": 0.7847
+    },
+    {
+      "return": 0.24354,
+      "volatility": 0.2565,
+      "sharpe": 0.7935
+    },
+    {
+      "return": 0.24679,
+      "volatility": 0.28202,
+      "sharpe": 0.7332
+    },
+    {
+      "return": 0.24921,
+      "volatility": 0.26168,
+      "sharpe": 0.7995
+    },
+    {
+      "return": 0.26333,
+      "volatility": 0.28337,
+      "sharpe": 0.7881
+    },
+    {
+      "return": 0.27034,
+      "volatility": 0.27943,
+      "sharpe": 0.8243
+    },
+    {
+      "return": 0.23919,
+      "volatility": 0.25527,
+      "sharpe": 0.7803
+    },
+    {
+      "return": 0.23855,
+      "volatility": 0.25579,
+      "sharpe": 0.7762
+    },
+    {
+      "return": 0.25129,
+      "volatility": 0.28009,
+      "sharpe": 0.7544
+    },
+    {
+      "return": 0.26704,
+      "volatility": 0.27874,
+      "sharpe": 0.8145
+    },
+    {
+      "return": 0.24293,
+      "volatility": 0.25677,
+      "sharpe": 0.7903
+    },
+    {
+      "return": 0.23819,
+      "volatility": 0.2658,
+      "sharpe": 0.7457
+    },
+    {
+      "return": 0.25731,
+      "volatility": 0.28917,
+      "sharpe": 0.7515
+    },
+    {
+      "return": 0.25304,
+      "volatility": 0.27419,
+      "sharpe": 0.777
+    },
+    {
+      "return": 0.25794,
+      "volatility": 0.27697,
+      "sharpe": 0.7869
+    },
+    {
+      "return": 0.24682,
+      "volatility": 0.26288,
+      "sharpe": 0.7867
+    },
+    {
+      "return": 0.24029,
+      "volatility": 0.25928,
+      "sharpe": 0.7725
+    },
+    {
+      "return": 0.25811,
+      "volatility": 0.28123,
+      "sharpe": 0.7755
+    },
+    {
+      "return": 0.25569,
+      "volatility": 0.28845,
+      "sharpe": 0.7477
+    },
+    {
+      "return": 0.24568,
+      "volatility": 0.26013,
+      "sharpe": 0.7907
+    },
+    {
+      "return": 0.24568,
+      "volatility": 0.26222,
+      "sharpe": 0.7844
+    },
+    {
+      "return": 0.25671,
+      "volatility": 0.2801,
+      "sharpe": 0.7737
+    },
+    {
+      "return": 0.22961,
+      "volatility": 0.2642,
+      "sharpe": 0.7177
+    },
+    {
+      "return": 0.24701,
+      "volatility": 0.26323,
+      "sharpe": 0.7864
+    },
+    {
+      "return": 0.25813,
+      "volatility": 0.26752,
+      "sharpe": 0.8154
+    },
+    {
+      "return": 0.23941,
+      "volatility": 0.26418,
+      "sharpe": 0.7548
+    },
+    {
+      "return": 0.24988,
+      "volatility": 0.26114,
+      "sharpe": 0.8037
+    },
+    {
+      "return": 0.24839,
+      "volatility": 0.25963,
+      "sharpe": 0.8026
+    },
+    {
+      "return": 0.26384,
+      "volatility": 0.27023,
+      "sharpe": 0.8283
+    },
+    {
+      "return": 0.24397,
+      "volatility": 0.25811,
+      "sharpe": 0.7902
+    },
+    {
+      "return": 0.24691,
+      "volatility": 0.25926,
+      "sharpe": 0.7981
+    },
+    {
+      "return": 0.2431,
+      "volatility": 0.26564,
+      "sharpe": 0.7646
+    },
+    {
+      "return": 0.22961,
+      "volatility": 0.26098,
+      "sharpe": 0.7265
+    },
+    {
+      "return": 0.25605,
+      "volatility": 0.27656,
+      "sharpe": 0.7812
+    },
+    {
+      "return": 0.22334,
+      "volatility": 0.25639,
+      "sharpe": 0.7151
+    },
+    {
+      "return": 0.2672,
+      "volatility": 0.27818,
+      "sharpe": 0.8167
+    },
+    {
+      "return": 0.25204,
+      "volatility": 0.28268,
+      "sharpe": 0.7501
+    },
+    {
+      "return": 0.2376,
+      "volatility": 0.26546,
+      "sharpe": 0.7444
+    },
+    {
+      "return": 0.24893,
+      "volatility": 0.25965,
+      "sharpe": 0.8047
+    },
+    {
+      "return": 0.24639,
+      "volatility": 0.25908,
+      "sharpe": 0.7966
+    },
+    {
+      "return": 0.23472,
+      "volatility": 0.26281,
+      "sharpe": 0.7409
+    },
+    {
+      "return": 0.24463,
+      "volatility": 0.28302,
+      "sharpe": 0.723
+    },
+    {
+      "return": 0.25591,
+      "volatility": 0.28492,
+      "sharpe": 0.7578
+    },
+    {
+      "return": 0.24255,
+      "volatility": 0.26192,
+      "sharpe": 0.7733
+    },
+    {
+      "return": 0.24451,
+      "volatility": 0.2655,
+      "sharpe": 0.7703
+    },
+    {
+      "return": 0.26129,
+      "volatility": 0.28138,
+      "sharpe": 0.7864
+    },
+    {
+      "return": 0.2331,
+      "volatility": 0.26431,
+      "sharpe": 0.7306
+    },
+    {
+      "return": 0.2567,
+      "volatility": 0.2678,
+      "sharpe": 0.8092
+    },
+    {
+      "return": 0.23875,
+      "volatility": 0.25695,
+      "sharpe": 0.7735
+    },
+    {
+      "return": 0.2559,
+      "volatility": 0.26799,
+      "sharpe": 0.8056
+    },
+    {
+      "return": 0.26101,
+      "volatility": 0.26548,
+      "sharpe": 0.8325
+    },
+    {
+      "return": 0.24327,
+      "volatility": 0.26086,
+      "sharpe": 0.7792
+    },
+    {
+      "return": 0.25108,
+      "volatility": 0.26705,
+      "sharpe": 0.7904
+    },
+    {
+      "return": 0.24857,
+      "volatility": 0.25933,
+      "sharpe": 0.8043
+    },
+    {
+      "return": 0.25991,
+      "volatility": 0.27803,
+      "sharpe": 0.7909
+    },
+    {
+      "return": 0.22886,
+      "volatility": 0.25946,
+      "sharpe": 0.7279
+    },
+    {
+      "return": 0.23316,
+      "volatility": 0.25737,
+      "sharpe": 0.7505
+    },
+    {
+      "return": 0.26284,
+      "volatility": 0.27441,
+      "sharpe": 0.8121
+    },
+    {
+      "return": 0.24174,
+      "volatility": 0.25579,
+      "sharpe": 0.7887
+    },
+    {
+      "return": 0.25858,
+      "volatility": 0.26578,
+      "sharpe": 0.8224
+    },
+    {
+      "return": 0.24627,
+      "volatility": 0.25888,
+      "sharpe": 0.7968
+    },
+    {
+      "return": 0.23934,
+      "volatility": 0.2693,
+      "sharpe": 0.7402
+    },
+    {
+      "return": 0.25036,
+      "volatility": 0.28022,
+      "sharpe": 0.7507
+    },
+    {
+      "return": 0.23925,
+      "volatility": 0.25682,
+      "sharpe": 0.7758
+    },
+    {
+      "return": 0.23815,
+      "volatility": 0.25853,
+      "sharpe": 0.7665
+    },
+    {
+      "return": 0.23844,
+      "volatility": 0.26024,
+      "sharpe": 0.7625
+    },
+    {
+      "return": 0.25101,
+      "volatility": 0.26166,
+      "sharpe": 0.8064
+    },
+    {
+      "return": 0.25476,
+      "volatility": 0.27882,
+      "sharpe": 0.7702
+    },
+    {
+      "return": 0.25749,
+      "volatility": 0.26915,
+      "sharpe": 0.808
+    },
+    {
+      "return": 0.25175,
+      "volatility": 0.2781,
+      "sharpe": 0.7614
+    },
+    {
+      "return": 0.2255,
+      "volatility": 0.26207,
+      "sharpe": 0.7078
+    },
+    {
+      "return": 0.24797,
+      "volatility": 0.26193,
+      "sharpe": 0.794
+    },
+    {
+      "return": 0.2223,
+      "volatility": 0.26243,
+      "sharpe": 0.6947
+    },
+    {
+      "return": 0.23085,
+      "volatility": 0.2592,
+      "sharpe": 0.7363
+    },
+    {
+      "return": 0.2504,
+      "volatility": 0.26998,
+      "sharpe": 0.7793
+    },
+    {
+      "return": 0.23886,
+      "volatility": 0.25858,
+      "sharpe": 0.7691
+    },
+    {
+      "return": 0.24791,
+      "volatility": 0.26926,
+      "sharpe": 0.7722
+    },
+    {
+      "return": 0.25019,
+      "volatility": 0.26239,
+      "sharpe": 0.8011
+    },
+    {
+      "return": 0.25457,
+      "volatility": 0.28923,
+      "sharpe": 0.7419
+    },
+    {
+      "return": 0.22894,
+      "volatility": 0.26011,
+      "sharpe": 0.7264
+    },
+    {
+      "return": 0.25762,
+      "volatility": 0.27894,
+      "sharpe": 0.7802
+    },
+    {
+      "return": 0.26584,
+      "volatility": 0.27481,
+      "sharpe": 0.8218
+    },
+    {
+      "return": 0.23942,
+      "volatility": 0.27432,
+      "sharpe": 0.727
+    },
+    {
+      "return": 0.25158,
+      "volatility": 0.26705,
+      "sharpe": 0.7923
+    },
+    {
+      "return": 0.25532,
+      "volatility": 0.27801,
+      "sharpe": 0.7745
+    },
+    {
+      "return": 0.25255,
+      "volatility": 0.27793,
+      "sharpe": 0.7648
+    },
+    {
+      "return": 0.25049,
+      "volatility": 0.26891,
+      "sharpe": 0.7828
+    },
+    {
+      "return": 0.24304,
+      "volatility": 0.25934,
+      "sharpe": 0.7829
+    },
+    {
+      "return": 0.22026,
+      "volatility": 0.26396,
+      "sharpe": 0.6829
+    },
+    {
+      "return": 0.23192,
+      "volatility": 0.2594,
+      "sharpe": 0.7398
+    },
+    {
+      "return": 0.24461,
+      "volatility": 0.25925,
+      "sharpe": 0.7892
+    },
+    {
+      "return": 0.2608,
+      "volatility": 0.28456,
+      "sharpe": 0.7759
+    },
+    {
+      "return": 0.24381,
+      "volatility": 0.29903,
+      "sharpe": 0.6816
+    },
+    {
+      "return": 0.24547,
+      "volatility": 0.26263,
+      "sharpe": 0.7824
+    },
+    {
+      "return": 0.26458,
+      "volatility": 0.28291,
+      "sharpe": 0.7938
+    },
+    {
+      "return": 0.25398,
+      "volatility": 0.26249,
+      "sharpe": 0.8152
+    },
+    {
+      "return": 0.23615,
+      "volatility": 0.26492,
+      "sharpe": 0.7404
+    },
+    {
+      "return": 0.24143,
+      "volatility": 0.25969,
+      "sharpe": 0.7756
+    },
+    {
+      "return": 0.24096,
+      "volatility": 0.26157,
+      "sharpe": 0.7683
+    },
+    {
+      "return": 0.23329,
+      "volatility": 0.25958,
+      "sharpe": 0.7446
+    },
+    {
+      "return": 0.27025,
+      "volatility": 0.28242,
+      "sharpe": 0.8153
+    },
+    {
+      "return": 0.24614,
+      "volatility": 0.28182,
+      "sharpe": 0.7315
+    },
+    {
+      "return": 0.24094,
+      "volatility": 0.25914,
+      "sharpe": 0.7754
+    },
+    {
+      "return": 0.24903,
+      "volatility": 0.28079,
+      "sharpe": 0.7444
+    },
+    {
+      "return": 0.25138,
+      "volatility": 0.27132,
+      "sharpe": 0.7791
+    },
+    {
+      "return": 0.25648,
+      "volatility": 0.27133,
+      "sharpe": 0.7979
+    },
+    {
+      "return": 0.24001,
+      "volatility": 0.25693,
+      "sharpe": 0.7785
+    },
+    {
+      "return": 0.25754,
+      "volatility": 0.27918,
+      "sharpe": 0.7792
+    },
+    {
+      "return": 0.24037,
+      "volatility": 0.26667,
+      "sharpe": 0.7514
+    },
+    {
+      "return": 0.24163,
+      "volatility": 0.26052,
+      "sharpe": 0.7739
+    },
+    {
+      "return": 0.2437,
+      "volatility": 0.26434,
+      "sharpe": 0.7706
+    },
+    {
+      "return": 0.23489,
+      "volatility": 0.26375,
+      "sharpe": 0.7389
+    },
+    {
+      "return": 0.24672,
+      "volatility": 0.26059,
+      "sharpe": 0.7933
+    },
+    {
+      "return": 0.24403,
+      "volatility": 0.27049,
+      "sharpe": 0.7543
+    },
+    {
+      "return": 0.24446,
+      "volatility": 0.26262,
+      "sharpe": 0.7785
+    },
+    {
+      "return": 0.23494,
+      "volatility": 0.26146,
+      "sharpe": 0.7456
+    },
+    {
+      "return": 0.24928,
+      "volatility": 0.25992,
+      "sharpe": 0.8052
+    },
+    {
+      "return": 0.23574,
+      "volatility": 0.26087,
+      "sharpe": 0.7503
+    },
+    {
+      "return": 0.22158,
+      "volatility": 0.2602,
+      "sharpe": 0.6979
+    },
+    {
+      "return": 0.24291,
+      "volatility": 0.26277,
+      "sharpe": 0.7722
+    },
+    {
+      "return": 0.24931,
+      "volatility": 0.26432,
+      "sharpe": 0.7919
+    },
+    {
+      "return": 0.23589,
+      "volatility": 0.25846,
+      "sharpe": 0.7579
+    },
+    {
+      "return": 0.24299,
+      "volatility": 0.25634,
+      "sharpe": 0.7919
+    },
+    {
+      "return": 0.2578,
+      "volatility": 0.27648,
+      "sharpe": 0.7878
+    },
+    {
+      "return": 0.23706,
+      "volatility": 0.25741,
+      "sharpe": 0.7655
+    },
+    {
+      "return": 0.2298,
+      "volatility": 0.25997,
+      "sharpe": 0.7301
+    },
+    {
+      "return": 0.2311,
+      "volatility": 0.26079,
+      "sharpe": 0.7328
+    },
+    {
+      "return": 0.26251,
+      "volatility": 0.28428,
+      "sharpe": 0.7827
+    },
+    {
+      "return": 0.24162,
+      "volatility": 0.26043,
+      "sharpe": 0.7742
+    },
+    {
+      "return": 0.25104,
+      "volatility": 0.28184,
+      "sharpe": 0.7488
+    },
+    {
+      "return": 0.22228,
+      "volatility": 0.25749,
+      "sharpe": 0.7079
+    },
+    {
+      "return": 0.22496,
+      "volatility": 0.26405,
+      "sharpe": 0.7005
+    },
+    {
+      "return": 0.23839,
+      "volatility": 0.2571,
+      "sharpe": 0.7716
+    },
+    {
+      "return": 0.23744,
+      "volatility": 0.25723,
+      "sharpe": 0.7675
+    },
+    {
+      "return": 0.24602,
+      "volatility": 0.26253,
+      "sharpe": 0.7847
+    },
+    {
+      "return": 0.24831,
+      "volatility": 0.26664,
+      "sharpe": 0.7812
+    },
+    {
+      "return": 0.24073,
+      "volatility": 0.25727,
+      "sharpe": 0.7802
+    },
+    {
+      "return": 0.25161,
+      "volatility": 0.2723,
+      "sharpe": 0.7771
+    },
+    {
+      "return": 0.2415,
+      "volatility": 0.25834,
+      "sharpe": 0.78
+    },
+    {
+      "return": 0.27479,
+      "volatility": 0.28375,
+      "sharpe": 0.8274
+    },
+    {
+      "return": 0.24193,
+      "volatility": 0.27099,
+      "sharpe": 0.7451
+    },
+    {
+      "return": 0.23208,
+      "volatility": 0.25523,
+      "sharpe": 0.7526
+    },
+    {
+      "return": 0.23319,
+      "volatility": 0.25521,
+      "sharpe": 0.757
+    },
+    {
+      "return": 0.22891,
+      "volatility": 0.25848,
+      "sharpe": 0.7308
+    },
+    {
+      "return": 0.23656,
+      "volatility": 0.26655,
+      "sharpe": 0.7374
+    },
+    {
+      "return": 0.24725,
+      "volatility": 0.29505,
+      "sharpe": 0.7024
+    },
+    {
+      "return": 0.23622,
+      "volatility": 0.27298,
+      "sharpe": 0.7188
+    },
+    {
+      "return": 0.24615,
+      "volatility": 0.26175,
+      "sharpe": 0.7876
+    },
+    {
+      "return": 0.24198,
+      "volatility": 0.25634,
+      "sharpe": 0.7879
+    },
+    {
+      "return": 0.25405,
+      "volatility": 0.28123,
+      "sharpe": 0.7611
+    },
+    {
+      "return": 0.25522,
+      "volatility": 0.28706,
+      "sharpe": 0.7497
+    },
+    {
+      "return": 0.25887,
+      "volatility": 0.27847,
+      "sharpe": 0.786
+    },
+    {
+      "return": 0.2522,
+      "volatility": 0.2618,
+      "sharpe": 0.8105
+    },
+    {
+      "return": 0.24462,
+      "volatility": 0.25761,
+      "sharpe": 0.7943
+    },
+    {
+      "return": 0.24198,
+      "volatility": 0.25662,
+      "sharpe": 0.7871
+    },
+    {
+      "return": 0.23858,
+      "volatility": 0.26658,
+      "sharpe": 0.7449
+    },
+    {
+      "return": 0.23381,
+      "volatility": 0.2559,
+      "sharpe": 0.7573
+    },
+    {
+      "return": 0.24361,
+      "volatility": 0.25776,
+      "sharpe": 0.7899
+    },
+    {
+      "return": 0.22966,
+      "volatility": 0.26056,
+      "sharpe": 0.7279
+    },
+    {
+      "return": 0.24821,
+      "volatility": 0.26497,
+      "sharpe": 0.7858
+    },
+    {
+      "return": 0.24115,
+      "volatility": 0.25761,
+      "sharpe": 0.7808
+    },
+    {
+      "return": 0.25492,
+      "volatility": 0.27593,
+      "sharpe": 0.7789
+    },
+    {
+      "return": 0.24136,
+      "volatility": 0.2766,
+      "sharpe": 0.728
+    },
+    {
+      "return": 0.24688,
+      "volatility": 0.25979,
+      "sharpe": 0.7963
+    },
+    {
+      "return": 0.23289,
+      "volatility": 0.25759,
+      "sharpe": 0.7488
+    },
+    {
+      "return": 0.25548,
+      "volatility": 0.27818,
+      "sharpe": 0.7746
+    },
+    {
+      "return": 0.25369,
+      "volatility": 0.27532,
+      "sharpe": 0.7762
+    },
+    {
+      "return": 0.23597,
+      "volatility": 0.25703,
+      "sharpe": 0.7624
+    },
+    {
+      "return": 0.23975,
+      "volatility": 0.27634,
+      "sharpe": 0.7228
+    },
+    {
+      "return": 0.24013,
+      "volatility": 0.25951,
+      "sharpe": 0.7712
+    },
+    {
+      "return": 0.24858,
+      "volatility": 0.26169,
+      "sharpe": 0.797
+    },
+    {
+      "return": 0.2427,
+      "volatility": 0.2563,
+      "sharpe": 0.7909
+    },
+    {
+      "return": 0.24378,
+      "volatility": 0.27909,
+      "sharpe": 0.7301
+    },
+    {
+      "return": 0.23309,
+      "volatility": 0.26043,
+      "sharpe": 0.7414
+    },
+    {
+      "return": 0.24473,
+      "volatility": 0.26035,
+      "sharpe": 0.7864
+    },
+    {
+      "return": 0.24391,
+      "volatility": 0.26085,
+      "sharpe": 0.7817
+    },
+    {
+      "return": 0.23063,
+      "volatility": 0.26153,
+      "sharpe": 0.7289
+    },
+    {
+      "return": 0.25573,
+      "volatility": 0.27925,
+      "sharpe": 0.7725
+    },
+    {
+      "return": 0.24351,
+      "volatility": 0.27456,
+      "sharpe": 0.7412
+    },
+    {
+      "return": 0.24723,
+      "volatility": 0.26055,
+      "sharpe": 0.7953
+    },
+    {
+      "return": 0.25067,
+      "volatility": 0.2681,
+      "sharpe": 0.7858
+    },
+    {
+      "return": 0.24699,
+      "volatility": 0.25968,
+      "sharpe": 0.7971
+    },
+    {
+      "return": 0.24465,
+      "volatility": 0.25686,
+      "sharpe": 0.7968
+    },
+    {
+      "return": 0.22595,
+      "volatility": 0.25738,
+      "sharpe": 0.7225
+    },
+    {
+      "return": 0.24422,
+      "volatility": 0.26314,
+      "sharpe": 0.7761
+    },
+    {
+      "return": 0.2463,
+      "volatility": 0.26614,
+      "sharpe": 0.7752
+    },
+    {
+      "return": 0.23997,
+      "volatility": 0.25571,
+      "sharpe": 0.782
+    },
+    {
+      "return": 0.24193,
+      "volatility": 0.25729,
+      "sharpe": 0.7849
+    },
+    {
+      "return": 0.24732,
+      "volatility": 0.27327,
+      "sharpe": 0.7587
+    },
+    {
+      "return": 0.23802,
+      "volatility": 0.27277,
+      "sharpe": 0.7259
+    },
+    {
+      "return": 0.25411,
+      "volatility": 0.26862,
+      "sharpe": 0.7971
+    },
+    {
+      "return": 0.24753,
+      "volatility": 0.26891,
+      "sharpe": 0.7717
+    },
+    {
+      "return": 0.24665,
+      "volatility": 0.26255,
+      "sharpe": 0.7871
+    },
+    {
+      "return": 0.23943,
+      "volatility": 0.26363,
+      "sharpe": 0.7565
+    },
+    {
+      "return": 0.22124,
+      "volatility": 0.25947,
+      "sharpe": 0.6985
+    },
+    {
+      "return": 0.24042,
+      "volatility": 0.26055,
+      "sharpe": 0.7692
+    },
+    {
+      "return": 0.2586,
+      "volatility": 0.27685,
+      "sharpe": 0.7896
+    },
+    {
+      "return": 0.2373,
+      "volatility": 0.2585,
+      "sharpe": 0.7632
+    },
+    {
+      "return": 0.2425,
+      "volatility": 0.25858,
+      "sharpe": 0.7831
+    },
+    {
+      "return": 0.24734,
+      "volatility": 0.25805,
+      "sharpe": 0.8035
+    },
+    {
+      "return": 0.24515,
+      "volatility": 0.25864,
+      "sharpe": 0.7932
+    },
+    {
+      "return": 0.25594,
+      "volatility": 0.27575,
+      "sharpe": 0.7831
+    },
+    {
+      "return": 0.25121,
+      "volatility": 0.27781,
+      "sharpe": 0.7603
+    },
+    {
+      "return": 0.24075,
+      "volatility": 0.26855,
+      "sharpe": 0.7476
+    },
+    {
+      "return": 0.24772,
+      "volatility": 0.26879,
+      "sharpe": 0.7728
+    },
+    {
+      "return": 0.24107,
+      "volatility": 0.27424,
+      "sharpe": 0.7332
+    },
+    {
+      "return": 0.25806,
+      "volatility": 0.27891,
+      "sharpe": 0.7818
+    },
+    {
+      "return": 0.2321,
+      "volatility": 0.2559,
+      "sharpe": 0.7507
+    },
+    {
+      "return": 0.22422,
+      "volatility": 0.25996,
+      "sharpe": 0.7087
+    },
+    {
+      "return": 0.25588,
+      "volatility": 0.27363,
+      "sharpe": 0.789
+    },
+    {
+      "return": 0.24114,
+      "volatility": 0.26477,
+      "sharpe": 0.7597
+    },
+    {
+      "return": 0.24465,
+      "volatility": 0.25622,
+      "sharpe": 0.7987
+    },
+    {
+      "return": 0.25192,
+      "volatility": 0.26814,
+      "sharpe": 0.7903
+    },
+    {
+      "return": 0.24583,
+      "volatility": 0.25779,
+      "sharpe": 0.7984
+    },
+    {
+      "return": 0.26542,
+      "volatility": 0.27912,
+      "sharpe": 0.8076
+    },
+    {
+      "return": 0.25781,
+      "volatility": 0.26903,
+      "sharpe": 0.8096
+    },
+    {
+      "return": 0.24291,
+      "volatility": 0.25892,
+      "sharpe": 0.7837
+    },
+    {
+      "return": 0.24223,
+      "volatility": 0.25721,
+      "sharpe": 0.7862
+    },
+    {
+      "return": 0.24736,
+      "volatility": 0.2626,
+      "sharpe": 0.7896
+    },
+    {
+      "return": 0.25356,
+      "volatility": 0.27665,
+      "sharpe": 0.772
+    },
+    {
+      "return": 0.24519,
+      "volatility": 0.26308,
+      "sharpe": 0.78
+    },
+    {
+      "return": 0.24626,
+      "volatility": 0.25845,
+      "sharpe": 0.7981
+    },
+    {
+      "return": 0.2317,
+      "volatility": 0.26017,
+      "sharpe": 0.7368
+    },
+    {
+      "return": 0.2532,
+      "volatility": 0.26067,
+      "sharpe": 0.8179
+    },
+    {
+      "return": 0.25303,
+      "volatility": 0.26595,
+      "sharpe": 0.801
+    },
+    {
+      "return": 0.24615,
+      "volatility": 0.26783,
+      "sharpe": 0.7697
+    },
+    {
+      "return": 0.2463,
+      "volatility": 0.25953,
+      "sharpe": 0.7949
+    },
+    {
+      "return": 0.25501,
+      "volatility": 0.26968,
+      "sharpe": 0.7973
+    },
+    {
+      "return": 0.2476,
+      "volatility": 0.26634,
+      "sharpe": 0.7795
+    },
+    {
+      "return": 0.23658,
+      "volatility": 0.25752,
+      "sharpe": 0.7634
+    },
+    {
+      "return": 0.24344,
+      "volatility": 0.25929,
+      "sharpe": 0.7846
+    },
+    {
+      "return": 0.24551,
+      "volatility": 0.25885,
+      "sharpe": 0.7939
+    },
+    {
+      "return": 0.25086,
+      "volatility": 0.26909,
+      "sharpe": 0.7836
+    },
+    {
+      "return": 0.25848,
+      "volatility": 0.26818,
+      "sharpe": 0.8147
+    },
+    {
+      "return": 0.24738,
+      "volatility": 0.25908,
+      "sharpe": 0.8005
+    },
+    {
+      "return": 0.24551,
+      "volatility": 0.25919,
+      "sharpe": 0.7929
+    },
+    {
+      "return": 0.25836,
+      "volatility": 0.27664,
+      "sharpe": 0.7893
+    },
+    {
+      "return": 0.25908,
+      "volatility": 0.27606,
+      "sharpe": 0.7936
+    },
+    {
+      "return": 0.26456,
+      "volatility": 0.27826,
+      "sharpe": 0.807
+    },
+    {
+      "return": 0.23285,
+      "volatility": 0.2549,
+      "sharpe": 0.7566
+    },
+    {
+      "return": 0.24331,
+      "volatility": 0.25665,
+      "sharpe": 0.7922
+    },
+    {
+      "return": 0.22812,
+      "volatility": 0.2567,
+      "sharpe": 0.7328
+    },
+    {
+      "return": 0.24414,
+      "volatility": 0.25906,
+      "sharpe": 0.788
+    },
+    {
+      "return": 0.24677,
+      "volatility": 0.2684,
+      "sharpe": 0.7704
+    },
+    {
+      "return": 0.23622,
+      "volatility": 0.26825,
+      "sharpe": 0.7315
+    },
+    {
+      "return": 0.26176,
+      "volatility": 0.27141,
+      "sharpe": 0.8171
+    },
+    {
+      "return": 0.24647,
+      "volatility": 0.26145,
+      "sharpe": 0.7897
+    },
+    {
+      "return": 0.23725,
+      "volatility": 0.26044,
+      "sharpe": 0.7574
+    },
+    {
+      "return": 0.23904,
+      "volatility": 0.27456,
+      "sharpe": 0.7249
+    },
+    {
+      "return": 0.26108,
+      "volatility": 0.2764,
+      "sharpe": 0.7998
+    },
+    {
+      "return": 0.26627,
+      "volatility": 0.27802,
+      "sharpe": 0.8139
+    },
+    {
+      "return": 0.23805,
+      "volatility": 0.25839,
+      "sharpe": 0.7665
+    },
+    {
+      "return": 0.24488,
+      "volatility": 0.26183,
+      "sharpe": 0.7825
+    },
+    {
+      "return": 0.24201,
+      "volatility": 0.25682,
+      "sharpe": 0.7866
+    },
+    {
+      "return": 0.23188,
+      "volatility": 0.25833,
+      "sharpe": 0.7428
+    },
+    {
+      "return": 0.25492,
+      "volatility": 0.27115,
+      "sharpe": 0.7926
+    },
+    {
+      "return": 0.24785,
+      "volatility": 0.26616,
+      "sharpe": 0.7809
+    },
+    {
+      "return": 0.27122,
+      "volatility": 0.27762,
+      "sharpe": 0.8329
+    },
+    {
+      "return": 0.25101,
+      "volatility": 0.26682,
+      "sharpe": 0.7908
+    },
+    {
+      "return": 0.22263,
+      "volatility": 0.25973,
+      "sharpe": 0.7031
+    },
+    {
+      "return": 0.24556,
+      "volatility": 0.26073,
+      "sharpe": 0.7884
+    },
+    {
+      "return": 0.252,
+      "volatility": 0.27358,
+      "sharpe": 0.7749
+    },
+    {
+      "return": 0.23605,
+      "volatility": 0.25898,
+      "sharpe": 0.757
+    },
+    {
+      "return": 0.24311,
+      "volatility": 0.25952,
+      "sharpe": 0.7826
+    },
+    {
+      "return": 0.25168,
+      "volatility": 0.28118,
+      "sharpe": 0.7528
+    },
+    {
+      "return": 0.22874,
+      "volatility": 0.26046,
+      "sharpe": 0.7247
+    },
+    {
+      "return": 0.25514,
+      "volatility": 0.27635,
+      "sharpe": 0.7785
+    },
+    {
+      "return": 0.25661,
+      "volatility": 0.27715,
+      "sharpe": 0.7815
+    },
+    {
+      "return": 0.24274,
+      "volatility": 0.26433,
+      "sharpe": 0.767
+    },
+    {
+      "return": 0.24827,
+      "volatility": 0.26142,
+      "sharpe": 0.7967
+    },
+    {
+      "return": 0.25476,
+      "volatility": 0.26778,
+      "sharpe": 0.802
+    },
+    {
+      "return": 0.2439,
+      "volatility": 0.25628,
+      "sharpe": 0.7956
+    },
+    {
+      "return": 0.23062,
+      "volatility": 0.25915,
+      "sharpe": 0.7356
+    },
+    {
+      "return": 0.26213,
+      "volatility": 0.28026,
+      "sharpe": 0.7926
+    },
+    {
+      "return": 0.24466,
+      "volatility": 0.25864,
+      "sharpe": 0.7913
+    },
+    {
+      "return": 0.25649,
+      "volatility": 0.26516,
+      "sharpe": 0.8164
+    },
+    {
+      "return": 0.2579,
+      "volatility": 0.28679,
+      "sharpe": 0.7598
+    },
+    {
+      "return": 0.24191,
+      "volatility": 0.26803,
+      "sharpe": 0.7533
+    },
+    {
+      "return": 0.25386,
+      "volatility": 0.28773,
+      "sharpe": 0.7433
+    },
+    {
+      "return": 0.24347,
+      "volatility": 0.28782,
+      "sharpe": 0.7069
+    },
+    {
+      "return": 0.25921,
+      "volatility": 0.27407,
+      "sharpe": 0.7998
+    },
+    {
+      "return": 0.23946,
+      "volatility": 0.26991,
+      "sharpe": 0.739
+    },
+    {
+      "return": 0.24644,
+      "volatility": 0.28157,
+      "sharpe": 0.7332
+    },
+    {
+      "return": 0.23701,
+      "volatility": 0.27149,
+      "sharpe": 0.7257
+    },
+    {
+      "return": 0.25588,
+      "volatility": 0.26611,
+      "sharpe": 0.8112
+    },
+    {
+      "return": 0.24589,
+      "volatility": 0.25968,
+      "sharpe": 0.7929
+    },
+    {
+      "return": 0.23218,
+      "volatility": 0.26361,
+      "sharpe": 0.7291
+    },
+    {
+      "return": 0.25662,
+      "volatility": 0.28165,
+      "sharpe": 0.7691
+    },
+    {
+      "return": 0.23778,
+      "volatility": 0.25956,
+      "sharpe": 0.762
+    },
+    {
+      "return": 0.22631,
+      "volatility": 0.25622,
+      "sharpe": 0.7271
+    },
+    {
+      "return": 0.25385,
+      "volatility": 0.2739,
+      "sharpe": 0.7808
+    },
+    {
+      "return": 0.26018,
+      "volatility": 0.26763,
+      "sharpe": 0.8227
+    },
+    {
+      "return": 0.23072,
+      "volatility": 0.28146,
+      "sharpe": 0.6776
+    },
+    {
+      "return": 0.22877,
+      "volatility": 0.25812,
+      "sharpe": 0.7313
+    },
+    {
+      "return": 0.23729,
+      "volatility": 0.2617,
+      "sharpe": 0.7539
+    },
+    {
+      "return": 0.25624,
+      "volatility": 0.28529,
+      "sharpe": 0.7579
+    },
+    {
+      "return": 0.23487,
+      "volatility": 0.26882,
+      "sharpe": 0.7249
+    },
+    {
+      "return": 0.23126,
+      "volatility": 0.26365,
+      "sharpe": 0.7254
+    },
+    {
+      "return": 0.24067,
+      "volatility": 0.26632,
+      "sharpe": 0.7535
+    },
+    {
+      "return": 0.23388,
+      "volatility": 0.26742,
+      "sharpe": 0.725
+    },
+    {
+      "return": 0.26722,
+      "volatility": 0.27662,
+      "sharpe": 0.8214
+    },
+    {
+      "return": 0.23442,
+      "volatility": 0.26051,
+      "sharpe": 0.7463
+    },
+    {
+      "return": 0.25098,
+      "volatility": 0.27566,
+      "sharpe": 0.7654
+    },
+    {
+      "return": 0.2606,
+      "volatility": 0.26945,
+      "sharpe": 0.8187
+    },
+    {
+      "return": 0.24122,
+      "volatility": 0.27155,
+      "sharpe": 0.741
+    },
+    {
+      "return": 0.24139,
+      "volatility": 0.25716,
+      "sharpe": 0.7831
+    },
+    {
+      "return": 0.23092,
+      "volatility": 0.26269,
+      "sharpe": 0.7268
+    },
+    {
+      "return": 0.23484,
+      "volatility": 0.25785,
+      "sharpe": 0.7556
+    },
+    {
+      "return": 0.2273,
+      "volatility": 0.25573,
+      "sharpe": 0.7324
+    },
+    {
+      "return": 0.26229,
+      "volatility": 0.27716,
+      "sharpe": 0.802
+    },
+    {
+      "return": 0.24094,
+      "volatility": 0.26624,
+      "sharpe": 0.7547
+    },
+    {
+      "return": 0.24178,
+      "volatility": 0.26141,
+      "sharpe": 0.7719
+    },
+    {
+      "return": 0.24952,
+      "volatility": 0.26013,
+      "sharpe": 0.8054
+    },
+    {
+      "return": 0.23818,
+      "volatility": 0.25842,
+      "sharpe": 0.7669
+    },
+    {
+      "return": 0.24786,
+      "volatility": 0.26559,
+      "sharpe": 0.7826
+    },
+    {
+      "return": 0.25181,
+      "volatility": 0.28129,
+      "sharpe": 0.753
+    },
+    {
+      "return": 0.27061,
+      "volatility": 0.28219,
+      "sharpe": 0.8172
+    },
+    {
+      "return": 0.2418,
+      "volatility": 0.25907,
+      "sharpe": 0.7789
+    },
+    {
+      "return": 0.26365,
+      "volatility": 0.27236,
+      "sharpe": 0.8212
+    },
+    {
+      "return": 0.23235,
+      "volatility": 0.26575,
+      "sharpe": 0.7238
+    },
+    {
+      "return": 0.25197,
+      "volatility": 0.28061,
+      "sharpe": 0.7554
+    },
+    {
+      "return": 0.23672,
+      "volatility": 0.26257,
+      "sharpe": 0.7492
+    },
+    {
+      "return": 0.2518,
+      "volatility": 0.26311,
+      "sharpe": 0.805
+    },
+    {
+      "return": 0.25448,
+      "volatility": 0.26434,
+      "sharpe": 0.8114
+    },
+    {
+      "return": 0.24032,
+      "volatility": 0.26321,
+      "sharpe": 0.7611
+    },
+    {
+      "return": 0.24395,
+      "volatility": 0.25719,
+      "sharpe": 0.793
+    },
+    {
+      "return": 0.25387,
+      "volatility": 0.27506,
+      "sharpe": 0.7776
+    },
+    {
+      "return": 0.24841,
+      "volatility": 0.25851,
+      "sharpe": 0.8062
+    },
+    {
+      "return": 0.25464,
+      "volatility": 0.27528,
+      "sharpe": 0.7797
+    },
+    {
+      "return": 0.24613,
+      "volatility": 0.26951,
+      "sharpe": 0.7648
+    },
+    {
+      "return": 0.24258,
+      "volatility": 0.26493,
+      "sharpe": 0.7647
+    },
+    {
+      "return": 0.23444,
+      "volatility": 0.26134,
+      "sharpe": 0.744
+    },
+    {
+      "return": 0.26407,
+      "volatility": 0.27344,
+      "sharpe": 0.8195
+    },
+    {
+      "return": 0.23922,
+      "volatility": 0.27491,
+      "sharpe": 0.7247
+    }
+  ],
+  "maxSharpe": {
+    "return": 0.27569,
+    "volatility": 0.2802,
+    "sharpe": 0.8412,
+    "weights": {
+      "AAPL": 0.609,
+      "MSFT": 0.0003,
+      "GOOG": 0.2905,
+      "AMZN": 0.0054,
+      "JPM": 0.0949
+    }
+  }
+}
