@@ -10,7 +10,7 @@ export function HeroSection() {
     >
       <div className="relative z-[1] max-w-[620px]">
         <p className="mb-4 font-mono text-[0.85rem] font-semibold tracking-[0.06em] text-brand">
-          MECHANICAL ENGINEERING &middot; ROBOTICS &middot; AUTONOMY &middot; DEFENSE TECH
+          AI &middot; ROBOTICS &middot; AUTONOMY &middot; TECH &amp; DEFENSE
         </p>
         <div className="mb-5 flex items-center justify-center gap-[18px] md:justify-start">
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -43,17 +43,16 @@ export function HeroSection() {
           </span>
         </Link>
 
-        <p className="mx-auto mb-6 max-w-[520px] text-[1.05rem] text-muted-foreground md:mx-0">
-          Mechanical Engineering student at Ohio State University, interested
-          in design/manufacturing engineering, product &amp; program
-          management, technical consulting, and robotics/AI, with a
-          particular pull toward tech and defense tech. I like building
-          small, working projects end-to-end - hardware, software, or both.
+        <p className="mx-auto mb-6 max-w-[520px] font-display text-[1.12rem] font-medium leading-snug text-muted-foreground md:mx-0">
+          Mechanical Engineering student at Ohio State University building
+          small, working projects end-to-end - hardware, software, or both -
+          with a particular pull toward robotics, AI, and defense tech. Feel
+          free to reach out with questions or opportunities.
         </p>
 
         <div className="mb-7 flex flex-wrap justify-center gap-3 md:justify-start">
           <span className="rounded-full border px-4 py-[7px] font-mono text-[0.78rem] font-semibold tracking-[0.03em] text-brand" style={{ borderColor: "color-mix(in srgb, var(--brand) 40%, transparent)", backgroundColor: "color-mix(in srgb, var(--brand) 10%, transparent)" }}>
-            OPEN TO INTERNSHIPS &amp; CO-OPS
+            OPEN TO OPPORTUNITIES
           </span>
           <span className="rounded-full border border-border px-4 py-[7px] font-mono text-[0.78rem] font-semibold tracking-[0.03em] text-muted-foreground">
             UNITED STATES

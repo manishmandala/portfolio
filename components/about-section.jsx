@@ -29,7 +29,7 @@ export function AboutSection() {
             <strong className="text-foreground">Education:</strong> B.S. Mechanical Engineering, Ohio State University
           </li>
           <li className="text-[0.95rem]">
-            <strong className="text-foreground">Currently:</strong> Open to internships &amp; co-ops
+            <strong className="text-foreground">Currently:</strong> Open to opportunities, feel free to reach out
           </li>
         </ul>
       </Reveal>

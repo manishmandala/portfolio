@@ -1,7 +1,7 @@
 import { FaArrowUpRightFromSquare } from "react-icons/fa6";
 import { TiltCard } from "@/components/tilt-card";
 import { categoryStyle } from "@/lib/categories";
-import { frontierPreviewDots } from "@/lib/quant-data";
+import { FrontierPreviewSvg } from "@/components/frontier-preview";
 
 // Large, faint decorative marks sitting behind the photo on a couple of
 // cards (dimmed by the same gradient overlay as everything else) - a nod to
@@ -71,14 +71,7 @@ export function ProjectCard({ project, featured = false, onOpen }) {
             className="h-full w-full object-cover saturate-[0.85] transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03] group-hover:saturate-100"
           />
         )}
-        {project.media.type === "sparkline" && (
-          <svg viewBox="0 0 200 100" className="h-full w-full" aria-hidden="true">
-            {frontierPreviewDots.dots.map((d, i) => (
-              <circle key={i} cx={d.x} cy={d.y} r="1.6" fill="var(--cat-green)" opacity="0.45" />
-            ))}
-            <circle cx={frontierPreviewDots.max.x} cy={frontierPreviewDots.max.y} r="3.5" fill="var(--cat-green)" />
-          </svg>
-        )}
+        {project.media.type === "sparkline" && <FrontierPreviewSvg />}
         {project.watermark && (
           <div className="absolute inset-0 text-[var(--row-color)]">{WATERMARKS[project.watermark]}</div>
         )}

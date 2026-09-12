@@ -5,7 +5,7 @@ import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { FaArrowUpRightFromSquare, FaXmark } from "react-icons/fa6";
 import { categoryStyle } from "@/lib/categories";
-import { frontierPreviewDots } from "@/lib/quant-data";
+import { FrontierPreviewSvg } from "@/components/frontier-preview";
 
 // Quick-preview popup for a project card - image, title, description, tags,
 // and a link into the full case-study page. Opened from ProjectsSection's
@@ -64,12 +64,9 @@ export function ProjectModal({ project, onClose }) {
                 <video src={project.media.src} autoPlay muted loop playsInline className="h-full w-full object-cover" />
               )}
               {project.media.type === "sparkline" && (
-                <svg viewBox="0 0 200 100" className="h-full w-full">
-                  {frontierPreviewDots.dots.map((d, i) => (
-                    <circle key={i} cx={d.x} cy={d.y} r="1.6" fill="var(--cat-green)" opacity="0.45" />
-                  ))}
-                  <circle cx={frontierPreviewDots.max.x} cy={frontierPreviewDots.max.y} r="3.5" fill="var(--cat-green)" />
-                </svg>
+                <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[color-mix(in_srgb,var(--cat-green)_16%,var(--secondary))] to-card">
+                  <FrontierPreviewSvg />
+                </div>
               )}
             </div>
 

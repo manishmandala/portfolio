@@ -22,7 +22,7 @@ import {
 import { Reveal } from "@/components/reveal";
 import { categoryStyle } from "@/lib/categories";
 
-const SKILLS = [
+const GROUPS = [
   {
     category: "blue",
     label: "Languages",
@@ -72,34 +72,41 @@ export function SkillsSection() {
       <h2 className="mb-12 flex items-baseline gap-2.5 font-display text-[clamp(1.6rem,4vw,2rem)] font-extrabold tracking-[-0.01em]">
         <span className="font-mono text-[1.1rem] font-semibold text-brand">03.</span> Skills
       </h2>
-      <div className="overflow-hidden rounded-lg border border-border bg-card shadow-[0_1px_3px_rgba(0,0,0,0.4)]">
-        {SKILLS.map((row) => (
-          <div
-            key={row.label}
-            className="grid grid-cols-1 items-center gap-2.5 border-b border-border border-l-4 px-6 py-5 transition-colors last:border-b-0 sm:grid-cols-[200px_1fr] sm:gap-6"
-            style={{ borderLeftColor: "var(--row-color)", ...categoryStyle(row.category) }}
-          >
-            <span className="font-mono text-[0.8rem] font-semibold uppercase tracking-[0.04em] text-[var(--row-color)]">
-              {row.label}
+
+      {/* color legend */}
+      <div className="mb-6 flex flex-wrap gap-x-6 gap-y-2">
+        {GROUPS.map((group) => (
+          <div key={group.label} className="flex items-center gap-2" style={categoryStyle(group.category)}>
+            <span className="h-[3px] w-4 rounded-full bg-[var(--row-color)]" />
+            <span className="font-mono text-[0.75rem] font-semibold uppercase tracking-[0.05em] text-[var(--row-color)]">
+              {group.label}
             </span>
-            <ul className="flex flex-wrap gap-2">
-              {row.tags.map((tag) => (
-                <li
-                  key={tag.label}
-                  className="inline-flex items-center gap-[7px] rounded-full border px-3 py-[5px] font-mono text-[0.85rem] text-[var(--row-color)] transition-transform hover:-translate-y-0.5"
-                  style={{
-                    borderColor: "color-mix(in srgb, var(--row-color) 30%, transparent)",
-                    backgroundColor: "color-mix(in srgb, var(--row-color) 12%, transparent)",
-                  }}
-                >
-                  <tag.icon className="text-[0.95rem]" />
-                  {tag.label}
-                </li>
-              ))}
-            </ul>
           </div>
         ))}
       </div>
+
+      {/* all tags, flowing together, color-coded per group */}
+      <Reveal>
+        <ul className="flex flex-wrap gap-2.5">
+          {GROUPS.flatMap((group) =>
+            group.tags.map((tag) => (
+              <li
+                key={tag.label}
+                className="inline-flex items-center gap-[7px] rounded-full border px-3.5 py-[7px] font-mono text-[0.85rem] transition-transform hover:-translate-y-0.5"
+                style={{
+                  ...categoryStyle(group.category),
+                  color: "var(--row-color)",
+                  borderColor: "color-mix(in srgb, var(--row-color) 30%, transparent)",
+                  backgroundColor: "color-mix(in srgb, var(--row-color) 12%, transparent)",
+                }}
+              >
+                <tag.icon className="text-[0.95rem]" />
+                {tag.label}
+              </li>
+            ))
+          )}
+        </ul>
+      </Reveal>
     </section>
   );
 }

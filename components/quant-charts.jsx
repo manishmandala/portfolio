@@ -13,10 +13,32 @@ import {
   Scatter,
   Cell,
 } from "recharts";
+import { SiNvidia, SiGoogle, SiMeta } from "react-icons/si";
+import { FaAmazon } from "react-icons/fa6";
 import { riskBarData, frontierData } from "@/lib/quant-data";
 
 const AXIS_COLOR = "#8a90a3";
 const GRID_COLOR = "#2b3142";
+
+const TICKER_ICONS = { NVDA: SiNvidia, GOOGL: SiGoogle, META: SiMeta, AMZN: FaAmazon };
+
+function TickerAxisTick({ x, y, payload }) {
+  const ticker = payload.value;
+  const Icon = TICKER_ICONS[ticker];
+  const entry = riskBarData.find((d) => d.ticker === ticker);
+  return (
+    <g transform={`translate(${x},${y})`}>
+      {Icon && (
+        <g transform="translate(-9, 8)">
+          <Icon size={18} color={entry?.color ?? AXIS_COLOR} />
+        </g>
+      )}
+      <text x={0} y={34} textAnchor="middle" fill={AXIS_COLOR} fontSize={11} fontFamily="var(--font-mono)">
+        {ticker}
+      </text>
+    </g>
+  );
+}
 
 function ChartTooltip({ active, payload, label, formatter }) {
   if (!active || !payload?.length) return null;
@@ -40,8 +62,8 @@ function ReturnVolatilityChart() {
         Real annualized return vs. volatility, computed from live market data (2022-2025). Swap in any
         tickers - these four are just an example.
       </p>
-      <ResponsiveContainer width="100%" height={260}>
-        <BarChart data={riskBarData} margin={{ top: 4, right: 8, left: -16, bottom: 0 }}>
+      <ResponsiveContainer width="100%" height={280}>
+        <BarChart data={riskBarData} margin={{ top: 4, right: 8, left: -16, bottom: 12 }}>
           <defs>
             <linearGradient id="googleGradient" x1="0" y1="0" x2="1" y2="1">
               <stop offset="0%" stopColor="#4285F4" />
@@ -51,7 +73,15 @@ function ReturnVolatilityChart() {
             </linearGradient>
           </defs>
           <CartesianGrid stroke={GRID_COLOR} vertical={false} />
-          <XAxis dataKey="ticker" stroke={AXIS_COLOR} fontSize={12} tickLine={false} axisLine={{ stroke: GRID_COLOR }} />
+          <XAxis
+            dataKey="ticker"
+            stroke={AXIS_COLOR}
+            fontSize={12}
+            tickLine={false}
+            axisLine={{ stroke: GRID_COLOR }}
+            height={44}
+            tick={<TickerAxisTick />}
+          />
           <YAxis stroke={AXIS_COLOR} fontSize={12} tickLine={false} axisLine={false} tickFormatter={(v) => `${Math.round(v * 100)}%`} />
           <Tooltip
             cursor={{ fill: "rgba(255,255,255,0.04)" }}
