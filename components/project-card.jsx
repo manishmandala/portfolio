@@ -81,7 +81,7 @@ export function ProjectCard({ project, featured = false, onOpen }) {
       <div
         className={`absolute inset-0 -z-10 ${
           project.solidCard
-            ? `bg-gradient-to-br from-[color-mix(in_srgb,var(--cat-green)_16%,var(--secondary))] to-card`
+            ? "bg-gradient-to-t from-[color-mix(in_srgb,var(--cat-green)_12%,rgba(8,10,15,0.88))] via-[rgba(8,10,15,0.3)] to-[rgba(8,10,15,0.05)]"
             : "bg-gradient-to-t from-[rgba(8,10,15,0.92)] via-[rgba(8,10,15,0.55)] to-[rgba(8,10,15,0.2)]"
         }`}
       />
