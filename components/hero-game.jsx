@@ -1,16 +1,41 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+import { defaultBubbleConfig } from "@/lib/game-bubbles";
 
-// Missile Defense - tiny canvas game for the hero "game slot". Ported from
-// game.js: falling targets, click-to-intercept with an eased traveling
-// projectile + fading trail that homes toward the live target position,
-// explosions, lives/score/game-over/reset state machine, HUD.
-export function HeroGame() {
+const RESPAWN_COOLDOWN_MS = 12000;
+const MISS_COOLDOWN_MS = 4000;
+const FILLER_CHANCE = 0.7; // fraction of spawns that stay plain filler in Explore mode
+const CARD_DISMISS_MS = 5000;
+
+// Missile Defense / bubble-nav hybrid for the hero "game slot". Two modes:
+// "classic" is the original filler-only reflex game; "explore" mixes in
+// content bubbles (projects, about-me) that pop into a confirm card instead
+// of navigating instantly. Canvas/physics loop stays a single ref-driven
+// requestAnimationFrame effect (unchanged in spirit from the original);
+// the mode toggle and confirm card are real React state rendered as actual
+// DOM, not canvas-drawn or injected HTML.
+export function HeroGame({ bubbleConfig = defaultBubbleConfig }) {
+  const router = useRouter();
   const canvasRef = useRef(null);
+  const bubbleConfigRef = useRef(bubbleConfig);
   const [score, setScore] = useState(0);
   const [message, setMessage] = useState("Click anywhere to intercept");
   const [gameOverVisual, setGameOverVisual] = useState(false);
+  const [mode, setMode] = useState("explore");
+  const [activeCard, setActiveCard] = useState(null);
+
+  useEffect(() => {
+    bubbleConfigRef.current = bubbleConfig;
+  }, [bubbleConfig]);
+
+  // Auto-dismiss the confirm card if the player ignores it.
+  useEffect(() => {
+    if (!activeCard) return;
+    const timer = setTimeout(() => setActiveCard(null), CARD_DISMISS_MS);
+    return () => clearTimeout(timer);
+  }, [activeCard]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -21,6 +46,13 @@ export function HeroGame() {
     const colorAccent = rootStyle.getPropertyValue("--brand").trim() || "#7f97c2";
     const colorRed = rootStyle.getPropertyValue("--cat-red").trim() || "#e66767";
     const colorMuted = rootStyle.getPropertyValue("--muted-foreground").trim() || "#8a90a3";
+    const colorCache = {};
+    function resolveColor(cssVar) {
+      if (!colorCache[cssVar]) {
+        colorCache[cssVar] = rootStyle.getPropertyValue(cssVar).trim() || colorAccent;
+      }
+      return colorCache[cssVar];
+    }
 
     let width = 0;
     let height = 0;
@@ -51,15 +83,57 @@ export function HeroGame() {
     let lastTime = null;
     let rafId = null;
 
+    // content-bubble bookkeeping: cooldowns per id, and ids currently live
+    // on screen (so the same project never has two bubbles falling at once)
+    const respawnAt = new Map();
+    const activeContentIds = new Set();
+
+    function pickContent() {
+      const now = performance.now();
+      const pool = bubbleConfigRef.current.filter(
+        (c) => !activeContentIds.has(c.id) && (respawnAt.get(c.id) ?? 0) <= now
+      );
+      if (!pool.length) return null;
+      return pool[Math.floor(Math.random() * pool.length)];
+    }
+
+    function fitLabel(text, maxWidth) {
+      if (ctx.measureText(text).width <= maxWidth) return text;
+      let t = text;
+      while (t.length > 1 && ctx.measureText(t + "…").width > maxWidth) {
+        t = t.slice(0, -1);
+      }
+      return t + "…";
+    }
+
     function spawnTarget() {
-      const r = 6 + Math.random() * 3;
-      targets.push({
-        x: r + Math.random() * (width - r * 2),
-        y: -r,
-        r,
-        speed: 28 + Math.random() * 18 + Math.min(40, score * 1.2),
-        spawnT: 0,
-      });
+      let content = null;
+      if (mode === "explore" && Math.random() > FILLER_CHANCE) {
+        content = pickContent();
+      }
+
+      if (content) {
+        const r = Math.max(30, Math.min(46, width * 0.09));
+        activeContentIds.add(content.id);
+        targets.push({
+          x: r + Math.random() * (width - r * 2),
+          y: -r,
+          r,
+          speed: 16 + Math.random() * 8,
+          spawnT: 0,
+          content,
+        });
+      } else {
+        const r = 6 + Math.random() * 3;
+        targets.push({
+          x: r + Math.random() * (width - r * 2),
+          y: -r,
+          r,
+          speed: 28 + Math.random() * 18 + Math.min(40, score * 1.2),
+          spawnT: 0,
+          content: null,
+        });
+      }
     }
 
     function reset() {
@@ -70,9 +144,11 @@ export function HeroGame() {
       lives = 3;
       gameOver = false;
       timeSinceSpawn = 0;
+      activeContentIds.clear();
       setScore(0);
       setMessage("Click anywhere to intercept");
       setGameOverVisual(false);
+      setActiveCard(null);
     }
 
     reset();
@@ -144,6 +220,10 @@ export function HeroGame() {
           t.y += t.speed * dt;
           if (t.y - t.r > height) {
             targets.splice(i, 1);
+            if (t.content) {
+              activeContentIds.delete(t.content.id);
+              respawnAt.set(t.content.id, performance.now() + MISS_COOLDOWN_MS);
+            }
             lives--;
             if (lives <= 0) {
               endGame();
@@ -174,6 +254,18 @@ export function HeroGame() {
               targets.splice(idx, 1);
               score++;
               setScore(score);
+              if (s.hitTarget.content) {
+                const c = s.hitTarget.content;
+                activeContentIds.delete(c.id);
+                respawnAt.set(c.id, performance.now() + RESPAWN_COOLDOWN_MS);
+                setActiveCard({
+                  label: c.label,
+                  description: c.description,
+                  route: c.route,
+                  x: s.hitTarget.x,
+                  y: s.hitTarget.y,
+                });
+              }
             }
           } else {
             explosions.push({ x: s.x2, y: s.y2, r: 1, maxR: 8, life: 1, faint: true });
@@ -234,17 +326,41 @@ export function HeroGame() {
 
       targets.forEach((t) => {
         ctx.globalAlpha = t.spawnT;
-        ctx.fillStyle = colorRed;
-        ctx.beginPath();
-        ctx.arc(t.x, t.y, t.r * (0.7 + 0.3 * t.spawnT), 0, Math.PI * 2);
-        ctx.fill();
-        ctx.strokeStyle = colorRed;
-        ctx.globalAlpha = 0.35 * t.spawnT;
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.moveTo(t.x, t.y - t.r);
-        ctx.lineTo(t.x, t.y - t.r - 10);
-        ctx.stroke();
+        const scaleR = t.r * (0.7 + 0.3 * t.spawnT);
+
+        if (t.content) {
+          const color = resolveColor(t.content.cssVar);
+          ctx.fillStyle = color;
+          ctx.beginPath();
+          ctx.arc(t.x, t.y, scaleR, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.lineWidth = 2;
+          ctx.strokeStyle = "rgba(255,255,255,0.3)";
+          ctx.stroke();
+
+          const fontSize = Math.max(9, Math.min(12, scaleR * 0.32));
+          ctx.font = `700 ${fontSize}px system-ui, sans-serif`;
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          const label = fitLabel(t.content.label, scaleR * 1.7);
+          ctx.lineWidth = 3;
+          ctx.strokeStyle = "rgba(0,0,0,0.55)";
+          ctx.strokeText(label, t.x, t.y);
+          ctx.fillStyle = "#fff";
+          ctx.fillText(label, t.x, t.y);
+        } else {
+          ctx.fillStyle = colorRed;
+          ctx.beginPath();
+          ctx.arc(t.x, t.y, scaleR, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.strokeStyle = colorRed;
+          ctx.globalAlpha = 0.35 * t.spawnT;
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(t.x, t.y - t.r);
+          ctx.lineTo(t.x, t.y - t.r - 10);
+          ctx.stroke();
+        }
         ctx.globalAlpha = 1;
       });
 
@@ -277,25 +393,89 @@ export function HeroGame() {
       canvas.removeEventListener("click", handleClick);
       ro.disconnect();
     };
-  }, []);
+  }, [mode]);
+
+  function goToCard() {
+    if (!activeCard) return;
+    router.push(activeCard.route);
+    setActiveCard(null);
+  }
 
   return (
-    <div className="hero-game-slot relative z-[1] shrink-0 w-[400px] h-[400px] max-w-[40vw] max-h-[400px] aspect-square border border-border rounded-lg overflow-hidden flex flex-col bg-card transition-colors hover:border-brand">
-      <div className="flex items-center justify-between px-3 py-2.5 border-b border-border">
-        <span className="font-mono text-[0.7rem] font-bold tracking-[0.06em] text-brand">
-          MISSILE DEFENSE
-        </span>
+    <div className="hero-game-slot relative z-[1] shrink-0 w-[460px] h-[420px] max-w-[42vw] max-h-[420px] border border-border rounded-lg overflow-hidden flex flex-col bg-card transition-colors hover:border-brand">
+      <div className="flex items-center justify-between px-3 py-2 border-b border-border">
+        <div className="flex items-center gap-1 rounded-full border border-border bg-secondary p-0.5">
+          <button
+            type="button"
+            onClick={() => setMode("classic")}
+            className={`rounded-full px-2.5 py-1 font-mono text-[0.65rem] font-bold tracking-[0.05em] transition-colors ${
+              mode === "classic" ? "bg-brand text-primary-foreground" : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            CLASSIC
+          </button>
+          <button
+            type="button"
+            onClick={() => setMode("explore")}
+            className={`rounded-full px-2.5 py-1 font-mono text-[0.65rem] font-bold tracking-[0.05em] transition-colors ${
+              mode === "explore" ? "bg-brand text-primary-foreground" : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            EXPLORE
+          </button>
+        </div>
         <span className="font-mono text-[0.75rem] text-muted-foreground">
           Score: <span>{score}</span>
         </span>
       </div>
-      <canvas ref={canvasRef} className="flex-1 w-full block cursor-crosshair" />
-      <div
-        className={`absolute left-0 right-0 bottom-2.5 text-center text-[0.78rem] pointer-events-none transition-opacity ${
-          gameOverVisual ? "text-brand font-semibold" : "text-muted-foreground"
-        }`}
-      >
-        {message}
+
+      <div className="relative flex-1 w-full">
+        <canvas ref={canvasRef} className="h-full w-full block cursor-crosshair" />
+
+        {activeCard && (
+          <div
+            className="absolute z-10 w-[210px] rounded-lg border border-brand bg-card p-3 shadow-[0_10px_28px_rgba(0,0,0,0.5)]"
+            style={{
+              left: Math.min(
+                Math.max(activeCard.x - 105, 8),
+                (canvasRef.current?.clientWidth ?? 460) - 210 - 8
+              ),
+              top: Math.min(
+                Math.max(activeCard.y - 40, 8),
+                (canvasRef.current?.clientHeight ?? 380) - 140 - 8
+              ),
+            }}
+          >
+            <p className="mb-1 font-display text-[0.9rem] font-bold text-foreground">{activeCard.label}</p>
+            {activeCard.description && (
+              <p className="mb-2 line-clamp-2 text-[0.75rem] text-muted-foreground">{activeCard.description}</p>
+            )}
+            <div className="flex items-center justify-between gap-2">
+              <button
+                type="button"
+                onClick={goToCard}
+                className="rounded-md bg-brand px-2.5 py-1 font-mono text-[0.7rem] font-semibold text-primary-foreground hover:bg-brand-hover"
+              >
+                View &rarr;
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveCard(null)}
+                className="font-mono text-[0.7rem] text-muted-foreground hover:text-foreground"
+              >
+                Dismiss
+              </button>
+            </div>
+          </div>
+        )}
+
+        <div
+          className={`pointer-events-none absolute left-0 right-0 bottom-2.5 text-center text-[0.78rem] transition-opacity ${
+            gameOverVisual ? "text-brand font-semibold" : "text-muted-foreground"
+          }`}
+        >
+          {message}
+        </div>
       </div>
     </div>
   );
