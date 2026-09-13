@@ -4,6 +4,7 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { IntroSplash } from "@/components/intro-splash";
 import { PageTransition } from "@/components/page-transition";
+import { CursorGlow } from "@/components/cursor-glow";
 
 const inter = Inter({
   variable: "--font-sans",
@@ -36,6 +37,7 @@ export default function RootLayout({ children }) {
       className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
+        <CursorGlow />
         <IntroSplash />
         <SiteHeader />
         <main className="flex-1">
