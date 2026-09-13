@@ -335,7 +335,7 @@ export function HeroGame({ bubbleConfig = homepageProjects }) {
 
     function drawLives() {
       ctx.fillStyle = colorMuted;
-      ctx.font = "11px monospace";
+      ctx.font = '11px "JetBrains Mono", monospace';
       ctx.textAlign = "right";
       ctx.fillText("Lives: " + "*".repeat(Math.max(0, lives)), width - 8, 16);
     }
@@ -398,7 +398,7 @@ export function HeroGame({ bubbleConfig = homepageProjects }) {
           ctx.stroke();
 
           const fontSize = Math.max(8, Math.min(10, scaleR * 0.32));
-          ctx.font = `700 ${fontSize}px system-ui, sans-serif`;
+          ctx.font = `700 ${fontSize}px "JetBrains Mono", monospace`;
           ctx.textAlign = "center";
           ctx.textBaseline = "middle";
           const lines = wrapLabel(t.project.shortTitle, scaleR * 1.7);
