@@ -1,10 +1,63 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+
 // Faint circuit-trace line art confined to the empty margins above/below
 // the hero text block, plus a small decorative geometric mark. Recreated
 // from the original inline SVGs in index.html (.hero-bg-circuit /
 // .hero-bg-art) - simplified, not pixel-identical, same visual idea.
+//
+// Each pad glows in its own category color based on proximity to the
+// cursor (tracked on window, since the SVG itself stays pointer-events:
+// none so it never blocks clicking through to the hero content) - a nod
+// to the "hex grid lights up on hover" effect, applied to this site's own
+// circuit-trace motif instead of copying a hex grid wholesale.
+const PADS = [
+  { x: 240, y: 20, cssVar: "--cat-blue" },
+  { x: 90, y: 60, cssVar: "--cat-orange" },
+  { x: 380, y: 110, cssVar: "--cat-aqua" },
+  { x: 560, y: 10, cssVar: "--cat-yellow" },
+  { x: 60, y: 80, cssVar: "--cat-magenta" },
+  { x: 140, y: 610, cssVar: "--cat-green" },
+  { x: 420, y: 555, cssVar: "--cat-violet" },
+  { x: 580, y: 570, cssVar: "--cat-red" },
+  { x: 20, y: 560, cssVar: "--cat-blue" },
+];
+
+const GLOW_RADIUS_PX = 140;
+
 export function HeroCircuit() {
+  const svgRef = useRef(null);
+  const padRefs = useRef([]);
+
+  useEffect(() => {
+    const svg = svgRef.current;
+    if (!svg) return;
+
+    function handleMove(e) {
+      const rect = svg.getBoundingClientRect();
+      if (rect.width === 0 || rect.height === 0) return;
+      const scaleX = rect.width / 640;
+      const scaleY = rect.height / 640;
+
+      PADS.forEach((pad, i) => {
+        const el = padRefs.current[i];
+        if (!el) return;
+        const padScreenX = rect.left + pad.x * scaleX;
+        const padScreenY = rect.top + pad.y * scaleY;
+        const dist = Math.hypot(e.clientX - padScreenX, e.clientY - padScreenY);
+        const intensity = Math.max(0, 1 - dist / GLOW_RADIUS_PX);
+        el.style.setProperty("--glow", intensity.toFixed(3));
+      });
+    }
+
+    window.addEventListener("mousemove", handleMove);
+    return () => window.removeEventListener("mousemove", handleMove);
+  }, []);
+
   return (
     <svg
+      ref={svgRef}
       className="pointer-events-none absolute top-0 left-0 h-full w-[min(640px,58%)] fill-none opacity-70"
       viewBox="0 0 640 640"
       preserveAspectRatio="none"
@@ -18,16 +71,21 @@ export function HeroCircuit() {
         <path d="M300,640 L300,590 L420,590 L420,555" />
         <path d="M480,610 L580,610 L580,570" />
       </g>
-      <g fill="var(--border)">
-        <circle cx="240" cy="20" r="5" />
-        <circle cx="90" cy="60" r="5" />
-        <circle cx="380" cy="110" r="5" />
-        <circle cx="560" cy="10" r="5" />
-        <circle cx="60" cy="80" r="5" />
-        <circle cx="140" cy="610" r="5" />
-        <circle cx="420" cy="555" r="5" />
-        <circle cx="580" cy="570" r="5" />
-        <circle cx="20" cy="560" r="5" />
+      <g>
+        {PADS.map((pad, i) => (
+          <circle
+            key={i}
+            ref={(el) => (padRefs.current[i] = el)}
+            cx={pad.x}
+            cy={pad.y}
+            r="5"
+            style={{
+              "--glow": 0,
+              fill: `color-mix(in srgb, var(${pad.cssVar}) calc(var(--glow) * 100%), var(--border))`,
+              filter: `drop-shadow(0 0 calc(var(--glow) * 7px) var(${pad.cssVar}))`,
+            }}
+          />
+        ))}
       </g>
     </svg>
   );
