@@ -73,6 +73,8 @@ function pointAtDistance(points, dist) {
 }
 
 const GLOW_RADIUS_PX = 140;
+const TRAIL_SEGMENTS = 7;
+const TRAIL_SPACING = 5; // viewBox units between sampled trail points
 
 function distToSegment(px, py, x1, y1, x2, y2) {
   const dx = x2 - x1;
@@ -101,6 +103,7 @@ export function HeroCircuit() {
   const traceRefs = useRef([]);
   const pulseRef = useRef(null);
   const pulseGlowRef = useRef(null);
+  const trailRefs = useRef([]);
 
   useEffect(() => {
     const svg = svgRef.current;
@@ -165,10 +168,11 @@ export function HeroCircuit() {
         acc += tr.slot;
       }
 
-      let x, y, opacity;
+      let x, y, opacity, currentDist;
       if (localElapsed < trace.duration) {
         const localT = localElapsed / trace.duration;
-        [x, y] = pointAtDistance(trace.points, localT * trace.length);
+        currentDist = localT * trace.length;
+        [x, y] = pointAtDistance(trace.points, currentDist);
         const fadeOutStart = trace.duration - FADE_MS;
         if (localElapsed > fadeOutStart) {
           opacity = Math.max(0, 1 - (localElapsed - fadeOutStart) / FADE_MS);
@@ -179,6 +183,7 @@ export function HeroCircuit() {
         }
       } else {
         // paused at the junction, dark
+        currentDist = trace.length;
         [x, y] = trace.points[trace.points.length - 1];
         opacity = 0;
       }
@@ -193,6 +198,25 @@ export function HeroCircuit() {
         pulseGlowRef.current.setAttribute("cy", y);
         pulseGlowRef.current.style.opacity = opacity;
       }
+
+      // comet trail: sample points behind the head along the same trace
+      // (following its actual bends, not a straight line) and connect them
+      // with segments that fade out toward the tail - bright head, dull tail.
+      const trailPoints = [[x, y]];
+      for (let i = 1; i <= TRAIL_SEGMENTS; i++) {
+        const d = Math.max(0, currentDist - i * TRAIL_SPACING);
+        trailPoints.push(pointAtDistance(trace.points, d));
+      }
+      trailRefs.current.forEach((el, i) => {
+        if (!el) return;
+        const [x1, y1] = trailPoints[i];
+        const [x2, y2] = trailPoints[i + 1];
+        el.setAttribute("x1", x1);
+        el.setAttribute("y1", y1);
+        el.setAttribute("x2", x2);
+        el.setAttribute("y2", y2);
+        el.style.opacity = opacity * (1 - i / TRAIL_SEGMENTS) * 0.8;
+      });
 
       PADS.forEach((pad, i) => {
         const el = padRefs.current[i];
@@ -233,9 +257,19 @@ export function HeroCircuit() {
           />
         ))}
       </g>
-      {/* the traveling "electricity" dot - one real point, animated in JS -
-          plus a small soft halo around it, same idea as the cursor glow
-          but much smaller and following the pulse instead of the mouse */}
+      {/* the traveling "electricity" - a comet-style trail (bright head,
+          dimming tail) instead of a plain dot, following the trace's actual
+          bends via segments sampled behind the head each frame */}
+      <g strokeLinecap="round">
+        {Array.from({ length: TRAIL_SEGMENTS }).map((_, i) => (
+          <line
+            key={i}
+            ref={(el) => (trailRefs.current[i] = el)}
+            stroke="white"
+            strokeWidth={2.4 - (i / TRAIL_SEGMENTS) * 1.6}
+          />
+        ))}
+      </g>
       <circle ref={pulseGlowRef} r="3.5" fill="white" opacity="0.5" style={{ filter: "blur(1.5px)" }} />
       <circle ref={pulseRef} r="2.5" fill="white" style={{ filter: "drop-shadow(0 0 4px white)" }} />
       <g>
