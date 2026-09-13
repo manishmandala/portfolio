@@ -83,6 +83,25 @@ export function CaseStudy({ project }) {
                   {p}
                 </p>
               ))}
+
+              {project.hints && (
+                <div className="mt-6 rounded-lg border border-border bg-secondary p-5">
+                  <div className="mb-1 font-mono text-[0.75rem] font-bold tracking-[0.06em] text-brand">
+                    ON THE BENCH
+                  </div>
+                  <p className="mb-3 text-[0.85rem] text-muted-foreground">
+                    A few things currently on order. See if you can guess where this is going.
+                  </p>
+                  <ul className="flex flex-col gap-1.5 font-mono text-[0.82rem] text-muted-foreground">
+                    {project.hints.map((hint, i) => (
+                      <li key={i} className="flex gap-2.5">
+                        <span className="text-brand">{String(i + 1).padStart(2, "0")}</span>
+                        {hint}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
           ) : (
             <>
