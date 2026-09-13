@@ -73,8 +73,8 @@ function pointAtDistance(points, dist) {
 }
 
 const GLOW_RADIUS_PX = 140;
-const TRAIL_SEGMENTS = 7;
-const TRAIL_SPACING = 5; // viewBox units between sampled trail points
+const TRAIL_SEGMENTS = 12;
+const TRAIL_SPACING = 7; // viewBox units between sampled trail points
 
 function distToSegment(px, py, x1, y1, x2, y2) {
   const dx = x2 - x1;
@@ -101,8 +101,6 @@ export function HeroCircuit() {
   const svgRef = useRef(null);
   const padRefs = useRef([]);
   const traceRefs = useRef([]);
-  const pulseRef = useRef(null);
-  const pulseGlowRef = useRef(null);
   const trailRefs = useRef([]);
 
   useEffect(() => {
@@ -188,20 +186,10 @@ export function HeroCircuit() {
         opacity = 0;
       }
 
-      if (pulseRef.current) {
-        pulseRef.current.setAttribute("cx", x);
-        pulseRef.current.setAttribute("cy", y);
-        pulseRef.current.style.opacity = opacity;
-      }
-      if (pulseGlowRef.current) {
-        pulseGlowRef.current.setAttribute("cx", x);
-        pulseGlowRef.current.setAttribute("cy", y);
-        pulseGlowRef.current.style.opacity = opacity;
-      }
-
-      // comet trail: sample points behind the head along the same trace
-      // (following its actual bends, not a straight line) and connect them
-      // with segments that fade out toward the tail - bright head, dull tail.
+      // the pulse is purely this fading line - no dot/head marker. Sample
+      // points behind the current position along the same trace (following
+      // its actual bends, not a straight line) and connect them with
+      // segments that fade out toward the tail - bright front, dull tail.
       const trailPoints = [[x, y]];
       for (let i = 1; i <= TRAIL_SEGMENTS; i++) {
         const d = Math.max(0, currentDist - i * TRAIL_SPACING);
@@ -215,7 +203,7 @@ export function HeroCircuit() {
         el.setAttribute("y1", y1);
         el.setAttribute("x2", x2);
         el.setAttribute("y2", y2);
-        el.style.opacity = opacity * (1 - i / TRAIL_SEGMENTS) * 0.8;
+        el.style.opacity = opacity * (1 - i / TRAIL_SEGMENTS);
       });
 
       PADS.forEach((pad, i) => {
@@ -257,21 +245,20 @@ export function HeroCircuit() {
           />
         ))}
       </g>
-      {/* the traveling "electricity" - a comet-style trail (bright head,
-          dimming tail) instead of a plain dot, following the trace's actual
-          bends via segments sampled behind the head each frame */}
+      {/* the traveling "electricity" - purely a fading line (bright front,
+          dull tail), no dot/head marker, following the trace's actual bends
+          via segments sampled behind the front each frame */}
       <g strokeLinecap="round">
         {Array.from({ length: TRAIL_SEGMENTS }).map((_, i) => (
           <line
             key={i}
             ref={(el) => (trailRefs.current[i] = el)}
             stroke="white"
-            strokeWidth={2.4 - (i / TRAIL_SEGMENTS) * 1.6}
+            strokeWidth={2.6 - (i / TRAIL_SEGMENTS) * 1.8}
+            style={i === 0 ? { filter: "drop-shadow(0 0 3px white)" } : undefined}
           />
         ))}
       </g>
-      <circle ref={pulseGlowRef} r="3.5" fill="white" opacity="0.5" style={{ filter: "blur(1.5px)" }} />
-      <circle ref={pulseRef} r="2.5" fill="white" style={{ filter: "drop-shadow(0 0 4px white)" }} />
       <g>
         {PADS.map((pad, i) => (
           <circle
