@@ -9,7 +9,7 @@ const EXPERIENCE = [
     mark: "NU",
     markColor: "#4E2A84",
     dates: "Jun 2026 - Aug 2026",
-    title: "Undergraduate Research Assistant",
+    title: "Undergraduate Research Assistant (AI/ML)",
     org: "Northwestern University · AMPL Lab",
     description:
       "Researching faster GPU-based simulation methods for 3D printing, working alongside a team of PhD researchers at Northwestern's AMPL Lab.",

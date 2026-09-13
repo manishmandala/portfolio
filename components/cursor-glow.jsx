@@ -33,14 +33,14 @@ export function CursorGlow() {
   return (
     <motion.div
       aria-hidden="true"
-      className="pointer-events-none fixed left-0 top-0 z-0 h-[600px] w-[600px] rounded-full"
+      className="pointer-events-none fixed left-0 top-0 z-0 h-[540px] w-[540px] rounded-full"
       style={{
         x,
         y,
         translateX: "-50%",
         translateY: "-50%",
         background:
-          "radial-gradient(circle, color-mix(in srgb, var(--brand) 22%, transparent) 0%, transparent 70%)",
+          "radial-gradient(circle, color-mix(in srgb, var(--brand) 20%, transparent) 0%, transparent 70%)",
         filter: "blur(40px)",
         mixBlendMode: "screen",
       }}

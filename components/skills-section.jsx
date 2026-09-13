@@ -18,6 +18,7 @@ import {
   FaPersonWalking,
   FaPlug,
   FaMicrochip,
+  FaCubes,
 } from "react-icons/fa6";
 import { Reveal } from "@/components/reveal";
 import { categoryStyle } from "@/lib/categories";
@@ -62,6 +63,7 @@ const GROUPS = [
       { icon: FaPersonWalking, label: "Pose Estimation" },
       { icon: FaPlug, label: "REST APIs" },
       { icon: FaMicrochip, label: "Hardware Integration" },
+      { icon: FaCubes, label: "FEA" },
     ],
   },
 ];

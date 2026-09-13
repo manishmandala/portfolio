@@ -17,9 +17,8 @@ export function AboutSection() {
         <p className="mb-4 text-muted-foreground">
           Outside coursework, I build side projects to learn by shipping:
           computer vision, embedded systems, and full-stack web apps. Right
-          now I&apos;m focused on internship search tooling and expanding
-          into more robotics/AI work, with a growing interest in defense
-          tech specifically.
+          now I&apos;m focused on robotics/AI work, defense tech, and
+          software development broadly.
         </p>
         <ul className="mt-6 grid gap-2">
           <li className="text-[0.95rem]">

@@ -1,41 +1,35 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
-import { defaultBubbleConfig } from "@/lib/game-bubbles";
+import { homepageProjects } from "@/lib/projects-data";
+import { CATEGORY_CLASSES } from "@/lib/categories";
+import { ProjectModal } from "@/components/project-modal";
 
 const RESPAWN_COOLDOWN_MS = 12000;
 const MISS_COOLDOWN_MS = 4000;
 const FILLER_CHANCE = 0.7; // fraction of spawns that stay plain filler in Explore mode
-const CARD_DISMISS_MS = 5000;
 
-// Missile Defense / bubble-nav hybrid for the hero "game slot". Two modes:
+// Missile Defense / project-nav hybrid for the hero "game slot". Two modes:
 // "classic" is the original filler-only reflex game; "explore" mixes in
-// content bubbles (projects, about-me) that pop into a confirm card instead
-// of navigating instantly. Canvas/physics loop stays a single ref-driven
-// requestAnimationFrame effect (unchanged in spirit from the original);
-// the mode toggle and confirm card are real React state rendered as actual
-// DOM, not canvas-drawn or injected HTML.
-export function HeroGame({ bubbleConfig = defaultBubbleConfig }) {
-  const router = useRouter();
+// project bubbles (drawn straight from lib/projects-data.js) among the
+// regular filler targets. Popping a project bubble opens the exact same
+// ProjectModal used on the homepage Projects grid - same preview, same
+// "View Full Case Study" link into the real case-study page. Canvas/physics
+// loop stays a single ref-driven requestAnimationFrame effect (unchanged in
+// spirit from the original); the mode toggle and modal are real React state
+// rendered as actual DOM, not canvas-drawn or injected HTML.
+export function HeroGame({ bubbleConfig = homepageProjects }) {
   const canvasRef = useRef(null);
   const bubbleConfigRef = useRef(bubbleConfig);
   const [score, setScore] = useState(0);
   const [message, setMessage] = useState("Click anywhere to intercept");
   const [gameOverVisual, setGameOverVisual] = useState(false);
   const [mode, setMode] = useState("explore");
-  const [activeCard, setActiveCard] = useState(null);
+  const [activeProject, setActiveProject] = useState(null);
 
   useEffect(() => {
     bubbleConfigRef.current = bubbleConfig;
   }, [bubbleConfig]);
-
-  // Auto-dismiss the confirm card if the player ignores it.
-  useEffect(() => {
-    if (!activeCard) return;
-    const timer = setTimeout(() => setActiveCard(null), CARD_DISMISS_MS);
-    return () => clearTimeout(timer);
-  }, [activeCard]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -83,15 +77,16 @@ export function HeroGame({ bubbleConfig = defaultBubbleConfig }) {
     let lastTime = null;
     let rafId = null;
 
-    // content-bubble bookkeeping: cooldowns per id, and ids currently live
-    // on screen (so the same project never has two bubbles falling at once)
+    // project-bubble bookkeeping: cooldowns per slug, and slugs currently
+    // live on screen (so the same project never has two bubbles falling
+    // at once)
     const respawnAt = new Map();
-    const activeContentIds = new Set();
+    const activeSlugs = new Set();
 
-    function pickContent() {
+    function pickProject() {
       const now = performance.now();
       const pool = bubbleConfigRef.current.filter(
-        (c) => !activeContentIds.has(c.id) && (respawnAt.get(c.id) ?? 0) <= now
+        (p) => !activeSlugs.has(p.slug) && (respawnAt.get(p.slug) ?? 0) <= now
       );
       if (!pool.length) return null;
       return pool[Math.floor(Math.random() * pool.length)];
@@ -107,21 +102,21 @@ export function HeroGame({ bubbleConfig = defaultBubbleConfig }) {
     }
 
     function spawnTarget() {
-      let content = null;
+      let project = null;
       if (mode === "explore" && Math.random() > FILLER_CHANCE) {
-        content = pickContent();
+        project = pickProject();
       }
 
-      if (content) {
-        const r = Math.max(30, Math.min(46, width * 0.09));
-        activeContentIds.add(content.id);
+      if (project) {
+        const r = Math.max(24, Math.min(36, width * 0.075));
+        activeSlugs.add(project.slug);
         targets.push({
           x: r + Math.random() * (width - r * 2),
           y: -r,
           r,
           speed: 16 + Math.random() * 8,
           spawnT: 0,
-          content,
+          project,
         });
       } else {
         const r = 6 + Math.random() * 3;
@@ -131,7 +126,7 @@ export function HeroGame({ bubbleConfig = defaultBubbleConfig }) {
           r,
           speed: 28 + Math.random() * 18 + Math.min(40, score * 1.2),
           spawnT: 0,
-          content: null,
+          project: null,
         });
       }
     }
@@ -144,11 +139,11 @@ export function HeroGame({ bubbleConfig = defaultBubbleConfig }) {
       lives = 3;
       gameOver = false;
       timeSinceSpawn = 0;
-      activeContentIds.clear();
+      activeSlugs.clear();
       setScore(0);
       setMessage("Click anywhere to intercept");
       setGameOverVisual(false);
-      setActiveCard(null);
+      setActiveProject(null);
     }
 
     reset();
@@ -220,9 +215,9 @@ export function HeroGame({ bubbleConfig = defaultBubbleConfig }) {
           t.y += t.speed * dt;
           if (t.y - t.r > height) {
             targets.splice(i, 1);
-            if (t.content) {
-              activeContentIds.delete(t.content.id);
-              respawnAt.set(t.content.id, performance.now() + MISS_COOLDOWN_MS);
+            if (t.project) {
+              activeSlugs.delete(t.project.slug);
+              respawnAt.set(t.project.slug, performance.now() + MISS_COOLDOWN_MS);
             }
             lives--;
             if (lives <= 0) {
@@ -254,17 +249,11 @@ export function HeroGame({ bubbleConfig = defaultBubbleConfig }) {
               targets.splice(idx, 1);
               score++;
               setScore(score);
-              if (s.hitTarget.content) {
-                const c = s.hitTarget.content;
-                activeContentIds.delete(c.id);
-                respawnAt.set(c.id, performance.now() + RESPAWN_COOLDOWN_MS);
-                setActiveCard({
-                  label: c.label,
-                  description: c.description,
-                  route: c.route,
-                  x: s.hitTarget.x,
-                  y: s.hitTarget.y,
-                });
+              if (s.hitTarget.project) {
+                const p = s.hitTarget.project;
+                activeSlugs.delete(p.slug);
+                respawnAt.set(p.slug, performance.now() + RESPAWN_COOLDOWN_MS);
+                setActiveProject(p);
               }
             }
           } else {
@@ -328,8 +317,9 @@ export function HeroGame({ bubbleConfig = defaultBubbleConfig }) {
         ctx.globalAlpha = t.spawnT;
         const scaleR = t.r * (0.7 + 0.3 * t.spawnT);
 
-        if (t.content) {
-          const color = resolveColor(t.content.cssVar);
+        if (t.project) {
+          const cssVar = (CATEGORY_CLASSES[t.project.category] ?? CATEGORY_CLASSES.blue).cssVar;
+          const color = resolveColor(cssVar);
           ctx.fillStyle = color;
           ctx.beginPath();
           ctx.arc(t.x, t.y, scaleR, 0, Math.PI * 2);
@@ -338,11 +328,11 @@ export function HeroGame({ bubbleConfig = defaultBubbleConfig }) {
           ctx.strokeStyle = "rgba(255,255,255,0.3)";
           ctx.stroke();
 
-          const fontSize = Math.max(9, Math.min(12, scaleR * 0.32));
+          const fontSize = Math.max(8, Math.min(10, scaleR * 0.32));
           ctx.font = `700 ${fontSize}px system-ui, sans-serif`;
           ctx.textAlign = "center";
           ctx.textBaseline = "middle";
-          const label = fitLabel(t.content.label, scaleR * 1.7);
+          const label = fitLabel(t.project.shortTitle, scaleR * 1.7);
           ctx.lineWidth = 3;
           ctx.strokeStyle = "rgba(0,0,0,0.55)";
           ctx.strokeText(label, t.x, t.y);
@@ -395,12 +385,6 @@ export function HeroGame({ bubbleConfig = defaultBubbleConfig }) {
     };
   }, [mode]);
 
-  function goToCard() {
-    if (!activeCard) return;
-    router.push(activeCard.route);
-    setActiveCard(null);
-  }
-
   return (
     <div className="hero-game-slot relative z-[1] shrink-0 w-[460px] h-[420px] max-w-[42vw] max-h-[420px] border border-border rounded-lg overflow-hidden flex flex-col bg-card transition-colors hover:border-brand">
       <div className="flex items-center justify-between px-3 py-2 border-b border-border">
@@ -432,43 +416,6 @@ export function HeroGame({ bubbleConfig = defaultBubbleConfig }) {
       <div className="relative flex-1 w-full">
         <canvas ref={canvasRef} className="h-full w-full block cursor-crosshair" />
 
-        {activeCard && (
-          <div
-            className="absolute z-10 w-[210px] rounded-lg border border-brand bg-card p-3 shadow-[0_10px_28px_rgba(0,0,0,0.5)]"
-            style={{
-              left: Math.min(
-                Math.max(activeCard.x - 105, 8),
-                (canvasRef.current?.clientWidth ?? 460) - 210 - 8
-              ),
-              top: Math.min(
-                Math.max(activeCard.y - 40, 8),
-                (canvasRef.current?.clientHeight ?? 380) - 140 - 8
-              ),
-            }}
-          >
-            <p className="mb-1 font-display text-[0.9rem] font-bold text-foreground">{activeCard.label}</p>
-            {activeCard.description && (
-              <p className="mb-2 line-clamp-2 text-[0.75rem] text-muted-foreground">{activeCard.description}</p>
-            )}
-            <div className="flex items-center justify-between gap-2">
-              <button
-                type="button"
-                onClick={goToCard}
-                className="rounded-md bg-brand px-2.5 py-1 font-mono text-[0.7rem] font-semibold text-primary-foreground hover:bg-brand-hover"
-              >
-                View &rarr;
-              </button>
-              <button
-                type="button"
-                onClick={() => setActiveCard(null)}
-                className="font-mono text-[0.7rem] text-muted-foreground hover:text-foreground"
-              >
-                Dismiss
-              </button>
-            </div>
-          </div>
-        )}
-
         <div
           className={`pointer-events-none absolute left-0 right-0 bottom-2.5 text-center text-[0.78rem] transition-opacity ${
             gameOverVisual ? "text-brand font-semibold" : "text-muted-foreground"
@@ -477,6 +424,8 @@ export function HeroGame({ bubbleConfig = defaultBubbleConfig }) {
           {message}
         </div>
       </div>
+
+      <ProjectModal project={activeProject} onClose={() => setActiveProject(null)} />
     </div>
   );
 }
