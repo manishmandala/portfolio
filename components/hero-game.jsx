@@ -397,8 +397,8 @@ export function HeroGame({ bubbleConfig = homepageProjects }) {
           ctx.strokeStyle = "rgba(255,255,255,0.3)";
           ctx.stroke();
 
-          const fontSize = Math.max(8, Math.min(10, scaleR * 0.32));
-          ctx.font = `700 ${fontSize}px "JetBrains Mono", monospace`;
+          const fontSize = Math.max(9, Math.min(11, scaleR * 0.34));
+          ctx.font = `700 ${fontSize}px "Space Grotesk", system-ui, sans-serif`;
           ctx.textAlign = "center";
           ctx.textBaseline = "middle";
           const lines = wrapLabel(t.project.shortTitle, scaleR * 1.7);
