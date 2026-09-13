@@ -63,7 +63,7 @@ function pointAtDistance(points, dist) {
 }
 
 const GLOW_RADIUS_PX = 140;
-const PULSE_CYCLE_MS = 5000; // total time to visit every trace once, then loop
+const PULSE_CYCLE_MS = 20000; // total time to visit every trace once, then loop
 
 function distToSegment(px, py, x1, y1, x2, y2) {
   const dx = x2 - x1;

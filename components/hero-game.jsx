@@ -7,7 +7,8 @@ import { ProjectModal } from "@/components/project-modal";
 
 const RESPAWN_COOLDOWN_MS = 12000;
 const MISS_COOLDOWN_MS = 4000;
-const MAX_CONCURRENT_PROJECTS = 3;
+const EXPLORE_SPAWN_INTERVAL_MS = 900;
+const LANE_GAP = 16;
 
 // Missile Defense / project-nav hybrid for the hero "game slot". Two modes:
 // "classic" is the original filler-only reflex game; "explore" mixes in
@@ -121,28 +122,53 @@ export function HeroGame({ bubbleConfig = homepageProjects }) {
       return lines;
     }
 
-    function pickSpawnX(r) {
-      for (let attempt = 0; attempt < 10; attempt++) {
-        const x = r + Math.random() * (width - r * 2);
-        const collides = targets.some((t) => {
-          if (t.y > height * 0.6) return false; // already well clear of the spawn zone
-          return Math.abs(t.x - x) < r + t.r + 16;
+    // Fixed-width lanes (deterministic, spaced by the constant content-bubble
+    // radius) instead of random placement + collision retries - two bubbles
+    // in different lanes can never overlap, by construction, and a lane
+    // only opens back up once its bubble is actually gone (popped or off
+    // the bottom), which is what gives a continuous, evenly-spaced flow
+    // instead of bursts that fill up then stall.
+    function laneLayout(r) {
+      const laneWidth = r * 2 + LANE_GAP;
+      const laneCount = Math.max(1, Math.floor(width / laneWidth));
+      const margin = (width - laneCount * laneWidth) / 2;
+      const centers = Array.from({ length: laneCount }, (_, i) => margin + laneWidth * i + laneWidth / 2);
+      return centers;
+    }
+
+    function occupiedLaneIndices(centers) {
+      const occupied = new Set();
+      targets.forEach((t) => {
+        if (!t.project) return;
+        let closest = 0;
+        let closestDist = Infinity;
+        centers.forEach((cx, i) => {
+          const d = Math.abs(t.x - cx);
+          if (d < closestDist) {
+            closestDist = d;
+            closest = i;
+          }
         });
-        if (!collides) return x;
-      }
-      return r + Math.random() * (width - r * 2); // give up after 10 tries, place it anyway
+        occupied.add(closest);
+      });
+      return occupied;
     }
 
     function spawnTarget() {
       if (mode === "explore") {
-        const liveProjectCount = targets.reduce((n, t) => n + (t.project ? 1 : 0), 0);
-        if (liveProjectCount >= MAX_CONCURRENT_PROJECTS) return; // board's full enough, skip this tick
+        const r = Math.max(24, Math.min(36, width * 0.075));
+        const centers = laneLayout(r);
+        const occupied = occupiedLaneIndices(centers);
+        const freeLanes = centers.map((_, i) => i).filter((i) => !occupied.has(i));
+        if (!freeLanes.length) return; // every lane's in use - skip this tick, no overlap risk taken
+
         const project = pickProject();
         if (!project) return; // everything's on cooldown/live - skip this tick, no filler fallback
-        const r = Math.max(24, Math.min(36, width * 0.075));
+
+        const laneIndex = freeLanes[Math.floor(Math.random() * freeLanes.length)];
         activeSlugs.add(project.slug);
         targets.push({
-          x: pickSpawnX(r),
+          x: centers[laneIndex],
           y: -r,
           r,
           speed: 22 + Math.random() * 12,
@@ -155,7 +181,7 @@ export function HeroGame({ bubbleConfig = homepageProjects }) {
           x: r + Math.random() * (width - r * 2),
           y: -r,
           r,
-          speed: 28 + Math.random() * 18 + Math.min(40, score * 1.2),
+          speed: 28 + Math.random() * 18 + Math.min(25, score * 0.5),
           spawnT: 0,
           project: null,
         });
@@ -172,7 +198,7 @@ export function HeroGame({ bubbleConfig = homepageProjects }) {
       timeSinceSpawn = 0;
       activeSlugs.clear();
       setScore(0);
-      setMessage("Click anywhere to intercept");
+      setMessage(mode === "explore" ? "Click a bubble to preview a project" : "Click anywhere to intercept");
       setGameOverVisual(false);
       setActiveProject(null);
     }
@@ -233,7 +259,7 @@ export function HeroGame({ bubbleConfig = homepageProjects }) {
       if (gameOver) return;
 
       timeSinceSpawn += dt * 1000;
-      const interval = Math.max(500, spawnEvery - score * 25);
+      const interval = mode === "explore" ? EXPLORE_SPAWN_INTERVAL_MS : Math.max(600, spawnEvery - score * 10);
       if (timeSinceSpawn >= interval) {
         timeSinceSpawn = 0;
         spawnTarget();
@@ -250,9 +276,11 @@ export function HeroGame({ bubbleConfig = homepageProjects }) {
               activeSlugs.delete(t.project.slug);
               respawnAt.set(t.project.slug, performance.now() + MISS_COOLDOWN_MS);
             }
-            lives--;
-            if (lives <= 0) {
-              endGame();
+            if (mode !== "explore") {
+              lives--;
+              if (lives <= 0) {
+                endGame();
+              }
             }
           }
         } else {
@@ -278,8 +306,10 @@ export function HeroGame({ bubbleConfig = homepageProjects }) {
             if (idx !== -1) {
               explosions.push({ x: s.hitTarget.x, y: s.hitTarget.y, r: 2, maxR: 24, life: 1 });
               targets.splice(idx, 1);
-              score++;
-              setScore(score);
+              if (mode !== "explore") {
+                score++;
+                setScore(score);
+              }
               if (s.hitTarget.project) {
                 const p = s.hitTarget.project;
                 activeSlugs.delete(p.slug);
@@ -397,7 +427,7 @@ export function HeroGame({ bubbleConfig = homepageProjects }) {
         ctx.globalAlpha = 1;
       });
 
-      drawLives();
+      if (mode !== "explore") drawLives();
     }
 
     function loop(t) {
@@ -441,9 +471,11 @@ export function HeroGame({ bubbleConfig = homepageProjects }) {
             EXPLORE
           </button>
         </div>
-        <span className="font-mono text-[0.75rem] text-muted-foreground">
-          Score: <span>{score}</span>
-        </span>
+        {mode !== "explore" && (
+          <span className="font-mono text-[0.75rem] text-muted-foreground">
+            Score: <span>{score}</span>
+          </span>
+        )}
       </div>
 
       <div className="relative flex-1 w-full">
