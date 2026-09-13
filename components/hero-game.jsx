@@ -120,6 +120,18 @@ export function HeroGame({ bubbleConfig = homepageProjects }) {
       return lines;
     }
 
+    function pickSpawnX(r) {
+      for (let attempt = 0; attempt < 10; attempt++) {
+        const x = r + Math.random() * (width - r * 2);
+        const collides = targets.some((t) => {
+          if (t.y > height * 0.6) return false; // already well clear of the spawn zone
+          return Math.abs(t.x - x) < r + t.r + 16;
+        });
+        if (!collides) return x;
+      }
+      return r + Math.random() * (width - r * 2); // give up after 10 tries, place it anyway
+    }
+
     function spawnTarget() {
       if (mode === "explore") {
         const project = pickProject();
@@ -127,7 +139,7 @@ export function HeroGame({ bubbleConfig = homepageProjects }) {
         const r = Math.max(24, Math.min(36, width * 0.075));
         activeSlugs.add(project.slug);
         targets.push({
-          x: r + Math.random() * (width - r * 2),
+          x: pickSpawnX(r),
           y: -r,
           r,
           speed: 22 + Math.random() * 12,
