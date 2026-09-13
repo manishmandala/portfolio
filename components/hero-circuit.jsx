@@ -124,17 +124,17 @@ export function HeroCircuit() {
         ))}
       </g>
       <g strokeLinecap="round" fill="none">
-        {TRACES.map((trace, i) => (
-          <path
-            key={i}
-            d={trace.d}
-            stroke="white"
-            strokeWidth="2"
-            strokeDasharray="14 900"
-            className="circuit-pulse"
-            style={{ animationDelay: `${i * -0.6}s`, filter: "drop-shadow(0 0 4px white)" }}
-          />
-        ))}
+        {/* One combined path across every trace (joined via separate "M"
+            subpaths) so a single pulse visits each segment in turn,
+            instead of each trace running its own independent pulse. */}
+        <path
+          d={TRACES.map((trace) => trace.d).join(" ")}
+          stroke="white"
+          strokeWidth="2"
+          strokeDasharray="20 1200"
+          className="circuit-pulse"
+          style={{ filter: "drop-shadow(0 0 4px white)" }}
+        />
       </g>
       <g>
         {PADS.map((pad, i) => (
@@ -156,11 +156,11 @@ export function HeroCircuit() {
       <style jsx>{`
         .circuit-pulse {
           opacity: 0.85;
-          animation: circuit-pulse-move 3.5s linear infinite;
+          animation: circuit-pulse-move 5s linear infinite;
         }
         @keyframes circuit-pulse-move {
           to {
-            stroke-dashoffset: -914;
+            stroke-dashoffset: -1220;
           }
         }
         @media (prefers-reduced-motion: reduce) {
