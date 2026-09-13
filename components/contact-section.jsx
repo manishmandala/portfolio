@@ -30,7 +30,7 @@ export function ContactSection() {
           </li>
           <li>
             <a
-              href="#"
+              href="https://www.linkedin.com/in/manish-mandala"
               target="_blank"
               rel="noopener"
               className="border-b border-transparent text-[0.9rem] font-medium text-muted-foreground transition-colors hover:border-brand hover:text-brand"

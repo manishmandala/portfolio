@@ -69,7 +69,7 @@ export function HeroSection() {
             GitHub
           </a>
           <a
-            href="#"
+            href="https://www.linkedin.com/in/manish-mandala"
             target="_blank"
             rel="noopener"
             className="rounded-lg border border-border px-6 py-3 text-[0.95rem] font-semibold transition-colors hover:border-brand hover:text-brand"
