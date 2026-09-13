@@ -7,6 +7,7 @@ import { ProjectModal } from "@/components/project-modal";
 
 const RESPAWN_COOLDOWN_MS = 12000;
 const MISS_COOLDOWN_MS = 4000;
+const MAX_CONCURRENT_PROJECTS = 3;
 
 // Missile Defense / project-nav hybrid for the hero "game slot". Two modes:
 // "classic" is the original filler-only reflex game; "explore" mixes in
@@ -134,6 +135,8 @@ export function HeroGame({ bubbleConfig = homepageProjects }) {
 
     function spawnTarget() {
       if (mode === "explore") {
+        const liveProjectCount = targets.reduce((n, t) => n + (t.project ? 1 : 0), 0);
+        if (liveProjectCount >= MAX_CONCURRENT_PROJECTS) return; // board's full enough, skip this tick
         const project = pickProject();
         if (!project) return; // everything's on cooldown/live - skip this tick, no filler fallback
         const r = Math.max(24, Math.min(36, width * 0.075));

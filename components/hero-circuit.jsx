@@ -33,7 +33,37 @@ const TRACES = [
   { d: "M480,610 L580,610 L580,570", points: [[480, 610], [580, 610], [580, 570]] },
 ];
 
+// Precompute each trace's total length once (module load), so the pulse
+// animation below can allot travel time and interpolate a position
+// without recomputing polyline length every frame.
+function polylineLength(points) {
+  let len = 0;
+  for (let i = 0; i < points.length - 1; i++) {
+    len += Math.hypot(points[i + 1][0] - points[i][0], points[i + 1][1] - points[i][1]);
+  }
+  return len;
+}
+TRACES.forEach((trace) => {
+  trace.length = polylineLength(trace.points);
+});
+
+function pointAtDistance(points, dist) {
+  let remaining = dist;
+  for (let i = 0; i < points.length - 1; i++) {
+    const [x1, y1] = points[i];
+    const [x2, y2] = points[i + 1];
+    const segLen = Math.hypot(x2 - x1, y2 - y1);
+    if (remaining <= segLen || i === points.length - 2) {
+      const t = segLen === 0 ? 0 : Math.max(0, Math.min(1, remaining / segLen));
+      return [x1 + (x2 - x1) * t, y1 + (y2 - y1) * t];
+    }
+    remaining -= segLen;
+  }
+  return points[points.length - 1];
+}
+
 const GLOW_RADIUS_PX = 140;
+const PULSE_CYCLE_MS = 5000; // total time to visit every trace once, then loop
 
 function distToSegment(px, py, x1, y1, x2, y2) {
   const dx = x2 - x1;
@@ -60,6 +90,8 @@ export function HeroCircuit() {
   const svgRef = useRef(null);
   const padRefs = useRef([]);
   const traceRefs = useRef([]);
+  const pulseRef = useRef(null);
+  const pulseGlowRef = useRef(null);
 
   useEffect(() => {
     const svg = svgRef.current;
@@ -99,6 +131,38 @@ export function HeroCircuit() {
     return () => window.removeEventListener("mousemove", handleMove);
   }, []);
 
+  // Animate one dot's actual (x,y) position along the traces, in order,
+  // jumping instantly from the end of one trace to the start of the next -
+  // this is a real traveling point, not a stroke-dasharray trick, so it
+  // can't fall into the "pattern resets at every sub-path" SVG quirk that
+  // made multiple traces look like they were pulsing independently.
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    let rafId = null;
+    const timePerTrace = PULSE_CYCLE_MS / TRACES.length;
+
+    function frame(t) {
+      const elapsed = t % PULSE_CYCLE_MS;
+      const traceIndex = Math.min(TRACES.length - 1, Math.floor(elapsed / timePerTrace));
+      const trace = TRACES[traceIndex];
+      const localT = (elapsed - traceIndex * timePerTrace) / timePerTrace;
+      const [x, y] = pointAtDistance(trace.points, localT * trace.length);
+
+      if (pulseRef.current) {
+        pulseRef.current.setAttribute("cx", x);
+        pulseRef.current.setAttribute("cy", y);
+      }
+      if (pulseGlowRef.current) {
+        pulseGlowRef.current.setAttribute("cx", x);
+        pulseGlowRef.current.setAttribute("cy", y);
+      }
+      rafId = requestAnimationFrame(frame);
+    }
+
+    rafId = requestAnimationFrame(frame);
+    return () => cancelAnimationFrame(rafId);
+  }, []);
+
   return (
     <svg
       ref={svgRef}
@@ -123,19 +187,9 @@ export function HeroCircuit() {
           />
         ))}
       </g>
-      <g strokeLinecap="round" fill="none">
-        {/* One combined path across every trace (joined via separate "M"
-            subpaths) so a single pulse visits each segment in turn,
-            instead of each trace running its own independent pulse. */}
-        <path
-          d={TRACES.map((trace) => trace.d).join(" ")}
-          stroke="white"
-          strokeWidth="2"
-          strokeDasharray="20 1200"
-          className="circuit-pulse"
-          style={{ filter: "drop-shadow(0 0 4px white)" }}
-        />
-      </g>
+      {/* the traveling "electricity" dot - one real point, animated in JS */}
+      <circle ref={pulseGlowRef} r="6" fill="white" opacity="0.35" style={{ filter: "blur(3px)" }} />
+      <circle ref={pulseRef} r="2.5" fill="white" style={{ filter: "drop-shadow(0 0 4px white)" }} />
       <g>
         {PADS.map((pad, i) => (
           <circle
@@ -152,24 +206,6 @@ export function HeroCircuit() {
           />
         ))}
       </g>
-
-      <style jsx>{`
-        .circuit-pulse {
-          opacity: 0.85;
-          animation: circuit-pulse-move 5s linear infinite;
-        }
-        @keyframes circuit-pulse-move {
-          to {
-            stroke-dashoffset: -1220;
-          }
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .circuit-pulse {
-            animation: none;
-            opacity: 0;
-          }
-        }
-      `}</style>
     </svg>
   );
 }
