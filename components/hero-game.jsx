@@ -7,8 +7,9 @@ import { ProjectModal } from "@/components/project-modal";
 
 const RESPAWN_COOLDOWN_MS = 12000;
 const MISS_COOLDOWN_MS = 4000;
-const EXPLORE_SPAWN_INTERVAL_MS = 900;
-const LANE_GAP = 16;
+const MAX_LANES_USED = 3; // leave spare lanes even when more would physically fit, so filling never syncs up
+const EXPLORE_SPAWN_MIN_MS = 600;
+const EXPLORE_SPAWN_MAX_MS = 1800;
 
 // Missile Defense / project-nav hybrid for the hero "game slot". Two modes:
 // "classic" is the original filler-only reflex game; "explore" mixes in
@@ -75,6 +76,7 @@ export function HeroGame({ bubbleConfig = homepageProjects }) {
     let started = false;
     const spawnEvery = 1300;
     let timeSinceSpawn = 0;
+    let nextSpawnIn = spawnEvery;
     let lastTime = null;
     let rafId = null;
 
@@ -128,12 +130,14 @@ export function HeroGame({ bubbleConfig = homepageProjects }) {
     // only opens back up once its bubble is actually gone (popped or off
     // the bottom), which is what gives a continuous, evenly-spaced flow
     // instead of bursts that fill up then stall.
-    function laneLayout(r) {
-      const laneWidth = r * 2 + LANE_GAP;
-      const laneCount = Math.max(1, Math.floor(width / laneWidth));
-      const margin = (width - laneCount * laneWidth) / 2;
-      const centers = Array.from({ length: laneCount }, (_, i) => margin + laneWidth * i + laneWidth / 2);
-      return centers;
+    function laneLayout() {
+      // Spread a fixed, small number of lanes evenly across the full width
+      // (rather than packing in as many as physically fit) - fewer lanes
+      // than could fit means there's always slack, so filling never
+      // syncs up into a fill-then-drain wave.
+      const laneCount = MAX_LANES_USED;
+      const segmentWidth = width / laneCount;
+      return Array.from({ length: laneCount }, (_, i) => segmentWidth * i + segmentWidth / 2);
     }
 
     function occupiedLaneIndices(centers) {
@@ -157,7 +161,7 @@ export function HeroGame({ bubbleConfig = homepageProjects }) {
     function spawnTarget() {
       if (mode === "explore") {
         const r = Math.max(24, Math.min(36, width * 0.075));
-        const centers = laneLayout(r);
+        const centers = laneLayout();
         const occupied = occupiedLaneIndices(centers);
         const freeLanes = centers.map((_, i) => i).filter((i) => !occupied.has(i));
         if (!freeLanes.length) return; // every lane's in use - skip this tick, no overlap risk taken
@@ -171,7 +175,7 @@ export function HeroGame({ bubbleConfig = homepageProjects }) {
           x: centers[laneIndex],
           y: -r,
           r,
-          speed: 22 + Math.random() * 12,
+          speed: 16 + Math.random() * 24,
           spawnT: 0,
           project,
         });
@@ -196,6 +200,7 @@ export function HeroGame({ bubbleConfig = homepageProjects }) {
       lives = 3;
       gameOver = false;
       timeSinceSpawn = 0;
+      nextSpawnIn = mode === "explore" ? EXPLORE_SPAWN_MIN_MS : spawnEvery;
       activeSlugs.clear();
       setScore(0);
       setMessage(mode === "explore" ? "Click a bubble to preview a project" : "Click anywhere to intercept");
@@ -259,9 +264,12 @@ export function HeroGame({ bubbleConfig = homepageProjects }) {
       if (gameOver) return;
 
       timeSinceSpawn += dt * 1000;
-      const interval = mode === "explore" ? EXPLORE_SPAWN_INTERVAL_MS : Math.max(600, spawnEvery - score * 10);
-      if (timeSinceSpawn >= interval) {
+      if (timeSinceSpawn >= nextSpawnIn) {
         timeSinceSpawn = 0;
+        nextSpawnIn =
+          mode === "explore"
+            ? EXPLORE_SPAWN_MIN_MS + Math.random() * (EXPLORE_SPAWN_MAX_MS - EXPLORE_SPAWN_MIN_MS)
+            : Math.max(600, spawnEvery - score * 10);
         spawnTarget();
       }
 

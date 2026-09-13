@@ -46,12 +46,16 @@ function polylineLength(points) {
   }
   return len;
 }
-const BASE_TRACE_MS = 4600;
+const BASE_TRACE_MS = 2200;
+const PAUSE_MS = 450; // pulse sits dark at a junction before the next trace picks up
+const FADE_MS = 220; // fade out approaching a junction, fade in leaving one
 TRACES.forEach((trace) => {
   trace.length = polylineLength(trace.points);
   trace.duration = BASE_TRACE_MS * trace.speedFactor;
+  trace.slot = trace.duration + PAUSE_MS;
 });
-const TOTAL_CYCLE_MS = TRACES.reduce((sum, t) => sum + t.duration, 0);
+const TOTAL_CYCLE_MS = TRACES.reduce((sum, t) => sum + t.slot, 0);
+const PULSE_PAD_RADIUS = 26; // viewBox units - pads light up white as the pulse nears/leaves them
 
 function pointAtDistance(points, dist) {
   let remaining = dist;
@@ -137,10 +141,12 @@ export function HeroCircuit() {
   }, []);
 
   // Animate one dot's actual (x,y) position along the traces, in order,
-  // jumping instantly from the end of one trace to the start of the next -
-  // this is a real traveling point, not a stroke-dasharray trick, so it
-  // can't fall into the "pattern resets at every sub-path" SVG quirk that
-  // made multiple traces look like they were pulsing independently.
+  // pausing briefly (dark) at the end of each trace before fading back in
+  // at the start of the next - this is a real traveling point, not a
+  // stroke-dasharray trick, so it can't fall into the "pattern resets at
+  // every sub-path" SVG quirk that made multiple traces look like they
+  // were pulsing independently. Also brightens any pad the pulse is
+  // currently near, in addition to the pad's own cursor-hover glow.
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     let rafId = null;
@@ -149,25 +155,53 @@ export function HeroCircuit() {
       const elapsed = t % TOTAL_CYCLE_MS;
       let acc = 0;
       let trace = TRACES[TRACES.length - 1];
-      let localT = 1;
+      let localElapsed = trace.slot;
       for (const tr of TRACES) {
-        if (elapsed < acc + tr.duration) {
+        if (elapsed < acc + tr.slot) {
           trace = tr;
-          localT = (elapsed - acc) / tr.duration;
+          localElapsed = elapsed - acc;
           break;
         }
-        acc += tr.duration;
+        acc += tr.slot;
       }
-      const [x, y] = pointAtDistance(trace.points, localT * trace.length);
+
+      let x, y, opacity;
+      if (localElapsed < trace.duration) {
+        const localT = localElapsed / trace.duration;
+        [x, y] = pointAtDistance(trace.points, localT * trace.length);
+        const fadeOutStart = trace.duration - FADE_MS;
+        if (localElapsed > fadeOutStart) {
+          opacity = Math.max(0, 1 - (localElapsed - fadeOutStart) / FADE_MS);
+        } else if (localElapsed < FADE_MS) {
+          opacity = localElapsed / FADE_MS;
+        } else {
+          opacity = 1;
+        }
+      } else {
+        // paused at the junction, dark
+        [x, y] = trace.points[trace.points.length - 1];
+        opacity = 0;
+      }
 
       if (pulseRef.current) {
         pulseRef.current.setAttribute("cx", x);
         pulseRef.current.setAttribute("cy", y);
+        pulseRef.current.style.opacity = opacity;
       }
       if (pulseGlowRef.current) {
         pulseGlowRef.current.setAttribute("cx", x);
         pulseGlowRef.current.setAttribute("cy", y);
+        pulseGlowRef.current.style.opacity = opacity;
       }
+
+      PADS.forEach((pad, i) => {
+        const el = padRefs.current[i];
+        if (!el) return;
+        const dist = Math.hypot(pad.x - x, pad.y - y);
+        const intensity = opacity * Math.max(0, 1 - dist / PULSE_PAD_RADIUS);
+        el.style.setProperty("--pulse-glow", intensity.toFixed(3));
+      });
+
       rafId = requestAnimationFrame(frame);
     }
 
@@ -199,8 +233,10 @@ export function HeroCircuit() {
           />
         ))}
       </g>
-      {/* the traveling "electricity" dot - one real point, animated in JS */}
-      <circle ref={pulseGlowRef} r="6" fill="white" opacity="0.35" style={{ filter: "blur(3px)" }} />
+      {/* the traveling "electricity" dot - one real point, animated in JS -
+          plus a small soft halo around it, same idea as the cursor glow
+          but much smaller and following the pulse instead of the mouse */}
+      <circle ref={pulseGlowRef} r="14" fill="white" opacity="0.5" style={{ filter: "blur(6px)" }} />
       <circle ref={pulseRef} r="2.5" fill="white" style={{ filter: "drop-shadow(0 0 4px white)" }} />
       <g>
         {PADS.map((pad, i) => (
@@ -212,8 +248,9 @@ export function HeroCircuit() {
             r="5"
             style={{
               "--glow": 0,
+              "--pulse-glow": 0,
               fill: `color-mix(in srgb, var(${pad.cssVar}) calc(var(--glow) * 100%), var(--border))`,
-              filter: `drop-shadow(0 0 calc(var(--glow) * 7px) var(${pad.cssVar}))`,
+              filter: `drop-shadow(0 0 calc(var(--glow) * 7px) var(${pad.cssVar})) drop-shadow(0 0 calc(var(--pulse-glow) * 9px) white)`,
             }}
           />
         ))}
