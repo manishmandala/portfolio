@@ -236,7 +236,7 @@ export function HeroCircuit() {
       {/* the traveling "electricity" dot - one real point, animated in JS -
           plus a small soft halo around it, same idea as the cursor glow
           but much smaller and following the pulse instead of the mouse */}
-      <circle ref={pulseGlowRef} r="14" fill="white" opacity="0.5" style={{ filter: "blur(6px)" }} />
+      <circle ref={pulseGlowRef} r="3.5" fill="white" opacity="0.5" style={{ filter: "blur(1.5px)" }} />
       <circle ref={pulseRef} r="2.5" fill="white" style={{ filter: "drop-shadow(0 0 4px white)" }} />
       <g>
         {PADS.map((pad, i) => (
