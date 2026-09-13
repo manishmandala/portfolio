@@ -90,5 +90,14 @@
   html {
     @apply font-sans;
     scroll-behavior: smooth;
+    background-color: var(--background);
   }
+}
+
+/* Keeps the real page invisible (behind the splash's own solid background)
+   until intro-splash.jsx has mounted and decided whether to show itself -
+   otherwise the server-rendered page paints first and flashes before the
+   splash (which can only know sessionStorage client-side) covers it. */
+html[data-intro-pending] body {
+  opacity: 0;
 }

@@ -24,6 +24,7 @@ export function IntroSplash() {
     if (!seen) {
       setVisible(true);
     }
+    document.documentElement.removeAttribute("data-intro-pending");
   }, []);
 
   useEffect(() => {

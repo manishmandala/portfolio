@@ -36,6 +36,22 @@ export default function RootLayout({ children }) {
       lang="en"
       className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
+      <head>
+        {/* Raw, genuinely synchronous script (not next/script - its
+            "beforeInteractive" strategy queues into Next's __next_s runtime
+            and still runs after first paint, verified via screenshot). This
+            has to block parsing before <body> so the real page never paints
+            ahead of intro-splash.jsx deciding whether to show itself. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try {
+              if (sessionStorage.getItem("mmIntroSeen") !== "1") {
+                document.documentElement.setAttribute("data-intro-pending", "");
+              }
+            } catch (e) {}`,
+          }}
+        />
+      </head>
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <CursorGlow />
         <IntroSplash />
