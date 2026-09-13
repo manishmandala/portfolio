@@ -57,6 +57,15 @@ TRACES.forEach((trace) => {
 const TOTAL_CYCLE_MS = TRACES.reduce((sum, t) => sum + t.slot, 0);
 const PULSE_PAD_RADIUS = 26; // viewBox units - pads light up white as the pulse nears/leaves them
 
+// Every bend in every trace (not just the 9 named PADS) gets a small glow
+// point that lights up white as the pulse passes through it.
+const JOINTS = [];
+TRACES.forEach((trace) => {
+  trace.points.forEach(([x, y]) => {
+    if (!JOINTS.some((j) => j.x === x && j.y === y)) JOINTS.push({ x, y });
+  });
+});
+
 function pointAtDistance(points, dist) {
   let remaining = dist;
   for (let i = 0; i < points.length - 1; i++) {
@@ -73,8 +82,8 @@ function pointAtDistance(points, dist) {
 }
 
 const GLOW_RADIUS_PX = 140;
-const TRAIL_SEGMENTS = 12;
-const TRAIL_SPACING = 7; // viewBox units between sampled trail points
+const TRAIL_LENGTH = 90; // viewBox units - how far back the fading line extends
+const TRAIL_SAMPLES = 16; // points sampled along that length to build the path
 
 function distToSegment(px, py, x1, y1, x2, y2) {
   const dx = x2 - x1;
@@ -100,8 +109,10 @@ function distToPolyline(px, py, points) {
 export function HeroCircuit() {
   const svgRef = useRef(null);
   const padRefs = useRef([]);
+  const jointRefs = useRef([]);
   const traceRefs = useRef([]);
-  const trailRefs = useRef([]);
+  const pulsePathRef = useRef(null);
+  const pulseGradientRef = useRef(null);
 
   useEffect(() => {
     const svg = svgRef.current;
@@ -186,25 +197,29 @@ export function HeroCircuit() {
         opacity = 0;
       }
 
-      // the pulse is purely this fading line - no dot/head marker. Sample
-      // points behind the current position along the same trace (following
-      // its actual bends, not a straight line) and connect them with
-      // segments that fade out toward the tail - bright front, dull tail.
+      // the pulse is one continuous path (not several discrete segments,
+      // which showed visible joints/steps at corners) with a gradient
+      // stroke fading from bright at the head to transparent at the tail.
+      // Sampling points behind the head along the trace's own points means
+      // it correctly bends with the trace instead of cutting corners.
       const trailPoints = [[x, y]];
-      for (let i = 1; i <= TRAIL_SEGMENTS; i++) {
-        const d = Math.max(0, currentDist - i * TRAIL_SPACING);
+      for (let i = 1; i <= TRAIL_SAMPLES; i++) {
+        const d = Math.max(0, currentDist - (i / TRAIL_SAMPLES) * TRAIL_LENGTH);
         trailPoints.push(pointAtDistance(trace.points, d));
       }
-      trailRefs.current.forEach((el, i) => {
-        if (!el) return;
-        const [x1, y1] = trailPoints[i];
-        const [x2, y2] = trailPoints[i + 1];
-        el.setAttribute("x1", x1);
-        el.setAttribute("y1", y1);
-        el.setAttribute("x2", x2);
-        el.setAttribute("y2", y2);
-        el.style.opacity = opacity * (1 - i / TRAIL_SEGMENTS);
-      });
+
+      if (pulsePathRef.current) {
+        const dAttr = trailPoints.map(([px, py], i) => `${i === 0 ? "M" : "L"}${px},${py}`).join(" ");
+        pulsePathRef.current.setAttribute("d", dAttr);
+        pulsePathRef.current.style.opacity = opacity;
+      }
+      if (pulseGradientRef.current) {
+        const [tailX, tailY] = trailPoints[trailPoints.length - 1];
+        pulseGradientRef.current.setAttribute("x1", tailX);
+        pulseGradientRef.current.setAttribute("y1", tailY);
+        pulseGradientRef.current.setAttribute("x2", x);
+        pulseGradientRef.current.setAttribute("y2", y);
+      }
 
       PADS.forEach((pad, i) => {
         const el = padRefs.current[i];
@@ -212,6 +227,14 @@ export function HeroCircuit() {
         const dist = Math.hypot(pad.x - x, pad.y - y);
         const intensity = opacity * Math.max(0, 1 - dist / PULSE_PAD_RADIUS);
         el.style.setProperty("--pulse-glow", intensity.toFixed(3));
+      });
+
+      JOINTS.forEach((joint, i) => {
+        const el = jointRefs.current[i];
+        if (!el) return;
+        const dist = Math.hypot(joint.x - x, joint.y - y);
+        const intensity = opacity * Math.max(0, 1 - dist / PULSE_PAD_RADIUS);
+        el.style.opacity = intensity.toFixed(3);
       });
 
       rafId = requestAnimationFrame(frame);
@@ -245,17 +268,36 @@ export function HeroCircuit() {
           />
         ))}
       </g>
-      {/* the traveling "electricity" - purely a fading line (bright front,
-          dull tail), no dot/head marker, following the trace's actual bends
-          via segments sampled behind the front each frame */}
-      <g strokeLinecap="round">
-        {Array.from({ length: TRAIL_SEGMENTS }).map((_, i) => (
-          <line
+      <defs>
+        <linearGradient ref={pulseGradientRef} id="pulseGradient" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="white" stopOpacity="0" />
+          <stop offset="100%" stopColor="white" stopOpacity="1" />
+        </linearGradient>
+      </defs>
+      {/* the traveling "electricity" - one continuous path (not several
+          discrete segments, which showed visible joints at corners), with a
+          gradient stroke fading from bright at the head to transparent at
+          the tail. No dot/head marker. */}
+      <path
+        ref={pulsePathRef}
+        fill="none"
+        stroke="url(#pulseGradient)"
+        strokeWidth="2.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        style={{ filter: "drop-shadow(0 0 3px white)" }}
+      />
+      <g>
+        {JOINTS.map((joint, i) => (
+          <circle
             key={i}
-            ref={(el) => (trailRefs.current[i] = el)}
-            stroke="white"
-            strokeWidth={2.6 - (i / TRAIL_SEGMENTS) * 1.8}
-            style={i === 0 ? { filter: "drop-shadow(0 0 3px white)" } : undefined}
+            ref={(el) => (jointRefs.current[i] = el)}
+            cx={joint.x}
+            cy={joint.y}
+            r="3.5"
+            fill="white"
+            opacity="0"
+            style={{ filter: "drop-shadow(0 0 8px white)" }}
           />
         ))}
       </g>
