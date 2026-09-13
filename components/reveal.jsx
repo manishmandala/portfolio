@@ -1,12 +1,9 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 
 const SESSION_KEY = "mmRevealSeen";
-// useLayoutEffect warns when it runs during SSR; alias to useEffect there
-// since this only ever needs to run in the browser anyway.
-const useIsoLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 // Fade + rise into view, replacing the old IntersectionObserver-based
 // [data-reveal] behavior from script.js. `delay` lets callers stagger a
@@ -15,32 +12,31 @@ const useIsoLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : use
 // Plays only once per browser session (sessionStorage-gated, same pattern
 // as the intro splash) - the first time the site's opened, sections
 // animate in as you scroll to them; any reload/revisit within that same
-// session just shows everything immediately, no re-animating, so it
-// doesn't get repetitive.
+// session (including client-side navigation back to this page) just shows
+// everything immediately, no re-animating.
+//
+// Decided once via a lazy useState initializer (runs synchronously on the
+// client's first render, before Framer Motion ever applies a style) rather
+// than flipping `initial`/`animate` props after mount via an effect - an
+// earlier version did that and left content permanently stuck at
+// opacity:0 whenever the props shape changed out from under Framer Motion
+// mid-lifecycle. Here the prop *shape* never changes, only `initial`'s
+// value does, decided before first paint.
 export function Reveal({ children, delay = 0, className, as = "div", ...props }) {
-  const [skipAnimation, setSkipAnimation] = useState(false);
-
-  useIsoLayoutEffect(() => {
+  const [seen] = useState(() => {
+    if (typeof window === "undefined") return false;
     try {
-      if (sessionStorage.getItem(SESSION_KEY) === "1") setSkipAnimation(true);
+      return sessionStorage.getItem(SESSION_KEY) === "1";
     } catch {
-      // sessionStorage unavailable - just animate normally
+      return false;
     }
-  }, []);
+  });
 
   const MotionTag = motion[as] ?? motion.div;
 
-  if (skipAnimation) {
-    return (
-      <MotionTag className={className} {...props}>
-        {children}
-      </MotionTag>
-    );
-  }
-
   return (
     <MotionTag
-      initial={{ opacity: 0, y: 22 }}
+      initial={seen ? false : { opacity: 0, y: 22 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.15, margin: "0px 0px -40px 0px" }}
       transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
