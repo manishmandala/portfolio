@@ -91,13 +91,33 @@ export function HeroGame({ bubbleConfig = homepageProjects }) {
       return pool[Math.floor(Math.random() * pool.length)];
     }
 
-    function fitLabel(text, maxWidth) {
-      if (ctx.measureText(text).width <= maxWidth) return text;
-      let t = text;
-      while (t.length > 1 && ctx.measureText(t + "…").width > maxWidth) {
-        t = t.slice(0, -1);
+    function wrapLabel(text, maxWidth, maxLines = 2) {
+      const words = text.split(" ");
+      const lines = [];
+      let current = "";
+      for (const word of words) {
+        const test = current ? `${current} ${word}` : word;
+        if (ctx.measureText(test).width <= maxWidth) {
+          current = test;
+        } else {
+          if (current) lines.push(current);
+          current = word;
+          if (lines.length >= maxLines) break;
+        }
       }
-      return t + "…";
+      if (current && lines.length < maxLines) lines.push(current);
+      if (lines.length > maxLines) lines.length = maxLines;
+      if (lines.length === 0) lines.push(text);
+
+      const lastIdx = lines.length - 1;
+      if (ctx.measureText(lines[lastIdx]).width > maxWidth) {
+        let t = lines[lastIdx];
+        while (t.length > 1 && ctx.measureText(t + "…").width > maxWidth) {
+          t = t.slice(0, -1);
+        }
+        lines[lastIdx] = t + "…";
+      }
+      return lines;
     }
 
     function spawnTarget() {
@@ -110,7 +130,7 @@ export function HeroGame({ bubbleConfig = homepageProjects }) {
           x: r + Math.random() * (width - r * 2),
           y: -r,
           r,
-          speed: 16 + Math.random() * 8,
+          speed: 22 + Math.random() * 12,
           spawnT: 0,
           project,
         });
@@ -328,12 +348,14 @@ export function HeroGame({ bubbleConfig = homepageProjects }) {
           ctx.font = `700 ${fontSize}px system-ui, sans-serif`;
           ctx.textAlign = "center";
           ctx.textBaseline = "middle";
-          const label = fitLabel(t.project.shortTitle, scaleR * 1.7);
+          const lines = wrapLabel(t.project.shortTitle, scaleR * 1.7);
+          const lineHeight = fontSize * 1.15;
+          const startY = t.y - ((lines.length - 1) * lineHeight) / 2;
           ctx.lineWidth = 3;
           ctx.strokeStyle = "rgba(0,0,0,0.55)";
-          ctx.strokeText(label, t.x, t.y);
+          lines.forEach((line, i) => ctx.strokeText(line, t.x, startY + i * lineHeight));
           ctx.fillStyle = "#fff";
-          ctx.fillText(label, t.x, t.y);
+          lines.forEach((line, i) => ctx.fillText(line, t.x, startY + i * lineHeight));
         } else {
           ctx.fillStyle = colorRed;
           ctx.beginPath();
