@@ -40,7 +40,7 @@ export function CursorGlow() {
         translateX: "-50%",
         translateY: "-50%",
         background:
-          "radial-gradient(circle, color-mix(in srgb, var(--brand) 20%, transparent) 0%, transparent 70%)",
+          "radial-gradient(circle, color-mix(in srgb, var(--brand) 21%, transparent) 0%, transparent 70%)",
         filter: "blur(40px)",
         mixBlendMode: "screen",
       }}

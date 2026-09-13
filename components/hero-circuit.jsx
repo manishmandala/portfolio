@@ -24,18 +24,21 @@ const PADS = [
   { x: 20, y: 560, cssVar: "--cat-blue" },
 ];
 
+// Per-trace speedFactor varies how long the pulse lingers on that trace
+// relative to the others (higher = slower), so the motion feels organic
+// rather than every line taking visually-uniform time.
 const TRACES = [
-  { d: "M0,60 L90,60 L90,20 L240,20", points: [[0, 60], [90, 60], [90, 20], [240, 20]] },
-  { d: "M560,10 L560,75 L470,75 L470,110 L380,110", points: [[560, 10], [560, 75], [470, 75], [470, 110], [380, 110]] },
-  { d: "M150,110 L150,80 L60,80", points: [[150, 110], [150, 80], [60, 80]] },
-  { d: "M20,560 L20,610 L140,610", points: [[20, 560], [20, 610], [140, 610]] },
-  { d: "M300,640 L300,590 L420,590 L420,555", points: [[300, 640], [300, 590], [420, 590], [420, 555]] },
-  { d: "M480,610 L580,610 L580,570", points: [[480, 610], [580, 610], [580, 570]] },
+  { d: "M0,60 L90,60 L90,20 L240,20", points: [[0, 60], [90, 60], [90, 20], [240, 20]], speedFactor: 1 },
+  { d: "M560,10 L560,75 L470,75 L470,110 L380,110", points: [[560, 10], [560, 75], [470, 75], [470, 110], [380, 110]], speedFactor: 1.7 },
+  { d: "M150,110 L150,80 L60,80", points: [[150, 110], [150, 80], [60, 80]], speedFactor: 0.6 },
+  { d: "M20,560 L20,610 L140,610", points: [[20, 560], [20, 610], [140, 610]], speedFactor: 1.3 },
+  { d: "M300,640 L300,590 L420,590 L420,555", points: [[300, 640], [300, 590], [420, 590], [420, 555]], speedFactor: 0.8 },
+  { d: "M480,610 L580,610 L580,570", points: [[480, 610], [580, 610], [580, 570]], speedFactor: 1.5 },
 ];
 
-// Precompute each trace's total length once (module load), so the pulse
-// animation below can allot travel time and interpolate a position
-// without recomputing polyline length every frame.
+// Precompute each trace's total length and travel duration once (module
+// load), so the pulse animation below can allot travel time and interpolate
+// a position without recomputing this every frame.
 function polylineLength(points) {
   let len = 0;
   for (let i = 0; i < points.length - 1; i++) {
@@ -43,9 +46,12 @@ function polylineLength(points) {
   }
   return len;
 }
+const BASE_TRACE_MS = 4600;
 TRACES.forEach((trace) => {
   trace.length = polylineLength(trace.points);
+  trace.duration = BASE_TRACE_MS * trace.speedFactor;
 });
+const TOTAL_CYCLE_MS = TRACES.reduce((sum, t) => sum + t.duration, 0);
 
 function pointAtDistance(points, dist) {
   let remaining = dist;
@@ -63,7 +69,6 @@ function pointAtDistance(points, dist) {
 }
 
 const GLOW_RADIUS_PX = 140;
-const PULSE_CYCLE_MS = 20000; // total time to visit every trace once, then loop
 
 function distToSegment(px, py, x1, y1, x2, y2) {
   const dx = x2 - x1;
@@ -139,13 +144,20 @@ export function HeroCircuit() {
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     let rafId = null;
-    const timePerTrace = PULSE_CYCLE_MS / TRACES.length;
 
     function frame(t) {
-      const elapsed = t % PULSE_CYCLE_MS;
-      const traceIndex = Math.min(TRACES.length - 1, Math.floor(elapsed / timePerTrace));
-      const trace = TRACES[traceIndex];
-      const localT = (elapsed - traceIndex * timePerTrace) / timePerTrace;
+      const elapsed = t % TOTAL_CYCLE_MS;
+      let acc = 0;
+      let trace = TRACES[TRACES.length - 1];
+      let localT = 1;
+      for (const tr of TRACES) {
+        if (elapsed < acc + tr.duration) {
+          trace = tr;
+          localT = (elapsed - acc) / tr.duration;
+          break;
+        }
+        acc += tr.duration;
+      }
       const [x, y] = pointAtDistance(trace.points, localT * trace.length);
 
       if (pulseRef.current) {
