@@ -398,17 +398,18 @@ export function HeroGame({ bubbleConfig = homepageProjects }) {
           ctx.stroke();
 
           const fontSize = Math.max(9, Math.min(11, scaleR * 0.34));
-          ctx.font = `700 ${fontSize}px "Space Grotesk", system-ui, sans-serif`;
+          ctx.font = `600 ${fontSize}px "Inter", system-ui, sans-serif`;
           ctx.textAlign = "center";
           ctx.textBaseline = "middle";
           const lines = wrapLabel(t.project.shortTitle, scaleR * 1.7);
           const lineHeight = fontSize * 1.15;
           const startY = t.y - ((lines.length - 1) * lineHeight) / 2;
-          ctx.lineWidth = 3;
-          ctx.strokeStyle = "rgba(0,0,0,0.55)";
-          lines.forEach((line, i) => ctx.strokeText(line, t.x, startY + i * lineHeight));
           ctx.fillStyle = "#fff";
+          ctx.shadowColor = "rgba(0,0,0,0.45)";
+          ctx.shadowBlur = 4;
           lines.forEach((line, i) => ctx.fillText(line, t.x, startY + i * lineHeight));
+          ctx.shadowColor = "transparent";
+          ctx.shadowBlur = 0;
         } else {
           ctx.fillStyle = colorRed;
           ctx.beginPath();
