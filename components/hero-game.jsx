@@ -7,7 +7,6 @@ import { ProjectModal } from "@/components/project-modal";
 
 const RESPAWN_COOLDOWN_MS = 12000;
 const MISS_COOLDOWN_MS = 4000;
-const FILLER_CHANCE = 0.7; // fraction of spawns that stay plain filler in Explore mode
 
 // Missile Defense / project-nav hybrid for the hero "game slot". Two modes:
 // "classic" is the original filler-only reflex game; "explore" mixes in
@@ -102,12 +101,9 @@ export function HeroGame({ bubbleConfig = homepageProjects }) {
     }
 
     function spawnTarget() {
-      let project = null;
-      if (mode === "explore" && Math.random() > FILLER_CHANCE) {
-        project = pickProject();
-      }
-
-      if (project) {
+      if (mode === "explore") {
+        const project = pickProject();
+        if (!project) return; // everything's on cooldown/live - skip this tick, no filler fallback
         const r = Math.max(24, Math.min(36, width * 0.075));
         activeSlugs.add(project.slug);
         targets.push({
