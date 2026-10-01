@@ -12,17 +12,9 @@ export function HeroSection() {
         <p className="mb-4 font-mono text-[0.85rem] font-semibold tracking-[0.06em] text-brand">
           AI &middot; ROBOTICS &middot; AUTONOMY &middot; TECH &amp; DEFENSE
         </p>
-        <div className="mb-5 flex items-center justify-center gap-[18px] md:justify-start">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/assets/headshot.png"
-            alt="Manish Mandala"
-            className="h-14 w-14 shrink-0 rounded-full border border-border object-cover md:h-[76px] md:w-[76px]"
-          />
-          <h1 className="font-display text-[clamp(2.4rem,6vw,3.6rem)] font-extrabold leading-[1.1] tracking-[-0.02em]">
-            Manish Mandala
-          </h1>
-        </div>
+        <h1 className="mb-5 font-display text-[clamp(2.4rem,6vw,3.6rem)] font-extrabold leading-[1.1] tracking-[-0.02em]">
+          Manish Mandala
+        </h1>
 
         <Link
           href="/new-project"
